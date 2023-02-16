@@ -1,6 +1,13 @@
 etat_civil <- read.csv("data/FD_NAIS_2021.csv", header= TRUE, sep=';')
 head(etat_civil)
 
+bebe <- read.table("data/bebe.txt", header = TRUE, sep = ";")
+head(bebe)
+dim(bebe)
+
+taux_fecondite <- read.csv("data/taux_fecondite.csv", header= TRUE, sep=',')
+head(taux_fecondite)
+View(taux_fecondite)
 
 
 #### Boxplot Age mere age pere ####
@@ -25,7 +32,13 @@ ggplot(age,aes(x=SEXEPARENT, y= AGEPARENT, color = SEXEPARENT))+
   scale_color_manual(values=c('red','blue'))+
   scale_fill_manual(values=c('#CD5C5C','#87CEFA'))+
   theme_classic()
+
+ggplot(bebe, aes(x=bebe$AgedelaMere))
   
-# Regression 
+##### Regression #####
+
+##### WorldCloud #####
+
+
 
 
