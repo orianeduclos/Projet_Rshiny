@@ -63,7 +63,7 @@ Nous considérons le modèle suivant :
 
 $Y_{PoidsBB} = \beta0 + \beta1 X1_{AgedelaMere} + \beta2 X2_{PoidsMere} + \beta3X3_{TailleBB} + \beta4X4_{Sexe} + \epsilon$ 
 
-Avant d'estimer les paramêtres, nous calculons la matrice de corrélation et nous présentesons un diagramme de dispersion de toutes les pairs de ces varaibles. Ceci permet de visualiser la relation entre la variable à expliquer et chacune des variables explicatives et de juger de la correlation entre les variables explicatives 
+Avant d'estimer les paramêtres, nous calculons la matrice de corrélation et nous présenterons un diagramme de dispersion de toutes les pairs de ces varaibles. Ceci permet de visualiser la relation entre la variable à expliquer et chacune des variables explicatives et de juger de la correlation entre les variables explicatives 
 
 
 

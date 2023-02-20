@@ -29,8 +29,6 @@ ggplot(age,aes(x=SEXEPARENT, y= AGEPARENT, color = SEXEPARENT))+
   theme_classic()
 
 
-###### Regression ######
-
 
 #### Base de donnée BEBE ####
 bebe <- read.table("data/bebe.txt", header = TRUE, sep = ";")
@@ -45,7 +43,7 @@ manquant <- is.na(bebe)
 dim(manquant)
 sum(manquant)
 
-# reparage apr ligne 
+# reparage par ligne 
 coordmanquant <- which(manquant, arr.ind=TRUE)
 coordmanquant[1:6,]
 # eliminer doublon 
@@ -55,8 +53,47 @@ bool <- apply(is.na(bebe),1,any)
 names(bool) <- NULL
 which(bool)
 
+library(tidyverse)
+bebepropre <- na.omit(bebe)
+
+# transformation sexe en variable indicatrice
+bebenew <- bebepropre |> 
+  mutate(Sexe_indicatrice = case_when(Sexe== "M" ~ "1",
+                                      Sexe=="F"~ "0" ))
+
+###### Regression ######
+
+bebenew$Nbsem <- as.numeric(bebenew$Nbsem)
+bebenew$PoidsBB <- as.numeric(bebenew$PoidsBB)
+bebenew$AgedelaMere <- as.numeric(bebenew$AgedelaMere)
+bebenew$Sexe_indicatrice <- as.numeric(bebenew$Sexe_indicatrice)
+reg1 <- lm(PoidsBB ~ TailleBB + Nbsem + AgedelaMere + Sexe_indicatrice, data=bebenew)
+summary(reg1)
+library(car)
+avPlots(reg1)
+
+myvars <- c("PoidsBB", "TailleBB","Nbsem", "AgedelaMere", "Sexe_indicatrice")
+data_matcorr <- bebenew[myvars]
+str(bebenew)
+mcor <- round(cor(data_matcorr),2)
+
+library(corrplot)
+corrplot(mcor, method="circle")
+
+col <- colorRampPalette(c("#f56767", "#d60909","#FFFFFF", "#b4c2f0","#3a14e0"))
+corrplot(mcor, method="color", col = col(200), 
+         type = "upper", order = "hclust",addCoef.col = "black", diag=FALSE,tl.col="black")
+vif(reg1)
+sqrt(vif(reg1))
+
+# PAS DE COLIN2ARIT2 ENTRE VARIABLE 
+
+
+
+
 
 ggplot(bebe, aes(x=bebe$AgedelaMere))
+
 
 
 #### Base de donnée taux de fécondité ####
