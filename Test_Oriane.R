@@ -10,6 +10,7 @@ head(taux_fecondite)
 View(taux_fecondite)
 
 
+
 #### Boxplot Age mere age pere ####
 
 library(rAmCharts)
@@ -36,6 +37,8 @@ ggplot(age,aes(x=SEXEPARENT, y= AGEPARENT, color = SEXEPARENT))+
 ggplot(bebe, aes(x=bebe$AgedelaMere))
   
 ##### Regression #####
+
+
 
 ##### WorldCloud #####
 
