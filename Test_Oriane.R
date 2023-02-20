@@ -1,7 +1,21 @@
+##### Base de donnée prenom #####
+prenom <- read.csv("data/dpt2021.csv", header= TRUE, sep=';') 
+View(prenom)
+
+
+######### WorldCloud #########
+library(tidyverse)
+library(wordcloud2)
+cloud <- prenom |> select(annais=="2001")
+# trié sur une année dans un premier temps 
+# sur le sexe 
+# prendre prenom et frequence et tracé 
+
+
 
 ##### Base de donnée etat civil ####
 etat_civil <- read.csv("data/FD_NAIS_2021.csv", header= TRUE, sep=';')
-head(etat_civil)
+View(etat_civil)
 
 
 
@@ -61,6 +75,7 @@ bebenew <- bebepropre |>
   mutate(Sexe_indicatrice = case_when(Sexe== "M" ~ "1",
                                       Sexe=="F"~ "0" ))
 
+
 ###### Regression ######
 
 bebenew$Nbsem <- as.numeric(bebenew$Nbsem)
@@ -90,8 +105,6 @@ sqrt(vif(reg1))
 
 
 
-
-
 ggplot(bebe, aes(x=bebe$AgedelaMere))
 
 
@@ -106,6 +119,6 @@ View(taux_fecondite)
 
 ##### WorldCloud #####
 
-
+library(wordcloud2)
 
 
