@@ -1,0 +1,78 @@
+---
+title: "Les Naissances"
+subtitle: | 
+    | Projet de visualisation de données
+    | R Shiny
+    | Université de Rennes II : Master Mathématiques Appliquées, Statistiques 
+author: | 
+    | Margaux Bailleul
+    | Oriane Duclos
+    
+
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+geometry: "left=2.5cm,right=2.5cm,top=2cm,bottom=2cm"
+fontfamily: mathpazo
+output:
+  pdf_document:
+    keep_tex: true
+    latex_engine: pdflatex
+    fig_caption: yes
+    highlight: haddock
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+    citation_package: natbib
+
+
+---
+
+# Introduction 
+
+# Etude des naissances
+
+## Création jeu de donnée 
+
+### Base de donnée etat_civil
+
+### Base de donnée bebe 
+
+Il s'agit d'une base de donnée que nous avons utilisé dans le cadre du cours de Logiciel avancé avec Nicolas Jegou. Celle ci étoffe notre étude en completant notre base de données etat_civil. Nous avons de nouvelle varaible pertinante en ce qui concerne le poids, la taille de la mère et du bébé par exemple. Varaible que nous n'avons pas dans la base de donnée etat_civil. 
+
+**Tri de bebe** : Valeur manquante 
+Nous avons decider de faire un tri sur les individus non totalement renseigné et d'utiliser tableau sans NA
+
+### Base de donnée taux_fecondité
+
+## Regression 
+
+Nous allons etudier le poids de naissance des bébés. 
+
+Les variables sont :  
+
+* le poids de naissance du bébé (en grammes) (**PoidsBB**)
+
+* l'âge de la mère (**AgedeleMere**)
+
+* le poids de la mère en ??? (**PoidsMere**)
+
+* la taille du bébé (en centimètre) (**TailleBB**)
+
+* Sexe du bébé (fille = 0, garçon = 1) : transformation de la variable **Sexe** en varaible indicatrice 
+
+Nous considérons le modèle suivant : 
+
+$Y_{PoidsBB} = \beta0 + \beta1 X1_{AgedelaMere} + \beta2 X2_{PoidsMere} + \beta3X3_{TailleBB} + \beta4X4_{Sexe} + \epsilon$ 
+
+Avant d'estimer les paramêtres, nous calculons la matrice de corrélation et nous présentesons un diagramme de dispersion de toutes les pairs de ces varaibles. Ceci permet de visualiser la relation entre la variable à expliquer et chacune des variables explicatives et de juger de la correlation entre les variables explicatives 
+
+
+
+# Travail en binôme 
+
+## Utilisation de git 
+
+## Repartition de tache 
+
+## Notre resentie
+
+# Conlusion 
