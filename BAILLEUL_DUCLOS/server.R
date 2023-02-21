@@ -6,6 +6,7 @@ library(formattable)
 library(dplyr)
 library(ggplot2)
 library(DT)
+library(leaflet)
 
 ##### Ouverture des bases de données #####
 
@@ -38,6 +39,18 @@ prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
 ### Base de données taux de fécondité ###
 
 taux_fecondite <- read.csv("../data/taux_fecondite.csv", header= TRUE, sep=',')
+library(WDI)
+
+fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2019, end = 2019)
+dim(fertility)
+world <- map_data("world")
+dim(world)
+
+# Jointure des données avec les données de la carte
+fertility_map <- left_join(world, fertility, by = c("region" = "country"))
+head(fertility_map)
+
+
 
 ##### Partie Server #####
 
@@ -57,8 +70,16 @@ shinyServer(function(input, output) {
   
   output$summary_pays <- renderPrint({
     summary(taux_fecondite)
+    
   })
 
+  # Création de la carte leaflet
+  output$map <- renderLeaflet({
+    leaflet() |> 
+      addTiles()
+      
+
+  })
   
 #### Partie France #### 
 

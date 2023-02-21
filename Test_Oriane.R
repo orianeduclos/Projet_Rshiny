@@ -145,6 +145,97 @@ taux_fecondite <- read.csv("data/taux_fecondite.csv", header= TRUE, sep=',')
 head(taux_fecondite)
 View(taux_fecondite)
 
+#### Carte taux de fédondité monde #####
+install.packages("WDI")
+library(WDI)
+
+fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2019, end = 2019)
+View(fertility)
+
+install.packages("rnaturalearth")
+library(rnaturalearth)
+library(tidyverse)
+world <- ne_countries(scale = "medium", returnclass = "sf")
+world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
+
+library(leaflet)
+
+pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
+
+leaflet() %>%
+  addTiles() %>%
+  addPolygons(data = world_fertility, 
+              fillColor = ~pal(SP.DYN.TFRT.IN),
+              fillOpacity = 0.7, 
+              color = "#BDBDC3",
+              weight = 1) %>%
+  addLegend(pal = pal, 
+            values = world_fertility$SP.DYN.TFRT.IN, 
+            opacity = 0.7, 
+            title = "Taux de fécondité")
+
+
+### 2eme carte ###
+
+library(leaflet)
+library(sp)
+library(rgdal)
+library(rworldmap)
+
+# Sélectionner les variables nécessaires
+data <- select(fertility, iso3c, SP.DYN.TFRT.IN)
+
+# Fusionner avec les données de la carte mondiale
+map_data <- joinCountryData2Map(data, joinCode = "ISO3", nameJoinColumn = "iso3c")
+
+# Créer la carte Leaflet
+leaflet(map_data) %>%
+  addProviderTiles("CartoDB.Positron") %>%  # Ajouter des tuiles de fond
+  addPolygons(fillColor = ~colorQuantile("YlOrRd", map_data$SP.DYN.TFRT.IN)(SP.DYN.TFRT.IN),
+              fillOpacity = 0.7, color = "#BDBDC3", weight = 1) %>%  # Ajouter les polygones des pays
+  addLegend(position = "bottomright", pal = colorQuantile("YlOrRd", map_data$SP.DYN.TFRT.IN),
+            values = map_data$SP.DYN.TFRT.IN, title = "Taux de fécondité")  # Ajouter la légende
+
+# Sélectionner les variables d'intérêt :
+fertility <- fertility[, c("iso3c", "fertility")]
+
+# Convertir les noms des pays en minuscules pour un meilleur alignement avec les données cartographiques :
+fertility$iso3c <- tolower(fertility$iso3c)
+
+### 3eme carte ####
+
+world <- map_data("world")
+
+# Jointure des données avec les données de la carte
+fertility_map <- left_join(world, fertility, by = c("region" = "Country"))
+
+# Création de la carte leaflet
+#output$map <- renderLeaflet({
+  leaflet() %>%
+    addTiles() %>%
+    setView(lng = -95, lat = 40, zoom = 3) %>%
+    addPolygons(
+      data = fertility_map,
+      fillColor = ~colorBin("YlOrRd", value = fertility, bins = 5),
+      fillOpacity = 0.8,
+      color = "#BDBDC3",
+      weight = 1,
+      group = "fertility",
+      popup = paste0("<b>Country:</b> ", region, "<br>",
+                     "<b>Fertility rate:</b> ", round(fertility, 2))
+    ) %>%
+    addLegend(
+      position = "bottomright",
+      title = "Fertility rate",
+      colors = colorBin("YlOrRd", value = fertility, bins = 5),
+      labels = c("< 2.0", "2.0 - 2.5", "2.5 - 3.0", "3.0 - 3.5", "> 3.5"),
+      group = "fertility"
+    )
+#})
+
+##### WorldCloud #####
+
+library(wordcloud2)
 
 
 

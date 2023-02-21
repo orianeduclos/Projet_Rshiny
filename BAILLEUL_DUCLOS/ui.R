@@ -7,6 +7,7 @@ library(formattable)
 library(dplyr)
 library(ggplot2)
 library(DT)
+library(leaflet)
 
 # Define UI for application that draws a histogram
 
@@ -30,6 +31,7 @@ dashboardPage(
     tabItems(
       tabItem(
         tabName = "pays",
+        
       ),
       
       tabItem(
@@ -42,7 +44,7 @@ dashboardPage(
           tabPanel(
             title = "Summary", 
             verbatimTextOutput("summary_pays")
-          )
+          ),
         )
       ),
       
@@ -65,6 +67,10 @@ dashboardPage(
           tabPanel(
             title = "Summary", 
             verbatimTextOutput("summary_france")
+          ),
+          tabPanel(
+            title = "Carte", 
+            leafletOutput("map")
           )
         )
       ),
@@ -125,7 +131,7 @@ dashboardPage(
       ), 
       
       tabItem(
-        tabName = "traitementmater",
+        tabName = "traitementmater"
       )
     )
   )
