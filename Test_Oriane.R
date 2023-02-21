@@ -1,15 +1,46 @@
 ##### Base de donnée prenom #####
-prenom <- read.csv("data/dpt2021.csv", header= TRUE, sep=';') 
+prenom <- read.csv("data/dpt2021.csv", header= TRUE, sep=';')
 View(prenom)
 
 
 ######### WorldCloud #########
 library(tidyverse)
+library(RColorBrewer)
+library(tm)  # ce package propose un ensemble de fonctions facilitant le traitement de donnees textuelles
+library(wordcloud)  # ce package permet la creation de wordcloud
 library(wordcloud2)
-cloud <- prenom |> select(annais=="2001")
-# trié sur une année dans un premier temps 
-# sur le sexe 
-# prendre prenom et frequence et tracé 
+prenom <- prenom[prenom$annais=='2020',]
+head(prenom)
+
+docs <- Corpus(VectorSource(prenom$preusuel))
+inspect(docs) # consulter l'interieur du document 
+# transformer caractere spé en espace 
+toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+docs <- tm_map(docs, toSpace, "_")
+inspect(docs)
+docs <- tm_map(docs, content_transformer(tolower)) # transformer texte en minuscule
+# Supprimer votre propre liste de mots non désirés
+inspect(docs)
+docs <- tm_map(docs, removeWords, c("prenoms rares")) 
+inspect(docs)
+
+# Supprimer les espaces vides supplémentaires
+docs <- tm_map(docs, stripWhitespace)
+
+# construction matrice 
+dtm <- TermDocumentMatrix(docs)
+m <- as.matrix(dtm)
+v <- sort(rowSums(m),decreasing=TRUE)
+d <- data.frame(word = names(v),freq=v)
+View(d)
+head(d, 10)
+
+#generer le nuage de mots
+
+set.seed(1234)
+wordcloud(words = d$word, freq = d$freq, min.freq = 50,
+          max.words=500, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
 
 
 

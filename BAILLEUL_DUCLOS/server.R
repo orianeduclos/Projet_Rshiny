@@ -4,5 +4,15 @@ library(rAmCharts)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
+  # Make the wordcloud drawing predictable during a session
+  wordcloud_rep <- repeatable(wordcloud)
+  
+  output$plot <- renderPlot({
+    v <- terms()
+    wordcloud_rep(names(v), v, scale=c(4,0.5),
+                  min.freq = input$freq, max.words=input$max,
+                  colors=brewer.pal(8, "Dark2"))
+  })
+  
   
 })
