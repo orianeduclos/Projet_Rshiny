@@ -152,7 +152,7 @@ library(WDI)
 fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2019, end = 2019)
 View(fertility)
 
-install.packages("rnaturalearth")
+#install.packages("rnaturalearth")
 library(rnaturalearth)
 library(tidyverse)
 world <- ne_countries(scale = "medium", returnclass = "sf")
