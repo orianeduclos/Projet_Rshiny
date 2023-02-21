@@ -2,6 +2,10 @@ library(shiny)
 library(colourpicker)
 library(shinydashboard)
 library(rAmCharts)
+library(tidyverse)
+library(formattable)
+library(dplyr)
+library(ggplot2)
 
 # Define UI for application that draws a histogram
 
@@ -62,7 +66,18 @@ dashboardPage(
       ), 
       
       tabItem(
-        tabName = "mater"
+        tabName = "mater", 
+        
+        tabsetPanel(
+          tabPanel(
+            title = "Présentation de la base de données", 
+            dataTableOutput("visu_bebe")
+          ), 
+          tabPanel(
+            title = "Summary", 
+            verbatimTextOutput("summary_bebe")
+          )
+        )
       )
     )
   )

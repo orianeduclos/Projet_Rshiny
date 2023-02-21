@@ -26,6 +26,7 @@ test <- taux_fecondite |>
     names_from = TIME,
     values_from = Value
   )
+
 #View(test)
 
 
