@@ -15,6 +15,8 @@ bebe <- read.table("data/bebe.txt", header = TRUE, sep = ";")
 head(bebe)
 #View(bebe)
 
+dpt2021 <- read.table("data/dpt2021.csv", header = TRUE, sep = ";")
+
 #### Manipulation BDD ####
 
 taux_fecondite$TIME <- as.numeric(taux_fecondite$TIME)
@@ -46,10 +48,10 @@ hchart(
 ### Modifications pour l'affiache de la bdd bebe ###
 
 # https://renkun-ken.github.io/formattable/ 
+
 bebe$Peridurale <- case_when(
   bebe$Peridurale == "oui" ~ TRUE,
   bebe$Peridurale == "non" ~ FALSE)
-#View(bebe)
 
 formattable(bebe, list(
   Sexe = formatter("span", style = x ~ ifelse(x == "M", 
@@ -59,6 +61,16 @@ formattable(bebe, list(
                                                style(color = "green", font.weight = "bold"), NA)),
   Peridurale = formatter("span",
                          style = x ~ style(color = ifelse(x, "green", "red")),
-                         x ~ icontext(ifelse(x, "ok", "remove"), ifelse(x, "Oui", "Non"))
-  )))
+                         x ~ icontext(ifelse(x, "ok", "remove"), ifelse(x, "Oui", "Non"))))) |> 
+  as.datatable(escape = FALSE,
+               options = list(scrollX = TRUE),
+               rownames = FALSE)
+
+
+
+
+
+
+
+
 

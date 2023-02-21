@@ -5,13 +5,76 @@ library(tidyverse)
 library(formattable)
 library(dplyr)
 library(ggplot2)
+library(DT)
 
-# Ouverture des bases de données
+##### Ouverture des bases de données #####
 
+### Base de donnée BEBE ###
 bebe <- read.table("../data/bebe.txt", header = TRUE, sep = ";")
+
+## NA ##
+manquant <- is.na(bebe)
+
+# reparage par ligne 
+coordmanquant <- which(manquant, arr.ind=TRUE)
+coordmanquant[1:6,]
+# eliminer doublon 
+unique(coordmanquant[,1])
+
+bool <- apply(is.na(bebe),1,any)
+names(bool) <- NULL
+which(bool)
+bebepropre <- na.omit(bebe)
+
+# transformation sexe en variable indicatrice
+bebe <- bebepropre |> 
+  mutate(Sexe_indicatrice = case_when(Sexe== "M" ~ "1",
+                                      Sexe=="F"~ "0" ))
+
+### Base de données prénom ###
+
+prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
+
+### Base de données taux de fécondité ###
+
+taux_fecondite <- read.csv("../data/taux_fecondite.csv", header= TRUE, sep=',')
+
+##### Partie Server #####
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
+  
+#### Partie Pays ####    
+
+  output$visu_pays <- DT::renderDataTable({
+    datatable(taux_fecondite, options = 
+                list(scrollX = TRUE, 
+                     initComplete = JS(
+                       "function(settings, json) {",
+                       "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+                       "}")))
+  })
+  
+  output$summary_pays <- renderPrint({
+    summary(taux_fecondite)
+  })
+
+  
+#### Partie France #### 
+
+  output$visu_france <- DT::renderDataTable({
+    datatable(prenom, options = 
+                list(scrollX = TRUE, 
+                     initComplete = JS(
+                       "function(settings, json) {",
+                       "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+                       "}")))
+  })
+  
+  output$summary_france <- renderPrint({
+    summary(prenom)
+  })
+  
   # Make the wordcloud drawing predictable during a session
   wordcloud_rep <- repeatable(wordcloud)
   
@@ -21,26 +84,23 @@ shinyServer(function(input, output) {
                   min.freq = input$freq, max.words=input$max,
                   colors=brewer.pal(8, "Dark2"))
   })
+
   
-  output$visu_bebe <- renderPrint({
-    
-    bebe$Peridurale <- case_when(
-      bebe$Peridurale == "oui" ~ TRUE,
-      bebe$Peridurale == "non" ~ FALSE)
-    
-    formattable(bebe, list(
-      Sexe = formatter("span", style = x ~ ifelse(x == "M", 
-                                                  style(color = "lightblue", font.weight = "bold"), 
-                                                  style(color = "lightpink", font.weight = "bold"))),
-      grade = formatter("span", style = x ~ ifelse(x == "A",
-                                                   style(color = "green", font.weight = "bold"), NA)),
-      Peridurale = formatter("span",
-                             style = x ~ style(color = ifelse(x, "green", "red")),
-                             x ~ icontext(ifelse(x, "ok", "remove"), ifelse(x, "Oui", "Non")))))
+#### Partie Maternité ####  
+ 
+   output$visu_bebe <- DT::renderDataTable({
+    datatable(bebe, options = 
+                list(scrollX = TRUE, 
+                     initComplete = JS(
+                       "function(settings, json) {",
+                       "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+                       "}")))
   })
   
   output$summary_bebe <- renderPrint({
     summary(bebe)
   })
+  
+
   
 })

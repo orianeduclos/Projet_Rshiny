@@ -148,8 +148,3 @@ View(taux_fecondite)
 
 
 
-##### WorldCloud #####
-
-library(wordcloud2)
-
-
