@@ -15,6 +15,7 @@ dashboardPage(
   dashboardHeader(title = "La natalité"),
   dashboardSidebar(
     sidebarMenu(
+      menuItem("Accueil", tabName = "accueil", icon = icon("door-open")),
       menuItem(" Dans les pays du monde", tabName = "pays", icon = icon("earth"),
         menuSubItem("Présentation BDD", tabName = "bddpays"),
         menuSubItem("À l'échelle mondiale", tabName = "monde"),
