@@ -67,10 +67,6 @@ dashboardPage(
           tabPanel(
             title = "Summary", 
             verbatimTextOutput("summary_france")
-          ),
-          tabPanel(
-            title = "Carte", 
-            leafletOutput("map")
           )
         )
       ),
@@ -107,7 +103,9 @@ dashboardPage(
         )
           ),
         tabPanel(
-          title = "BLABLA")
+          title = "Carte", 
+          leafletOutput("map")
+          )
         )
       ), 
       
