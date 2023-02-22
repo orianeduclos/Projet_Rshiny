@@ -28,20 +28,37 @@ output:
 
 # Introduction 
 
-# Etude des naissances
+## Pourquoi avons-nous choisi de travailler sur les naissances ? 
 
-## Création jeu de donnée 
+Les naissances est un sujet très intéressant et qui peut présenter énormément de possibilités de traitements visuels : cartes, régression linéaire, graphiques...
 
-### Base de donnée etat_civil
+## À quoi sert notre application ? 
 
-### Base de donnée bebe 
+Notre application se veut tout d'abord intercative : on veut que l'utilisateur puisse avoir les informations qu'il veut quand il le souhaite 
+Elle se veut également simple d'utilisation 
+Nous voulions traiter les naissances à différentes échelles pour rendre compte de la différence 
 
-Il s'agit d'une base de donnée que nous avons utilisé dans le cadre du cours de Logiciel avancé avec Nicolas Jegou. Celle ci étoffe notre étude en completant notre base de données etat_civil. Nous avons de nouvelle varaible pertinante en ce qui concerne le poids, la taille de la mère et du bébé par exemple. Varaible que nous n'avons pas dans la base de donnée etat_civil. 
+
+## Présentation des différentes bases de données
+
+### Base de données WDI
+
+
+
+### Base de données etat_civil
+
+### Base de données bebe 
+
+Il s'agit d'une base de donnée que nous avons utilisé dans le cadre du cours de Logiciel avancé avec Nicolas Jegou. Celle ci étoffe notre étude en completant notre base de données etat_civil. Nous avons de nouvelle variable pertinantes en ce qui concerne le poids, la taille de la mère et du bébé par exemple. Variable que nous n'avons pas dans la base de donnée etat_civil. 
 
 **Tri de bebe** : Valeur manquante 
 Nous avons decider de faire un tri sur les individus non totalement renseigné et d'utiliser tableau sans NA
 
-### Base de donnée taux_fecondité
+### Base de données taux_fecondité
+
+La base de données taux de fécondité 
+
+# Etude des naissances
 
 ## Regression 
 
@@ -71,8 +88,14 @@ Avant d'estimer les paramêtres, nous calculons la matrice de corrélation et no
 
 ## Utilisation de git 
 
-## Repartition de tache 
+## Répartition des tâches
 
-## Notre resentie
+## Notre ressenti
+
+## Difficultés rencontrées
+
+Margaux : utilisation du package formattable, association avec le paxkage DT qui marchait très bien dans ma console mais impossible de le faire marcher dans l'application à cause d'une erreur html
 
 # Conlusion 
+
+Pour conclure, cela a été un vrai plaisir de travailler sur ce projet. 
