@@ -8,6 +8,7 @@ library(dplyr)
 library(ggplot2)
 library(DT)
 library(leaflet)
+library(highcharter)
 
 # Define UI for application that draws a histogram
 
@@ -15,6 +16,7 @@ dashboardPage(
   dashboardHeader(title = "La natalité"),
   dashboardSidebar(
     sidebarMenu(
+      menuItem("Accueil", tabName = "accueil", icon = icon("door-open")),
       menuItem(" Dans les pays du monde", tabName = "pays", icon = icon("earth"),
         menuSubItem("Présentation BDD", tabName = "bddpays"),
         menuSubItem("À l'échelle mondiale", tabName = "monde"),
@@ -49,7 +51,17 @@ dashboardPage(
       ),
       
       tabItem(
-        tabName = "traitementpays",
+        tabName = "monde",
+        tabsetPanel(
+          tabPanel(
+            title = "Carte", 
+            leafletOutput("map")
+          ), 
+          tabPanel(
+            title = "Graphique sur les pays", 
+            highchartOutput("graphique_pays")
+          )
+        )
       ),
       
       tabItem(
@@ -67,10 +79,6 @@ dashboardPage(
           tabPanel(
             title = "Summary", 
             verbatimTextOutput("summary_france")
-          ),
-          tabPanel(
-            title = "Carte", 
-            leafletOutput("map")
           )
         )
       ),
@@ -105,9 +113,7 @@ dashboardPage(
             plotOutput("wordcloud")
           )
         )
-          ),
-        tabPanel(
-          title = "BLABLA")
+          )
         )
       ), 
       
