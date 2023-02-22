@@ -5,6 +5,7 @@ library(formattable)
 library(dplyr)
 library(ggplot2)
 library(rAmCharts)
+library(highcharter)
 
 #### BDD ####
 

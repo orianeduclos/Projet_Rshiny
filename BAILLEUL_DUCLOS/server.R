@@ -7,6 +7,7 @@ library(dplyr)
 library(ggplot2)
 library(DT)
 library(leaflet)
+library(highcharter)
 
 ##### Ouverture des bases de données #####
 
@@ -39,6 +40,10 @@ prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
 ### Base de données taux de fécondité ###
 
 taux_fecondite <- read.csv("../data/taux_fecondite.csv", header= TRUE, sep=',')
+taux_fecondite$TIME <- as.numeric(taux_fecondite$TIME)
+
+### Base de données taux de fertilité ###
+
 library(WDI)
 
 fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2019, end = 2019)
@@ -77,8 +82,13 @@ shinyServer(function(input, output) {
   output$map <- renderLeaflet({
     leaflet() |> 
       addTiles()
-      
-
+  })
+  
+  output$graphique_pays <- renderHighchart({
+    hchart(
+      taux_fecondite, "line", 
+      hcaes(x = TIME, y =  Value, group = LOCATION)
+    )
   })
   
 #### Partie France #### 
