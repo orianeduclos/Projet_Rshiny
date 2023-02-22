@@ -8,6 +8,8 @@ library(ggplot2)
 library(DT)
 library(leaflet)
 library(highcharter)
+library(WDI) # package qui nous permet d'importer fertility
+library(rnaturalearth) # package utilisé pour la carte 
 
 ##### Ouverture des bases de données #####
 
@@ -44,17 +46,15 @@ taux_fecondite$TIME <- as.numeric(taux_fecondite$TIME)
 
 ### Base de données taux de fertilité ###
 
-library(WDI)
 
+#### Code pour la carte taux de fertilité dans le monde ####
 fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2019, end = 2019)
-dim(fertility)
-world <- map_data("world")
-dim(world)
 
-# Jointure des données avec les données de la carte
-fertility_map <- left_join(world, fertility, by = c("region" = "country"))
-head(fertility_map)
+world <- ne_countries(scale = "medium", returnclass = "sf")
+world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
+head(world_fertility)
 
+pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
 
 
 ##### Partie Server #####
@@ -81,7 +81,31 @@ shinyServer(function(input, output) {
   # Création de la carte leaflet
   output$map <- renderLeaflet({
     leaflet() |> 
-      addTiles()
+      setView(lng = -95, lat = 40, zoom = 3) %>%
+      addTiles() |> 
+      addPolygons(data = world_fertility, 
+                  label = ~ world_fertility$name_sort,
+                  opacity= 1,
+                  dashArray = "2",
+                  fillColor = ~pal(SP.DYN.TFRT.IN),
+                  fillOpacity = 0.8, 
+                  color = "#BDBDC3",
+                  highlightOptions = highlightOptions(color = "#666", weight = 2, dashArray = "", fillOpacity = 0.7, bringToFront = TRUE),
+                  weight = 1,
+                  popup = paste0("<b>Country:</b> ",world_fertility$name_sort, "<br>",
+                                 "<b>Fertility rate:</b> ", round(world_fertility$SP.DYN.TFRT.IN, 2))
+      ) |> 
+      addLegend(pal = pal, 
+                values = world_fertility$SP.DYN.TFRT.IN, 
+                opacity = 0.7, 
+                title = "Taux de fécondité") |> 
+      # Ajout d'un rectangle à la main sur la france 
+      addRectangles(
+        lng1 = -5.11, lat1 = 52.10,
+        lng2 = 10.92, lat2 = 40.25,
+        color = "green",
+        popup = "France",
+        fill = FALSE)
   })
   
   output$graphique_pays <- renderHighchart({

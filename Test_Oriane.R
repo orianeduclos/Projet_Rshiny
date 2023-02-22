@@ -156,6 +156,7 @@ View(fertility)
 library(rnaturalearth)
 library(tidyverse)
 world <- ne_countries(scale = "medium", returnclass = "sf")
+View(world)
 world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
 
 library(leaflet)
