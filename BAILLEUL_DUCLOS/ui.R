@@ -9,6 +9,8 @@ library(ggplot2)
 library(DT)
 library(leaflet)
 library(highcharter)
+library(WDI) # package qui nous permet d'importer fertility
+library(rnaturalearth) # package utilisé pour la carte 
 
 ### Base de donnée BEBE ###
 bebe <- read.table("../data/bebe.txt", header = TRUE, sep = ";")
@@ -31,6 +33,12 @@ bebepropre <- na.omit(bebe)
 bebe <- bebepropre |> 
   mutate(Sexe_indicatrice = case_when(Sexe== "M" ~ "1",
                                       Sexe=="F"~ "0" ))
+
+#### Code pour la carte taux de fertilité dans le monde ####
+fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2017, end = 2019)
+
+world <- ne_countries(scale = "medium", returnclass = "sf")
+world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
 
 # Define UI for application that draws a histogram
 
@@ -77,6 +85,9 @@ dashboardPage(
         tabsetPanel(
           tabPanel(
             title = "Carte", 
+            sidebarPanel(
+              selectInput(inputId = "Year", label = "year", choices = unique(world_fertility$year))
+            ),
             leafletOutput("map")
           ), 
           tabPanel(
