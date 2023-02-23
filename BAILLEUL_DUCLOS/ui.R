@@ -26,7 +26,7 @@ dashboardPage(
         menuSubItem("Traitement", tabName = "traitementfrance")),
       menuItem(" Dans une maternité", tabName = "mater", icon = icon("baby"),
         menuSubItem("Présentation BDD", tabName = "bddmater"), 
-        menuSubItem("Traitement", tabName = "traitementmater"))
+        menuSubItem("Régression", tabName = "regressionmater"))
     )
   ),
   dashboardBody(
@@ -137,7 +137,29 @@ dashboardPage(
       ), 
       
       tabItem(
-        tabName = "traitementmater"
+        tabName = "regressionmater", 
+        tabsetPanel(
+          tabPanel(
+            title = "Régression sortie", 
+            sidebarLayout(
+              sidebarPanel(
+                p("Select the inputs for the Dependent Variable"),
+                selectInput(inputId = "DepVar", label = "Dependent Variables", multiple = FALSE, choices = list("PoidsBB", "TailleBB")),
+                p("Select the inputs for the Independent Variable"),
+                checkboxGroupInput(inputId = "IndVar", label = "Independent Variables", choices = colnames(data), selected = "TailleBB")
+              ),
+              mainPanel(
+                verbatimTextOutput(outputId = "RegSum"),
+                verbatimTextOutput(outputId = "IndPrint"),
+                verbatimTextOutput(outputId = "DepPrint"),
+              )
+            )
+          ), 
+          tabPanel(
+            title = "Régression graphique", 
+            plotOutput("rl")
+          )
+        )
       )
     )
   )
