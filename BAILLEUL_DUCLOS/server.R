@@ -48,11 +48,14 @@ taux_fecondite$TIME <- as.numeric(taux_fecondite$TIME)
 
 
 #### Code pour la carte taux de fertilité dans le monde ####
-fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2019, end = 2019)
+fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2017, end = 2019)
+
 
 world <- ne_countries(scale = "medium", returnclass = "sf")
 world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
 head(world_fertility)
+
+
 
 pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
 
@@ -63,6 +66,15 @@ pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
 shinyServer(function(input, output) {
   
 #### Partie Pays ####    
+  
+  # Reactivité de la carte en fonction des années 
+  fertility_reactive <- reactive({
+    subset(
+      world_fertility, 
+      year == input$year
+    )
+  })
+  
 
   output$visu_pays <- DT::renderDataTable({
     datatable(taux_fecondite, options = 
@@ -77,14 +89,14 @@ shinyServer(function(input, output) {
     summary(taux_fecondite)
     
   })
-
+ 
   # Création de la carte leaflet
   output$map <- renderLeaflet({
     leaflet() |> 
       setView(lng = -95, lat = 40, zoom = 3) %>%
       addTiles() |> 
-      addPolygons(data = world_fertility, 
-                  label = ~ world_fertility$name_sort,
+      addPolygons(data = fertility_reactive(), 
+                  label = ~ fertility_reactive()$name_sort,
                   opacity= 1,
                   dashArray = "2",
                   fillColor = ~pal(SP.DYN.TFRT.IN),
@@ -92,11 +104,11 @@ shinyServer(function(input, output) {
                   color = "#BDBDC3",
                   highlightOptions = highlightOptions(color = "#666", weight = 2, dashArray = "", fillOpacity = 0.7, bringToFront = TRUE),
                   weight = 1,
-                  popup = paste0("<b>Country:</b> ",world_fertility$name_sort, "<br>",
-                                 "<b>Fertility rate:</b> ", round(world_fertility$SP.DYN.TFRT.IN, 2))
+                  popup = paste0("<b>Country:</b> ",fertility_reactive()$name_sort, "<br>",
+                                 "<b>Fertility rate:</b> ", round(fertility_reactive()$SP.DYN.TFRT.IN, 2))
       ) |> 
       addLegend(pal = pal, 
-                values = world_fertility$SP.DYN.TFRT.IN, 
+                values = fertility_reactive()$SP.DYN.TFRT.IN, 
                 opacity = 0.7, 
                 title = "Taux de fécondité") |> 
       # Ajout d'un rectangle à la main sur la france 
