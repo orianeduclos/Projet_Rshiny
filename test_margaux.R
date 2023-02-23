@@ -31,8 +31,8 @@ test <- taux_fecondite |>
     values_from = Value
   )
 
-#View(test)
-
+taux_fecondite$LOCATION <- as.factor(taux_fecondite$LOCATION)
+levels(taux_fecondite$LOCATION) <- c("Argentine", "Australie", "Autriche", "Belgique", "Bulgarie", "Brésil", "Canada", "Suisse", "Chili", "Chine", "Colombie", "Costa Rica", "Chypre", "République Tchèque", "Allemagne", "Danemark", "Espagne", "Estonie", "États-Unis", "Finlande", "France", "Royaume-Uni", "Grèce", "Croatie", "Hongrie", "Indonésie", "Inde", "Irlande", "Islande", "Italie", "Japon", "Corée", "Lituanie", "Luxembourg", "Lettonie", "Mexique", "Malte", "Pays-Bas", "Norvège", "Nouvelle Zélande", "Pérou", "Pologne", "")                        # Finir       
 
 #### Graphiques ####
 
@@ -41,6 +41,7 @@ hchart(
   taux_fecondite, "line", 
   hcaes(x = TIME, y =  Value, group = LOCATION)
 )
+
 
 # Faire un onglet où on peut sélectionner les pays qu'on veut 
 
