@@ -44,7 +44,6 @@ ui <- fluidPage(
   # Sidebar contenant les filtres pour la variable explicative
   sidebarLayout(
     sidebarPanel(
-      radioButtons(inputId = "idRadio", label = "Select one", choices = c("AgedelaMere", "Nbsem ", "PoidsMere"), selected = NULL)
       selectInput("variable", "Variable explicative", choices = c("AgedelaMere", "Nbsem ", "PoidsMere"), selected = NULL)
     ),
     

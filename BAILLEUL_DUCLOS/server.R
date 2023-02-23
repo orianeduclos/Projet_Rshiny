@@ -14,7 +14,7 @@ library(rnaturalearth) # package utilisé pour la carte
 ##### Ouverture des bases de données #####
 
 ### Base de donnée BEBE ###
-bebe <- read.table("data/bebe.txt", header = TRUE, sep = ";")
+bebe <- read.table("../data/bebe.txt", header = TRUE, sep = ";")
 
 ## NA ##
 manquant <- is.na(bebe)
@@ -37,11 +37,11 @@ bebe <- bebepropre |>
 
 ### Base de données prénom ###
 
-prenom <- read.csv("data/dpt2021.csv", header= TRUE, sep=';')
+prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
 
 ### Base de données taux de fécondité ###
 
-taux_fecondite <- read.csv("data/taux_fecondite.csv", header= TRUE, sep=',')
+taux_fecondite <- read.csv("../data/taux_fecondite.csv", header= TRUE, sep=',')
 taux_fecondite$TIME <- as.numeric(taux_fecondite$TIME)
 
 ### Base de données taux de fertilité ###
