@@ -10,6 +10,28 @@ library(DT)
 library(leaflet)
 library(highcharter)
 
+### Base de donnée BEBE ###
+bebe <- read.table("../data/bebe.txt", header = TRUE, sep = ";")
+
+## NA ##
+manquant <- is.na(bebe)
+
+# reparage par ligne 
+coordmanquant <- which(manquant, arr.ind=TRUE)
+coordmanquant[1:6,]
+# eliminer doublon 
+unique(coordmanquant[,1])
+
+bool <- apply(is.na(bebe),1,any)
+names(bool) <- NULL
+which(bool)
+bebepropre <- na.omit(bebe)
+
+# transformation sexe en variable indicatrice
+bebe <- bebepropre |> 
+  mutate(Sexe_indicatrice = case_when(Sexe== "M" ~ "1",
+                                      Sexe=="F"~ "0" ))
+
 # Define UI for application that draws a histogram
 
 dashboardPage(
@@ -146,7 +168,7 @@ dashboardPage(
                 p("Select the inputs for the Dependent Variable"),
                 selectInput(inputId = "DepVar", label = "Dependent Variables", multiple = FALSE, choices = list("PoidsBB", "TailleBB")),
                 p("Select the inputs for the Independent Variable"),
-                checkboxGroupInput(inputId = "IndVar", label = "Independent Variables", choices = colnames(data), selected = "TailleBB")
+                checkboxGroupInput(inputId = "IndVar", label = "Independent Variables", choices = colnames(bebe), selected = "TailleBB")
               ),
               mainPanel(
                 verbatimTextOutput(outputId = "RegSum"),

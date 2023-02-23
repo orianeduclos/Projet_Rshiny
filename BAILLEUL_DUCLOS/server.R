@@ -157,14 +157,14 @@ shinyServer(function(input, output) {
   })
   
   lm1 <- reactive({
-    lm(reformulate(input$IndVar, input$DepVar), data = data)
+    lm(reformulate(input$IndVar, input$DepVar), data = bebe)
   })
   
   output$IndPrint <- renderPrint({input$IndVar})
   output$RegSum <- renderPrint({summary(lm1())})
   
   output$rl <- renderPlot({
-    ggplot(data, aes(x = PoidsBB, y = TailleBB)) + 
+    ggplot(bebe, aes(x = PoidsBB, y = TailleBB)) + 
       geom_point()+
       geom_smooth(method="lm")
   })
