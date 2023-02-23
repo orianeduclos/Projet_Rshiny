@@ -55,11 +55,7 @@ dashboardPage(
         tabsetPanel(
           tabPanel(
             title = "Carte", 
-            sidebarPanel(
-              selectInput("year", "Choisissez une année :", choices = unique(world_fertility$year))
-            ),
-            leafletOutput("map"),
-            box(p("blabldhiahdazdgjhdfgefghezubhebgjbgjzebfjzefbjbfgjqefj"))
+            leafletOutput("map")
           ), 
           tabPanel(
             title = "Graphique sur les pays", 
