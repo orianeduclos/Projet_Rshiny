@@ -68,7 +68,7 @@ formattable(bebe, list(
   as.datatable(escape = FALSE,
                options = list(scrollX = TRUE),
                rownames = FALSE)
-
+# formattableOutput() dans ui et renderFormattable() dans server
 
 
 
