@@ -5,7 +5,7 @@ library(dplyr)
 
 
 #### Base de donnée BEBE
-bebe <- read.csv("~/MAS/SEMESTRE 2/Projet_Rshiny/data/bebe.txt", sep=";")
+bebe <- read.csv("../data/bebe.txt", sep=";")
 head(bebe)
 #View(bebe)
 dim(bebe)
