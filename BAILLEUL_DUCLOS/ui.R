@@ -45,7 +45,8 @@ head(world_fertility)
 # Define UI for application that draws a histogram
 
 dashboardPage(
-  dashboardHeader(title = "La natalité"),
+  dashboardHeader(title = "La natalité 👶", 
+                  dropdownMenu(type="message", messageItem(from = "Margaux et Oriane", message="Bienvenue sur notre application 👶",icon=icon("envelope-open"), time = "Now"))),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Accueil", tabName = "accueil", icon = icon("door-open")),
