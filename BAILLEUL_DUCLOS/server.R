@@ -121,6 +121,11 @@ shinyServer(function(input, output) {
         fill = FALSE)
   })
   
+  # Texte en dessous carte 
+  output$texte_carte <- renderText({
+    paste("taux de fertilité",round(mean(fertility_reactive()$SP.DYN.TFRT.IN, na.rm=TRUE),2))
+  })
+  
   # Graphique représentant tous les pays 
   output$graphique_pays <- renderHighchart({
     hchart(

@@ -96,7 +96,8 @@ dashboardPage(skin='purple',
             sidebarPanel(
               selectInput(inputId = "Year", label = "year", choices = unique(world_fertility$year))
             ),
-            leafletOutput("map")
+            leafletOutput("map"),
+            textOutput("texte_carte")
           ), 
           tabPanel(
             title = "Graphique sur les pays", 
