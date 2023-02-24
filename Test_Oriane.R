@@ -106,6 +106,9 @@ bebenew <- bebepropre |>
   mutate(Sexe_indicatrice = case_when(Sexe== "M" ~ "1",
                                       Sexe=="F"~ "0" ))
 
+head(bebenew)
+### Belle table 
+library(sparkline)
 
 ###### Regression ######
 
@@ -150,7 +153,7 @@ install.packages("WDI")
 library(WDI)
 
 fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2019, end = 2019)
-View(fertility)
+
 
 #install.packages("rnaturalearth")
 library(rnaturalearth)
@@ -159,6 +162,8 @@ world <- ne_countries(scale = "medium", returnclass = "sf")
 View(world)
 world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
 
+
+### Affichage en dynamique 
 library(leaflet)
 
 pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)

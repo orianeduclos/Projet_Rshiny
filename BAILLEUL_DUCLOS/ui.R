@@ -37,8 +37,10 @@ bebe <- bebepropre |>
 #### Code pour la carte taux de fertilité dans le monde ####
 fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2017, end = 2019)
 
+
 world <- ne_countries(scale = "medium", returnclass = "sf")
 world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
+head(world_fertility)
 
 # Define UI for application that draws a histogram
 
