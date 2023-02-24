@@ -50,7 +50,7 @@ dashboardPage(
       menuItem(" Dans les pays du monde", tabName = "pays", icon = icon("earth"),
         menuSubItem("Présentation BDD", tabName = "bddpays"),
         menuSubItem("À l'échelle mondiale", tabName = "monde"),
-        menuSubItem("Pour seulement qql pays", tabName = "qqlpays")),
+        menuSubItem("Zoom sur les continents", tabName = "qqlpays")),
       menuItem(" En France", tabName = "france", icon = icon("location-dot"),
         menuSubItem("Présentation BDD", tabName = "bddfrance"), 
         menuSubItem("Traitement", tabName = "traitementfrance")),
