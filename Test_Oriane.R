@@ -107,8 +107,23 @@ bebenew <- bebepropre |>
                                       Sexe=="F"~ "0" ))
 
 head(bebenew)
-### Belle table 
+### Belle table avec boxplot en bas de la page 
 library(sparkline)
+
+library(sparkline)
+library(reactable)
+library(reactablefmtr)
+bebenew %>% 
+  reactable(theme =  flatly(),
+    defaultPageSize = 5,
+    defaultColDef = colDef(footer = function(values) {
+      if (!is.numeric(values)) return()
+      sparkline(values, type = "box", width = 100, height = 30)
+    }))
+
+colnames(bebenew)
+
+
 
 ###### Regression ######
 
@@ -161,9 +176,23 @@ library(tidyverse)
 world <- ne_countries(scale = "medium", returnclass = "sf")
 View(world)
 world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
+View(world_fertility)
+
+### Affichage en dynamique ###
+
+library(sparkline)
+library(reactable)
+world_fertility %>% 
+  reactable(
+    defaultPageSize = 5,
+    defaultColDef = colDef(footer = function(values) {
+      if (!is.numeric(values)) return()
+      sparkline(values, type = "box", width = 100, height = 30)
+    })
+  )
 
 
-### Affichage en dynamique 
+
 library(leaflet)
 
 pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
