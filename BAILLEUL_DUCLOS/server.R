@@ -91,7 +91,6 @@ shinyServer(function(input, output) {
   # Création de la carte leaflet
   output$map <- renderLeaflet({
     leaflet() |> 
-      setView(lng = -95, lat = 40, zoom = 3) %>%
       addTiles() |> 
       addPolygons(data = fertility_reactive(), 
                   label = ~ fertility_reactive()$name_sort,
