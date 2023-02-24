@@ -165,6 +165,7 @@ shinyServer(function(input, output) {
     summary(bebe)
   })
   
+  
   lm1 <- reactive({
     lm(reformulate(input$IndVar, input$DepVar), data = bebe)
   })
