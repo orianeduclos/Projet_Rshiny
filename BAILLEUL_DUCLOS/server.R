@@ -43,6 +43,9 @@ prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
 
 taux_fecondite <- read.csv("../data/taux_fecondite.csv", header= TRUE, sep=',')
 taux_fecondite$TIME <- as.numeric(taux_fecondite$TIME)
+taux_fecondite$LOCATION <- as.factor(taux_fecondite$LOCATION)
+levels(taux_fecondite$LOCATION) <- c("Argentine", "Australie", "Autriche", "Belgique", "Bulgarie", "Brésil", "Canada", "Suisse", "Chili", "Chine", "Colombie", "Costa Rica", "Chypre", "République Tchèque", "Allemagne", "Danemark", "Espagne", "Estonie", "Union Européenne", "Finlande", "France", "Royaume-Uni", "Grèce", "Croatie", "Hongrie", "Indonésie", "Inde", "Irlande", "Islande", "Israël", "Italie",  "Japon", "Corée", "Lituanie", "Luxembourg", "Lettonie", "Mexique", "Malte", "Pays-Bas", "Norvège", "Nouvelle Zélande", "OAVG", "Pérou", "Pologne", "Portugal", "Roumanie", "Russie", "Arabie Saoudite", "Slovaquie", "Slovénie", "Suède", "Turquie", "États-Unis", "Afrique du Sud")       
+
 
 ### Base de données taux de fertilité ###
 

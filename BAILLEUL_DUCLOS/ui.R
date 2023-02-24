@@ -43,8 +43,8 @@ world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
 # Define UI for application that draws a histogram
 
 dashboardPage(
-  dashboardHeader(title = "La natalité", 
-                  dropdownMenu(type="message", messageItem(from="Notification",message="Bienvenue sur notre application!",icon=icon("envelope-open")))),
+  dashboardHeader(title = "La natalité 👶", 
+                  dropdownMenu(type="message", messageItem(from = "Margaux et Oriane", message="Bienvenue sur notre application 👶",icon=icon("envelope-open"), time = "Now"))),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Accueil", tabName = "accueil", icon = icon("door-open")),
