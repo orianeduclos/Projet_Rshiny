@@ -10,6 +10,7 @@ library(leaflet)
 library(highcharter)
 library(WDI) # package qui nous permet d'importer fertility
 library(rnaturalearth) # package utilisé pour la carte 
+library(plotly)
 
 ##### Ouverture des bases de données #####
 
@@ -120,11 +121,19 @@ shinyServer(function(input, output) {
         fill = FALSE)
   })
   
+  # Graphique représentant tous les pays 
   output$graphique_pays <- renderHighchart({
     hchart(
       taux_fecondite, "line", 
       hcaes(x = TIME, y =  Value, group = LOCATION)
     )
+  })
+  
+  # Graphique dans lequel on peut choisir le pays 
+  output$graphique_pays_indiv <- renderPlot({
+    df <- taux_fecondite |>  dplyr::filter(LOCATION==input$pays_seul)
+    ggplot(df)+aes(x=TIME,y=Value)+
+      geom_point()+geom_smooth()+theme_bw()
   })
   
 #### Partie France #### 

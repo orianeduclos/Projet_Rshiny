@@ -12,7 +12,14 @@ library(highcharter)
 library(WDI) # package qui nous permet d'importer fertility
 library(rnaturalearth) # package utilisé pour la carte 
 library(bslib)
+library(plotly)
 
+### Base de données taux de fécondité ###
+
+taux_fecondite <- read.csv("../data/taux_fecondite.csv", header= TRUE, sep=',')
+taux_fecondite$TIME <- as.numeric(taux_fecondite$TIME)
+taux_fecondite$LOCATION <- as.factor(taux_fecondite$LOCATION)
+levels(taux_fecondite$LOCATION) <- c("Argentine", "Australie", "Autriche", "Belgique", "Bulgarie", "Brésil", "Canada", "Suisse", "Chili", "Chine", "Colombie", "Costa Rica", "Chypre", "République Tchèque", "Allemagne", "Danemark", "Espagne", "Estonie", "Union Européenne", "Finlande", "France", "Royaume-Uni", "Grèce", "Croatie", "Hongrie", "Indonésie", "Inde", "Irlande", "Islande", "Israël", "Italie",  "Japon", "Corée", "Lituanie", "Luxembourg", "Lettonie", "Mexique", "Malte", "Pays-Bas", "Norvège", "Nouvelle Zélande", "OAVG", "Pérou", "Pologne", "Portugal", "Roumanie", "Russie", "Arabie Saoudite", "Slovaquie", "Slovénie", "Suède", "Turquie", "États-Unis", "Afrique du Sud")       
 
 
 ### Base de donnée BEBE ###
@@ -68,11 +75,6 @@ dashboardPage(skin='purple',
   dashboardBody(
     tabItems(
       tabItem(
-        tabName = "pays",
-        
-      ),
-      
-      tabItem(
         tabName = "bddpays",
         tabsetPanel(
           tabPanel(
@@ -99,12 +101,15 @@ dashboardPage(skin='purple',
           tabPanel(
             title = "Graphique sur les pays", 
             highchartOutput("graphique_pays")
+          ), 
+          tabPanel(
+            title = "Graphique sur un pays", 
+            sidebarPanel(
+              selectInput(inputId = "pays_seul", label = "Choisissez un pays", choices = unique(taux_fecondite$LOCATION))
+            ),
+            plotOutput("graphique_pays_indiv")
           )
         )
-      ),
-      
-      tabItem(
-        tabName = "france",
       ),
       
       tabItem(
@@ -155,11 +160,7 @@ dashboardPage(skin='purple',
           )
         )
       ), 
-      
-      tabItem(
-        tabName = "mater",
-      ),
-      
+
       tabItem(
         tabName = "bddmater", 
         

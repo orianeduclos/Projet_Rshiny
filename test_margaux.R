@@ -6,6 +6,7 @@ library(dplyr)
 library(ggplot2)
 library(rAmCharts)
 library(highcharter)
+library(plotly)
 
 #### BDD ####
 
@@ -43,6 +44,33 @@ hchart(
   taux_fecondite, "line", 
   hcaes(x = TIME, y =  Value, group = LOCATION)
 )
+
+hchart(
+  taux_fecondite, "line", 
+  hcaes(x = TIME, y =  Value, group = LOCATION)
+)
+
+df <- reactive({
+  pays <- new.env()
+  getSymbols(
+    input$choixpays, 
+    env = pays,
+    do.call(merge, lapply(pays, ))
+  )
+})
+
+output$graphpaysseul <- renderPlot({
+  ggplot(df(), aes(x = TIME, y =  Value, group = LOCATION))
+})
+
+data_base1 <- data_base %>% dplyr::filter(Equipe==input$varclub)
+data_base$EfficaciteTirEquipe[which(data_base$Equipe==input$varclub)]
+ggplot(data_base1)+aes(x=Annee,y=EfficaciteTirEquipe)+
+  geom_point()+geom_smooth()+theme_bw()+
+  ggtitle(paste("Evolution de l'efficacité de Tirs de l'équipe",input$varclub))+theme(plot.title = element_text(hjust = 0.45))
+
+
+# The dynamically-generated user panel
 
 
 # Faire un onglet où on peut sélectionner les pays qu'on veut 

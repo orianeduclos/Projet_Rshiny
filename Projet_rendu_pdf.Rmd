@@ -97,6 +97,7 @@ Avant d'estimer les paramêtres, nous calculons la matrice de corrélation et no
 Margaux : utilisation du package formattable, association avec le package DT qui marchait très bien dans ma console mais impossible de le faire marcher dans l'application à cause d'une erreur html
 Base de données fertility, impossible de sélectionner trop d'années car trop lourd 
 NA dans la carte, on ne sait pas comment l'enlever 
+Voulait faire un bouton logout mais il fallait shiny server pro 
 
 # Conlusion 
 
