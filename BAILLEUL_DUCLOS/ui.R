@@ -11,6 +11,9 @@ library(leaflet)
 library(highcharter)
 library(WDI) # package qui nous permet d'importer fertility
 library(rnaturalearth) # package utilisé pour la carte 
+library(bslib)
+
+
 
 ### Base de donnée BEBE ###
 bebe <- read.table("../data/bebe.txt", header = TRUE, sep = ";")
@@ -44,7 +47,7 @@ head(world_fertility)
 
 # Define UI for application that draws a histogram
 
-dashboardPage(
+dashboardPage(skin='purple',
   dashboardHeader(title = "La natalité 👶", 
                   dropdownMenu(type="message", messageItem(from = "Margaux et Oriane", message="Bienvenue sur notre application 👶",icon=icon("envelope-open"), time = "Now"))),
   dashboardSidebar(

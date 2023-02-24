@@ -114,9 +114,10 @@ library(sparkline)
 library(reactable)
 library(reactablefmtr)
 bebenew %>% 
-  reactable(theme =  flatly(),
+  reactable( theme = journal(),
+             
     defaultPageSize = 5,
-    defaultColDef = colDef(footer = function(values) {
+    defaultColDef = colDef(cell = data_bars(., fill_color = viridis::magma(5), text_position = "inside-end"),footer = function(values) {
       if (!is.numeric(values)) return()
       sparkline(values, type = "box", width = 100, height = 30)
     }))
