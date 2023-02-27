@@ -86,6 +86,12 @@ $Y_{PoidsBB} = \beta0 + \beta1 X1_{AgedelaMere} + \beta2 X2_{PoidsMere} + \beta3
 
 Avant d'estimer les paramêtres, nous calculons la matrice de corrélation et nous présenterons un diagramme de dispersion de toutes les pairs de ces varaibles. Ceci permet de visualiser la relation entre la variable à expliquer et chacune des variables explicatives et de juger de la correlation entre les variables explicatives 
 
+## Worldcoud
+
+Le nuage de mots ou « wordcloud » en anglais est un outil de visualisation qui permet au travers d’une image de percevoir très rapidement quels sont les mots qui sont les plus fréquents au sein d’un texte ou un corpus de texte. L'utilisateur peut en un clic selectionner une année et observer quels sont les prénoms qui ont été le plus fréquament donnée sur cette année. Qu'est ce que son prénom à été fréquament donnée à son année de naissance ? 
+
+Wordcloud2est un widget html. Cela signifie que votre wordcloud sera sorti dans un HTMLformat.
+Nous avons décider de mettre en place un bouton qui permet à l'utilisateur de l'exporter en tant que png image. 
 
 
 # Travail en binôme 

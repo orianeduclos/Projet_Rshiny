@@ -19,6 +19,9 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("year", "Sélectionnez une année :", choices = unique(data$annais)),
+      actionButton("update", "Change")
+     
+      
     ),
     
     # Affichage du word cloud
