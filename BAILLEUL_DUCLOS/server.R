@@ -52,7 +52,7 @@ levels(taux_fecondite$LOCATION) <- c("Argentine", "Australie", "Autriche", "Belg
 
 
 #### Code pour la carte taux de fertilité dans le monde ####
-fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2017, end = 2019)
+fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2017, end = 2022)
 
 world <- ne_countries(scale = "medium", returnclass = "sf")
 world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
@@ -123,7 +123,7 @@ shinyServer(function(input, output) {
   
   # Texte en dessous carte 
   output$texte_carte <- renderText({
-    paste("taux de fertilité",round(mean(fertility_reactive()$SP.DYN.TFRT.IN, na.rm=TRUE),2))
+    paste("Le taux de fertilité dans le monde est un indicateur important de la santé démographique des populations. Il mesure le nombre moyen d'enfants qu'une femme peut espérer avoir tout au long de sa vie reproductive. En ",fertility_reactive()$year, "le taux de fertilité mondial était d'environ ",round(mean(fertility_reactive()$SP.DYN.TFRT.IN, na.rm=TRUE),2))
   })
   
   # Graphique représentant tous les pays 
