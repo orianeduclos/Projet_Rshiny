@@ -99,11 +99,11 @@ formattable(bebe, list(
                options = list(scrollX = TRUE),
                rownames = FALSE)
 
-
-
-
-
-
+p1 <- ggplot(bebe) + aes(x = ModeAccouc) + geom_histogram(stat="count")
+ggplotly(p1)
+  
+p2 <- ggplot(bebe) + aes(x = Operant) + geom_histogram(stat="count")
+ggplotly(p2)
 
 
 

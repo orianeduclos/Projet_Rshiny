@@ -191,7 +191,8 @@ shinyServer(function(input, output) {
   output$RegSum <- renderPrint({summary(lm1())})
   
   output$rl <- renderPlot({
-    ggplot(bebe, aes(x = PoidsBB, y = TailleBB)) + 
+    ggplot(bebe) + 
+      aes(x = PoidsBB, y = TailleBB) + 
       geom_point()+
       geom_smooth(method="lm")
   })
