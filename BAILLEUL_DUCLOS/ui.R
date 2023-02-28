@@ -53,7 +53,16 @@ world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
 head(world_fertility)
 
 # Define UI for application that draws a histogram
+fluidPage(
+  
+  # load custom stylesheet
+  includeCSS("www/custom.css"),
 
+  # remove shiny "red" warning messages on GUI
+  tags$style(type="text/css",
+             ".shiny-output-error { visibility: hidden; }",
+             ".shiny-output-error:before { visibility: hidden; }"
+  ),
 
 dashboardPage(skin='purple',
   dashboardHeader(title = "La natalité 👶", 
@@ -209,4 +218,4 @@ dashboardPage(skin='purple',
       )
     )
   )
-)
+))
