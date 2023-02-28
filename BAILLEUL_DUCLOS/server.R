@@ -133,7 +133,7 @@ server <- function(input, output) {
     ggplot(bebe) + 
       aes(x = PoidsBB, y = TailleBB) + 
       geom_point()+
-      geom_smooth(method="lm")
+      geom_smooth(method="loess")
   })
 
   
