@@ -14,13 +14,12 @@ ui <- fluidPage(
 
 dashboardPage(skin='purple',
   dashboardHeader(title = "La natalité 👶", 
-                  titleWidth = 90%,
                   dropdownMenu(type="message", messageItem(from = "Margaux et Oriane", message="Bienvenue sur notre application 👶",icon=icon("envelope-open"), time = "Now"))),
   dashboardSidebar(
     sidebarMenu(
       HTML(paste0(
         "<br>",
-        "<img style = 'display: block; margin-left: auto; margin-right: auto;' src='BAILLEUL_DUCLOS/www/logo_bebe.png' width = '186'>",
+        "<img style = 'display: block; margin-left: auto; margin-right: auto;' src='BAILLEUL_DUCLOS/www/logo_bebe.png'>",
         "<br>",
         "<p style = 'text-align: center;'><small>Logo bébé</small></p>",
         "<br>"
