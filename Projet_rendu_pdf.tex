@@ -1,0 +1,199 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage[]{mathpazo}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[left=2.5cm,right=2.5cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Les Naissances},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Les Naissances}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Projet de visualisation de données\\
+R Shiny\\
+Université de Rennes II : Master Mathématiques Appliquées, Statistiques}
+\author{Margaux Bailleul\\
+Oriane Duclos}
+\date{22 February, 2023}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\hypertarget{pourquoi-avons-nous-choisi-de-travailler-sur-les-naissances}{%
+\subsection{Pourquoi avons-nous choisi de travailler sur les naissances
+?}\label{pourquoi-avons-nous-choisi-de-travailler-sur-les-naissances}}
+
+Les naissances est un sujet très intéressant et qui peut présenter
+énormément de possibilités de traitements visuels : cartes, régression
+linéaire, graphiques\ldots{}
+
+\hypertarget{uxe0-quoi-sert-notre-application}{%
+\subsection{À quoi sert notre application
+?}\label{uxe0-quoi-sert-notre-application}}
+
+Notre application se veut tout d'abord intercative : on veut que
+l'utilisateur puisse avoir les informations qu'il veut quand il le
+souhaite Elle se veut également simple d'utilisation Nous voulions
+traiter les naissances à différentes échelles pour rendre compte de la
+différence
+
+\hypertarget{pruxe9sentation-des-diffuxe9rentes-bases-de-donnuxe9es}{%
+\subsection{Présentation des différentes bases de
+données}\label{pruxe9sentation-des-diffuxe9rentes-bases-de-donnuxe9es}}
+
+\hypertarget{base-de-donnuxe9es-wdi}{%
+\subsubsection{Base de données WDI}\label{base-de-donnuxe9es-wdi}}
+
+\hypertarget{base-de-donnuxe9es-etat_civil}{%
+\subsubsection{Base de données
+etat\_civil}\label{base-de-donnuxe9es-etat_civil}}
+
+\hypertarget{base-de-donnuxe9es-bebe}{%
+\subsubsection{Base de données bebe}\label{base-de-donnuxe9es-bebe}}
+
+Il s'agit d'une base de donnée que nous avons utilisé dans le cadre du
+cours de Logiciel avancé avec Nicolas Jegou. Celle ci étoffe notre étude
+en completant notre base de données etat\_civil. Nous avons de nouvelle
+variable pertinantes en ce qui concerne le poids, la taille de la mère
+et du bébé par exemple. Variable que nous n'avons pas dans la base de
+donnée etat\_civil.
+
+\textbf{Tri de bebe} : Valeur manquante Nous avons decider de faire un
+tri sur les individus non totalement renseigné et d'utiliser tableau
+sans NA
+
+\hypertarget{base-de-donnuxe9es-taux_fecondituxe9}{%
+\subsubsection{Base de données
+taux\_fecondité}\label{base-de-donnuxe9es-taux_fecondituxe9}}
+
+La base de données taux de fécondité
+
+\hypertarget{etude-des-naissances}{%
+\section{Etude des naissances}\label{etude-des-naissances}}
+
+\hypertarget{regression}{%
+\subsection{Regression}\label{regression}}
+
+Nous allons etudier le poids de naissance des bébés.
+
+Les variables sont :
+
+\begin{itemize}
+\item
+  le poids de naissance du bébé (en grammes) (\textbf{PoidsBB})
+\item
+  l'âge de la mère (\textbf{AgedeleMere})
+\item
+  le poids de la mère en ??? (\textbf{PoidsMere})
+\item
+  la taille du bébé (en centimètre) (\textbf{TailleBB})
+\item
+  Sexe du bébé (fille = 0, garçon = 1) : transformation de la variable
+  \textbf{Sexe} en varaible indicatrice
+\end{itemize}
+
+Nous considérons le modèle suivant :
+
+\(Y_{PoidsBB} = \beta0 + \beta1 X1_{AgedelaMere} + \beta2 X2_{PoidsMere} + \beta3X3_{TailleBB} + \beta4X4_{Sexe} + \epsilon\)
+
+Avant d'estimer les paramêtres, nous calculons la matrice de corrélation
+et nous présenterons un diagramme de dispersion de toutes les pairs de
+ces varaibles. Ceci permet de visualiser la relation entre la variable à
+expliquer et chacune des variables explicatives et de juger de la
+correlation entre les variables explicatives
+
+\hypertarget{travail-en-binuxf4me}{%
+\section{Travail en binôme}\label{travail-en-binuxf4me}}
+
+\hypertarget{utilisation-de-git}{%
+\subsection{Utilisation de git}\label{utilisation-de-git}}
+
+\hypertarget{ruxe9partition-des-tuxe2ches}{%
+\subsection{Répartition des tâches}\label{ruxe9partition-des-tuxe2ches}}
+
+\hypertarget{notre-ressenti}{%
+\subsection{Notre ressenti}\label{notre-ressenti}}
+
+\hypertarget{difficultuxe9s-rencontruxe9es}{%
+\subsection{Difficultés
+rencontrées}\label{difficultuxe9s-rencontruxe9es}}
+
+Margaux : utilisation du package formattable, association avec le
+paxkage DT qui marchait très bien dans ma console mais impossible de le
+faire marcher dans l'application à cause d'une erreur html
+
+\hypertarget{conlusion}{%
+\section{Conlusion}\label{conlusion}}
+
+Pour conclure, cela a été un vrai plaisir de travailler sur ce projet.
+
+\end{document}
