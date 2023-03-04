@@ -1,9 +1,11 @@
+
+
 ######### WorldCloud #########
 library(tidyverse)
 library(RColorBrewer)
 library(tm)  # ce package propose un ensemble de fonctions facilitant le traitement de donnees textuelles
 library(wordcloud)  # ce package permet la creation de wordcloud
-library(wordcloud2)
+
 library(shiny)
 
 # Data prenom
@@ -21,6 +23,14 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("year", "Sélectionnez une année :", choices = unique(data$annais)),
+      hr(),
+      sliderInput("freq",
+                  "Fréquence Minumun:",
+                  min = 1,  max = 100, value = 10),
+      sliderInput("max",
+                  "Nombre Maximal de mots:",
+                  min = 1,  max = 500,  value = 100),
+      hr(),
       actionButton("update", "Change"),
       downloadButton(outputId="export",label= "Cliquez pour sauvegarder le graphique")
       
@@ -29,7 +39,7 @@ ui <- fluidPage(
     
     # Affichage du word cloud
     mainPanel(
-      wordcloud2Output("wordcloud")
+      plotOutput("wordcloud")
     )
   )
 )
@@ -44,7 +54,7 @@ server <- function(input, output) {
   })
   
   # Générer le word cloud
-  output$wordcloud <- renderWordcloud2({
+  output$wordcloud <- renderPlot({
     ## Créer un corpus des prénoms sélectionnés
     docs <- Corpus(VectorSource(prenom_data()$preusuel))
     inspect(docs) # consulter l'interieur du document 
@@ -69,7 +79,8 @@ server <- function(input, output) {
     
     
     # Générer le word cloud
-    wordcloud(d, size = 1.5, color = "random-light", backgroundColor = "white", rotateRatio = 0.5)
+    wordcloud(words = d$word, freq = d$freq, min.freq = input$freq,
+              max.words=input$max, colors = brewer.pal(8,"Set2"), random.order=FALSE, rot.per=0)
   })
   
   
@@ -79,8 +90,8 @@ server <- function(input, output) {
     },
     content = function(file) {
       png(file)
-      
-      wordcloud(d, size = 1.5, color = "random-light", backgroundColor = "white", rotateRatio = 0.5)
+      wordcloud(words = d$word, freq = d$freq, min.freq = input$freq,
+                max.words=input$max, colors = brewer.pal(8,"Dark2"), random.order=FALSE, rot.per=0.35)
       dev.off()
     }
   )
