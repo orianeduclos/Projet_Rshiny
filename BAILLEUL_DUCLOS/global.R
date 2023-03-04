@@ -93,8 +93,6 @@ prenom_dpt <- aggregate(prenom_dpt$nombre, by=list(preusuel = prenom_dpt$preusue
 prenom_dpt <- inner_join(prenom_dpt, dpt, by = c("CODE_DEPT"))
 prenom_dpt <- sf::st_as_sf(prenom_dpt)
 
-pal <- colorNumeric(palette = "YlOrRd", domain = prenom_dpt$x)
-
 
 ## WORLD CLOUD 
 

@@ -1,64 +1,76 @@
 library(shiny)
 library(leaflet)
 library(dplyr)
+library(sf)
+
+
+if (!(require(jsonlite))) install.packages("jsonlite")
+mygeocode <- function(adresses){
+  # adresses est un vecteur contenant toutes les adresses sous forme de chaine de caracteres
+  nominatim_osm <- function(address = NULL){
+    ## details: http://wiki.openstreetmap.org/wiki/Nominatim
+    ## fonction nominatim_osm proposée par D.Kisler
+    if(suppressWarnings(is.null(address)))  return(data.frame())
+    tryCatch(
+      d <- jsonlite::fromJSON(
+        gsub('\\@addr\\@', gsub('\\s+', '\\%20', address),
+             'http://nominatim.openstreetmap.org/search/@addr@?format=json&addressdetails=0&limit=1')
+      ), error = function(c) return(data.frame())
+    )
+    if(length(d) == 0) return(data.frame())
+    return(c(as.numeric(d$lon), as.numeric(d$lat)))
+  }
+  tableau <- t(sapply(adresses,nominatim_osm))
+  colnames(tableau) <- c("lon","lat")
+  return(tableau)
+}
 
 # Importer les données
 
-library(WDI)
+dpt <- read_sf("../data/dpt")
+prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
+prenom <- prenom |> 
+  rename("CODE_DEPT" = "dpt")
+prenom_dpt <- inner_join(prenom, dpt, by = c("CODE_DEPT"))
 
-fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2019, end = 2019)
+mygeocode("France")
+France <- c(1.888334, 46.60335) 
 
 
+prenom_dpt <- aggregate(prenom_dpt$nombre, by=list(preusuel = prenom_dpt$preusuel, CODE_DEPT = prenom_dpt$CODE_DEPT), FUN=sum)
+prenom_dpt <- inner_join(prenom_dpt, dpt, by = c("CODE_DEPT"))
+prenom_dpt <- sf::st_as_sf(prenom_dpt)
 
-#install.packages("rnaturalearth")
-library(rnaturalearth)
-library(tidyverse)
-world <- ne_countries(scale = "medium", returnclass = "sf")
-world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
-head(world_fertility)
+pal <- colorNumeric(palette = "YlOrRd", domain = prenom_dpt$x)
 
-pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
 
 # Création de l'application shiny
 ui <- fluidPage(
-  leafletOutput("map")
-  
-)
+    sidebarLayout(
+      # Sidebar with a slider and selection inputs
+      sidebarPanel(
+        selectInput(inputId = "selection_bebe", label = "Choisissez un prénom", choices = unique(prenom_dpt$preusuel))
+      ),
+      # carte des bébé
+      mainPanel(
+        leafletOutput("carte_bebe_dpt")
+      )
+    )
+  )
 
 server <- function(input, output) {
   
   # Création de la carte leaflet
-  output$map <- renderLeaflet({
+  output$carte_bebe_dpt <- renderLeaflet({
     leaflet() |> 
-      setView(lng = -95, lat = 40, zoom = 3) %>%
       addTiles() |> 
-      addPolygons(data = world_fertility, 
-                  label = ~ world_fertility$name_sort,
-                  opacity= 1,
-                  dashArray = "2",
-                  fillColor = ~pal(SP.DYN.TFRT.IN),
-                  fillOpacity = 0.8, 
+      setView(lng = France[1], lat = France[2], zoom = 6) |> 
+      addPolygons(data = prenom_dpt$geometry, 
+                  fillColor = ~pal(x),
+                  fillOpacity = 0.7, 
                   color = "#BDBDC3",
-                  highlightOptions = highlightOptions(color = "#666", weight = 2, dashArray = "", fillOpacity = 0.7, bringToFront = TRUE),
-                  weight = 1,
-                  popup = paste0("<b>Country:</b> ",world_fertility$name_sort, "<br>",
-                                 "<b>Fertility rate:</b> ", round(world_fertility$SP.DYN.TFRT.IN, 2))
-                  ) |> 
-      addLegend(pal = pal, 
-                values = world_fertility$SP.DYN.TFRT.IN, 
-                opacity = 0.7, 
-                title = "Taux de fécondité") |> 
-      # Ajout d'un rectangle à la main sur la france 
-      addRectangles(
-        lng1 = -5.11, lat1 = 52.10,
-        lng2 = 10.92, lat2 = 40.25,
-        color = "green",
-        popup = "France",
-        fill = FALSE)
-      
+                  weight = 1)
   })
-  
-
 }
 
 # Lancement de l'application shiny
