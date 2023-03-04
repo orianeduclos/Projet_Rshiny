@@ -4,36 +4,6 @@ library(ggplot2)
 library(dplyr)
 
 
-#### Base de donnée BEBE
-bebe <- read.csv("../data/bebe.txt", sep=";")
-head(bebe)
-#View(bebe)
-dim(bebe)
-summary(bebe)
-
-###### NA ######
-mean(bebe$TailleBB, na.rm=TRUE)
-manquant <- is.na(bebe)
-dim(manquant)
-sum(manquant)
-
-# reparage par ligne 
-coordmanquant <- which(manquant, arr.ind=TRUE)
-coordmanquant[1:6,]
-# eliminer doublon 
-unique(coordmanquant[,1])
-
-bool <- apply(is.na(bebe),1,any)
-names(bool) <- NULL
-which(bool)
-
-library(tidyverse)
-bebepropre <- na.omit(bebe)
-
-# transformation sexe en variable indicatrice
-data <- bebepropre |> 
-  mutate(Sexe_indicatrice = case_when(Sexe== "M" ~ "1",
-                                      Sexe=="F"~ "0" ))
 
 # Création de l'application Shiny
 ui <- fluidPage(

@@ -127,7 +127,19 @@ dashboardPage(skin='purple',
             plotOutput("wordcloud")
           )
         )
-          )
+          ), 
+        tabPanel(
+          title = "Carte des bébés", 
+            sidebarLayout(
+              # Sidebar with a slider and selection inputs
+              sidebarPanel(
+                selectInput(inputId = "selection_bebe", label = "Choisissez un prénom", choices = unique(prenom_dpt$preusuel))
+              ),
+              # carte des bébé
+              mainPanel(
+              )
+            )
+        )
         )
       ), 
 
@@ -173,4 +185,5 @@ dashboardPage(skin='purple',
       )
     )
   )
-))
+)
+)

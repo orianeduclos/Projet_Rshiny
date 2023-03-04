@@ -13,8 +13,28 @@ library(WDI) # package qui nous permet d'importer fertility
 library(rnaturalearth) # package utilisé pour la carte 
 library(bslib)
 library(plotly)
+library(sf)
 
-
+if (!(require(jsonlite))) install.packages("jsonlite")
+mygeocode <- function(adresses){
+  # adresses est un vecteur contenant toutes les adresses sous forme de chaine de caracteres
+  nominatim_osm <- function(address = NULL){
+    ## details: http://wiki.openstreetmap.org/wiki/Nominatim
+    ## fonction nominatim_osm proposée par D.Kisler
+    if(suppressWarnings(is.null(address)))  return(data.frame())
+    tryCatch(
+      d <- jsonlite::fromJSON(
+        gsub('\\@addr\\@', gsub('\\s+', '\\%20', address),
+             'http://nominatim.openstreetmap.org/search/@addr@?format=json&addressdetails=0&limit=1')
+      ), error = function(c) return(data.frame())
+    )
+    if(length(d) == 0) return(data.frame())
+    return(c(as.numeric(d$lon), as.numeric(d$lat)))
+  }
+  tableau <- t(sapply(adresses,nominatim_osm))
+  colnames(tableau) <- c("lon","lat")
+  return(tableau)
+}
 
 ### Base de données taux de fécondité ###
 
@@ -59,8 +79,22 @@ head(world_fertility)
 pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
 
 ### BASE DE DONNEE PRENOM 
-prenom <- read.csv("data/dpt2021.csv", header= TRUE, sep=';')
+prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
+dpt <- read_sf("../data/dpt")
+prenom <- prenom |> 
+  rename("CODE_DEPT" = "dpt")
+prenom_dpt <- inner_join(prenom, dpt, by = c("CODE_DEPT"))
+
+mygeocode("France")
+France <- c(1.888334, 46.60335) 
+
+
+prenom_dpt <- aggregate(prenom_dpt$nombre, by=list(preusuel = prenom_dpt$preusuel, CODE_DEPT = prenom_dpt$CODE_DEPT), FUN=sum)
+prenom_dpt <- inner_join(prenom_dpt, dpt, by = c("CODE_DEPT"))
+prenom_dpt <- sf::st_as_sf(prenom_dpt)
+
+pal <- colorNumeric(palette = "YlOrRd", domain = prenom_dpt$x)
 
 
 ## WORLD CLOUD 
-nouvelle_palette <- colorPalette(c("#E9D1F2", "#C86DF2", "#B87AD3"))
+
