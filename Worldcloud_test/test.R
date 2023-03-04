@@ -2,7 +2,7 @@
 
 ######### WorldCloud #########
 library(tidyverse)
-library(RColorBrewer)
+#library(RColorBrewer)
 library(tm)  # ce package propose un ensemble de fonctions facilitant le traitement de donnees textuelles
 library(wordcloud)  # ce package permet la creation de wordcloud
 

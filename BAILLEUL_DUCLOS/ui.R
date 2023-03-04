@@ -109,17 +109,19 @@ dashboardPage(skin='purple',
         sidebarLayout(
           # Sidebar with a slider and selection inputs
           sidebarPanel(
-            selectInput("selection", "Choissisez une année:",
-                        choices = c("année")),
-            
-            actionButton("update", "Change"),
+            selectInput("year_prenom", "Sélectionnez une année :", choices = unique(prenom$annais)),
             hr(),
             sliderInput("freq",
-                        "Minimum Frequency:",
-                        min = 1,  max = 50, value = 15),
+                        "Fréquence Minumun:",
+                        min = 1,  max = 100, value = 10),
             sliderInput("max",
-                        "Maximum Number of Words:",
-                        min = 1,  max = 300,  value = 100)
+                        "Nombre Maximal de mots:",
+                        min = 1,  max = 500,  value = 100),
+            hr(),
+            actionButton("update", "Change"),
+            downloadButton(outputId="export",label= "Cliquez pour sauvegarder le graphique")
+            
+            
           ),
           
           # Show Word Cloud
