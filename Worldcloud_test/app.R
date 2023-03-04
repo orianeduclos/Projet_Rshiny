@@ -4,10 +4,12 @@ library(RColorBrewer)
 library(tm)  # ce package propose un ensemble de fonctions facilitant le traitement de donnees textuelles
 library(wordcloud)  # ce package permet la creation de wordcloud
 library(wordcloud2)
+library(shiny)
 
 # Data prenom
 
 data <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
+
 
 
 # Définir l'interface utilisateur
@@ -19,7 +21,8 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("year", "Sélectionnez une année :", choices = unique(data$annais)),
-      actionButton("update", "Change")
+      actionButton("update", "Change"),
+      downloadButton(outputId="export",label= "Cliquez pour sauvegarder le graphique")
      
       
     ),
@@ -68,6 +71,19 @@ server <- function(input, output) {
     # Générer le word cloud
     wordcloud2(d, size = 1.5, color = "random-light", backgroundColor = "white", rotateRatio = 0.5)
   })
+  
+  
+  output$export <- downloadHandler(
+    filename = function() {
+      paste("Worldcloud-", Sys.Date(), ".png", sep="")
+    },
+    content = function(file) {
+      png(file)
+      
+      wordcloud2(d, size = 1.5, color = "random-light", backgroundColor = "white", rotateRatio = 0.5)
+      dev.off()
+    }
+  )
 }
 
 # Lancer l'application Shiny

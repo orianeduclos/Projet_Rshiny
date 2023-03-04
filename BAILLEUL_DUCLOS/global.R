@@ -58,5 +58,9 @@ head(world_fertility)
 
 pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
 
-### 
-prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
+### BASE DE DONNEE PRENOM 
+prenom <- read.csv("data/dpt2021.csv", header= TRUE, sep=';')
+
+
+## WORLD CLOUD 
+nouvelle_palette <- colorPalette(c("#E9D1F2", "#C86DF2", "#B87AD3"))
