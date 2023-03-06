@@ -144,16 +144,13 @@ France <- c(1.888334, 46.60335)
 prenom_dpt <- aggregate(prenom_dpt$nombre, by=list(preusuel = prenom_dpt$preusuel, CODE_DEPT = prenom_dpt$CODE_DEPT), FUN=sum)
 prenom_dpt <- inner_join(prenom_dpt, dpt, by = c("CODE_DEPT"))
 prenom_dpt <- sf::st_as_sf(prenom_dpt)
+prenom_dpt <- st_transform(prenom_dpt, crs = 4326)
+pal <- colorNumeric(palette = "YlOrRd", domain = prenom_dpt$x)
 
-pal <- colorNumeric(palette = "YlOrRd", domain = prneom_dpt_test2$x)
-
-leaflet() |> 
-  addProviderTiles(providers$Esri.WorldImagery) |> 
+leaflet(prenom_dpt$geometry) |> 
+  addTiles() |> 
   setView(lng = France[1], lat = France[2], zoom = 6) |> 
-  addPolygons(data = prenom_dpt, 
-              fillColor = ~pal(x),
-              fillOpacity = 0.7, 
-              color = "#BDBDC3",
+  addPolygons(fillColor = ~pal(x),
               weight = 1)
 
     addPolygons(data = fertility_reactive(), 

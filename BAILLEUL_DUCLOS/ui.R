@@ -126,7 +126,7 @@ dashboardPage(skin='purple',
           
           # Show Word Cloud
           mainPanel(
-            plotOutput("wordcloud")
+            box(plotOutput("wordcloud"))
           )
         )
           ), 
