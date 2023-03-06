@@ -142,8 +142,21 @@ dashboardPage(skin='purple',
                 sidebarPanel(
                   selectInput(inputId = "selection_bebe", label = "Choisissez un prénom", choices = unique(prenom_dpt$preusuel))
                 ),
+                
                 # carte des bébé
                 mainPanel(
+                )
+              )
+            ), 
+            tabPanel(
+              title = "Prénoms au fur et à mesure des années", 
+              sidebarLayout(
+                sidebarPanel(
+                  textInput("prenom_bebe", "Prénom du bébé", value = "LAURENT")
+                ),
+                # Graphique des bébés 
+                mainPanel(
+                  plotlyOutput("plot_bebe")
                 )
               )
             )

@@ -60,7 +60,10 @@ taux_fecondite$LOCATION <- as.factor(taux_fecondite$LOCATION)
 levels(taux_fecondite$LOCATION)
 levels(taux_fecondite$LOCATION) <- c("Argentine", "Australie", "Autriche", "Belgique", "Bulgarie", "Brésil", "Canada", "Suisse", "Chili", "Chine", "Colombie", "Costa Rica", "Chypre", "République Tchèque", "Allemagne", "Danemark", "Espagne", "Estonie", "Union Européenne", "Finlande", "France", "Royaume-Uni", "Grèce", "Croatie", "Hongrie", "Indonésie", "Inde", "Irlande", "Islande", "Israël", "Italie",  "Japon", "Corée", "Lituanie", "Luxembourg", "Lettonie", "Mexique", "Malte", "Pays-Bas", "Norvège", "Nouvelle Zélande", "OAVG", "Pérou", "Pologne", "Portugal", "Roumanie", "Russie", "Arabie Saoudite", "Slovaquie", "Slovénie", "Suède", "Turquie", "États-Unis", "Afrique du Sud")       
 
-prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
+prenom <- read.csv("data/dpt2021.csv", header= TRUE, sep=';')
+
+prenom <- subset(prenom, (preusuel != "_PRENOMS_RARES") & (annais != "XXXX"))
+
 
 #### Graphiques ####
 
@@ -153,54 +156,20 @@ leaflet(prenom_dpt$geometry) |>
   addPolygons(fillColor = ~pal(x),
               weight = 1)
 
-    addPolygons(data = fertility_reactive(), 
-                label = ~ fertility_reactive()$name_sort,
-                opacity= 1,
-                dashArray = "2",
-                fillColor = ~pal(SP.DYN.TFRT.IN),
-                fillOpacity = 0.8, 
-                color = "#BDBDC3",
-                highlightOptions = highlightOptions(color = "#666", weight = 2, dashArray = "", fillOpacity = 0.7, bringToFront = TRUE),
-                weight = 1,
-                popup = paste0("<b>Country:</b> ",fertility_reactive()$name_sort, "<br>",
-                               "<b>Fertility rate:</b> ", round(fertility_reactive()$SP.DYN.TFRT.IN, 2))
-    ) |> 
-    addLegend(pal = pal, 
-              values = fertility_reactive()$SP.DYN.TFRT.IN, 
-              opacity = 0.7, 
-              title = "Taux de fécondité") 
-  
+
+prenom_graph <- prenom |> 
+  pivot_wider(
+    id_cols = preusuel,
+    names_from = annais,
+    values_from = nombre, 
+    values_fn = sum, 
+    values_fill = 0
+  )
+
+ggplot(prenom) + 
+  aes(x = annais, y = nombre) + 
+  geom_point()
 
 
 
 
-
-  addPolygons(data = world_fertility, 
-              fillColor = ~pal(SP.DYN.TFRT.IN),
-              fillOpacity = 0.7, 
-              color = "#BDBDC3",
-              weight = 1) %>%
-  addLegend(pal = pal, 
-            values = world_fertility$SP.DYN.TFRT.IN, 
-            opacity = 0.7, 
-            title = "Taux de fécondité")
-
-  
-  fertility_reactive <- reactive({
-    subset(
-      world_fertility, 
-      year == input$Year
-    )
-  })
-(data = dpt2,color=~pal(t_prev),fillOpacity = 0.6, 
-  stroke = TRUE,weight=1,
-  popup=~paste(as.character(NOM_DEPT),as.character(t_prev),sep=" : "),
-  highlightOptions = highlightOptions(color = "black", weight = 3,bringToFront = TRUE))
-  
-  
-  
-  
-  
-  
-  
-  nouvelle_palette <- colorPalette(c("#E9D1F2", "#C86DF2", "#B87AD3"))

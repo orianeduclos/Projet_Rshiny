@@ -152,6 +152,15 @@ server <- function(input, output) {
     }
   )
   
+  # Graphique sur les bébés 
+  output$plot_bebe <- renderPlotly({
+    df <- prenom_annees |>  dplyr::filter(preusuel==input$prenom_bebe)
+    p <- ggplot(df)+aes(x=annais,y=nombre)+
+      geom_point() 
+    ggplotly(p)
+  })
+  
+  
 #### Partie Maternité ####  
  
    output$visu_bebe <- DT::renderDataTable({
@@ -182,5 +191,5 @@ server <- function(input, output) {
       geom_smooth(method="loess")
   })
 
-  
+
 }

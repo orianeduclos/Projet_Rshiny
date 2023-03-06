@@ -95,6 +95,10 @@ prenom_dpt <- aggregate(prenom_dpt$nombre, by=list(preusuel = prenom_dpt$preusue
 prenom_dpt <- inner_join(prenom_dpt, dpt, by = c("CODE_DEPT"))
 prenom_dpt <- sf::st_as_sf(prenom_dpt)
 
+prenom_annees <- subset(prenom, (preusuel != "_PRENOMS_RARES") & (annais != "XXXX"))
+prenom_annees <- prenom_annees |>                                      
+  group_by(preusuel, annais) |>                       
+  summarise(nombre = sum(nombre))
 
 ## WORLD CLOUD 
 
