@@ -40,7 +40,15 @@ dashboardPage(skin='purple',
     tabItems(
       tabItem(
         tabName = "accueil",
-        h1("Bonjour")
+        h1("Bonjour"), 
+        h2("Chiffres clés"),
+        
+        fluidRow(
+          valueBoxOutput("Taux_fertilite",width=4),
+          valueBoxOutput("Age_moyen_maman_France",width=4),
+          valueBoxOutput("Nombre_semaine",width=4)),
+      
+        
         ),
       tabItem(
         tabName = "bddpays",
