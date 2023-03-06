@@ -66,7 +66,7 @@ server <- function(input, output) {
   
   # Texte en dessous carte 
   output$texte_carte <- renderText({
-    paste("Le taux de fertilité dans le monde est un indicateur important de la santé démographique des populations. Il mesure le nombre moyen d'enfants qu'une femme peut espérer avoir tout au long de sa vie reproductive. En ",fertility_reactive()$year, "le taux de fertilité mondial était d'environ ",round(mean(fertility_reactive()$SP.DYN.TFRT.IN, na.rm=TRUE),2))
+    paste("Le taux de fertilité dans le monde est un indicateur important de la santé démographique des populations. Il mesure le nombre moyen d'enfants qu'une femme peut espérer avoir tout au long de sa vie reproductive. En ", input$Year, "le taux de fertilité mondial était d'environ ",round(mean(fertility_reactive()$SP.DYN.TFRT.IN, na.rm=TRUE),2))  
   })
   
   # Graphique représentant tous les pays 
@@ -77,11 +77,21 @@ server <- function(input, output) {
     )
   })
   
+  # Texte pour les pays 
+  output$texte_plsrs_pays <- renderText({
+    paste("Nous remarquons que blabla")
+  })
+  
   # Graphique dans lequel on peut choisir le pays 
   output$graphique_pays_indiv <- renderPlot({
     df <- taux_fecondite |>  dplyr::filter(LOCATION==input$pays_seul)
     ggplot(df)+aes(x=TIME,y=Value)+
       geom_point()+geom_smooth()+theme_bw()
+  })
+  
+  # Texte pour les pays 
+  output$texte_pays_seul <- renderText({
+    paste("Nous remarquons que blabla", input$pays_seul)
   })
   
 #### Partie France #### 
