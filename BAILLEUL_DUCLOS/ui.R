@@ -206,13 +206,18 @@ dashboardPage(skin='purple',
                 mainPanel(
                   verbatimTextOutput(outputId = "RegSum"),
                   verbatimTextOutput(outputId = "IndPrint"),
-                  verbatimTextOutput(outputId = "DepPrint"),
+                  verbatimTextOutput(outputId = "DepPrint")
                 )
               )
             ), 
             tabPanel(
-              title = "Régression graphique", 
-              plotOutput("rl")
+              title = "Régression graphique",
+              
+              box(
+      title = "Analyse des corrélations des régresseurs du modèle", solidHeader=T,
+                       width = 600,height=700, collapsible = T,
+                       plotOutput("correlation")),
+              box(plotOutput("rl"))
             )
           )
         )

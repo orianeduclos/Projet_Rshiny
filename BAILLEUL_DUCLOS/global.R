@@ -20,6 +20,8 @@ library(shinyWidgets)
 library(sparkline) # pour affichage beau tableau 
 library(reactable)
 library(reactablefmtr)
+library(corrplot) # affichage matrice de correlation
+library(car)
 
 if (!(require(jsonlite))) install.packages("jsonlite")
 mygeocode <- function(adresses){

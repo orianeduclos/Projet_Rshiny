@@ -16,6 +16,8 @@ server <- function(input, output) {
   prenom_data <- reactive({
     data[data$annais == input$year_prenom, ]
   })
+
+  
 #### Partie Acceuil ####
   
   ## BANNIERE CHIFFRE CLES
@@ -215,8 +217,19 @@ server <- function(input, output) {
       geom_point()+
       geom_smooth(method="loess")
   })
+  
+  ## MATRICE DE CORRELATION DES VARIABLES DU MODELE
+  
+  output$correlation <- renderPlot({
+    myvars <- input$IndVar
+    data_matcorr <- bebe[myvars]
+    mcor <- round(cor(data_matcorr),2)
+    corrplot(mcor, type="upper", order="hclust", tl.col="black", tl.srt=45,cex.main=0.9)
+    
+  })
+  
+  
 
-  ### Regression simple
   
   ## VISUALISATION NUAGE DE POINT POUR LE MODELE SIMPLE
   output$nuage_point <- renderPlotly({
