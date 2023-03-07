@@ -109,6 +109,11 @@ server <- function(input, output) {
     summary(prenom)
   })
   
+  # Sélectionner les données en fonction de l'année choisie
+  prenom_data <- reactive({
+    prenom[prenom$annais == input$year, ]
+  })
+  
   # Générer le word cloud
   output$wordcloud <- renderPlot({
     ## Créer un corpus des prénoms sélectionnés

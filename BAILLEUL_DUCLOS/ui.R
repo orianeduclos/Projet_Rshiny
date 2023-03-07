@@ -111,10 +111,12 @@ dashboardPage(skin='purple',
             tabPanel(
               title = "Word cloud",
               #### world cloud ####
+              # Titre de la page
+              titlePanel("World cloud des prénoms en France"),
+              # Zone de sélection des années
               sidebarLayout(
-                # Sidebar with a slider and selection inputs
                 sidebarPanel(
-                  selectInput("year_prenom", "Sélectionnez une année :", choices = unique(prenom$annais)),
+                  selectInput("year", "Sélectionnez une année :", choices = unique(prenom$annais)),
                   hr(),
                   sliderInput("freq",
                               "Fréquence Minumun:",
@@ -129,9 +131,9 @@ dashboardPage(skin='purple',
                   
                 ),
                 
-                # Show Word Cloud
+                # Affichage du word cloud
                 mainPanel(
-                  box(plotOutput("wordcloud"))
+                  plotOutput("wordcloud")
                 )
               )
             ), 
