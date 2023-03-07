@@ -47,14 +47,14 @@ mygeocode <- function(adresses){
 
 ### Base de données taux de fécondité ###
 
-taux_fecondite <- read.csv("../data/taux_fecondite.csv", header= TRUE, sep=',')
+taux_fecondite <- read.csv("data/taux_fecondite.csv", header= TRUE, sep=',')
 taux_fecondite$TIME <- as.numeric(taux_fecondite$TIME)
 taux_fecondite$LOCATION <- as.factor(taux_fecondite$LOCATION)
 levels(taux_fecondite$LOCATION) <- c("Argentine", "Australie", "Autriche", "Belgique", "Bulgarie", "Brésil", "Canada", "Suisse", "Chili", "Chine", "Colombie", "Costa Rica", "Chypre", "République Tchèque", "Allemagne", "Danemark", "Espagne", "Estonie", "Union Européenne", "Finlande", "France", "Royaume-Uni", "Grèce", "Croatie", "Hongrie", "Indonésie", "Inde", "Irlande", "Islande", "Israël", "Italie",  "Japon", "Corée", "Lituanie", "Luxembourg", "Lettonie", "Mexique", "Malte", "Pays-Bas", "Norvège", "Nouvelle Zélande", "OAVG", "Pérou", "Pologne", "Portugal", "Roumanie", "Russie", "Arabie Saoudite", "Slovaquie", "Slovénie", "Suède", "Turquie", "États-Unis", "Afrique du Sud")       
 
 
 ### Base de donnée BEBE ###
-bebe <- read.table("../data/bebe.txt", header = TRUE, sep = ";")
+bebe <- read.table("data/bebe.txt", header = TRUE, sep = ";")
 
 ## NA ##
 manquant <- is.na(bebe)
@@ -88,8 +88,8 @@ head(world_fertility)
 pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
 
 ### BASE DE DONNEE PRENOM 
-prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
-dpt <- read_sf("../data/dpt")
+prenom <- read.csv("data/dpt2021.csv", header= TRUE, sep=';')
+dpt <- read_sf("data/dpt")
 prenom <- prenom |> 
   rename("CODE_DEPT" = "dpt")
 prenom_dpt <- inner_join(prenom, dpt, by = c("CODE_DEPT"))
