@@ -196,6 +196,7 @@ server <- function(input, output) {
                        "}")))
   })
   
+  
   output$summary_bebe <- renderPrint({
     summary(bebe)
   })
@@ -215,5 +216,44 @@ server <- function(input, output) {
       geom_smooth(method="loess")
   })
 
+  ### Regression simple
+  
+  ## VISUALISATION NUAGE DE POINT POUR LE MODELE SIMPLE
+  output$nuage_point <- renderPlotly({
+    
+    variable_modele<- reactive({
+      switch(input$variable_simple,
+             "Nbsem"=bebe$Nbsem,
+             )
+    })
+    
+    type_graph<- reactive({
+      switch(input$choix_graphe,
+             "bar"=histo,
+             "line"=nuage,
+             "pie"=nuage)
+    })
+    
+    
+    nuage=ggplot(bebe) +
+      aes(x = variable_modele(), y = TailleBB) +
+      geom_point(shape = "circle", size = 1.5, colour = input$color2) +
+      labs(x = input$variable_simple,y = "TailleBB",title = paste("Nuage de point de",input$variable_simple,"avec TailleBB")) +
+      geom_smooth(method="lm")+
+      
+      theme_minimal()
+    
+    histo=ggplot(bebe) +
+      aes(x = variable_modele()) +
+      geom_histogram(bins = 30L, fill =input$color2, colour = input$color2) +
+      labs(x = input$variable_simple,y = "Valeur",title = paste("Histogramme de la variable",input$variable_simple))+
+      theme_minimal()
+    
+    type_graph()
+    
+    
+    
+  })
+  
 
 }

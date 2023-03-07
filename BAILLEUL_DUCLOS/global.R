@@ -17,6 +17,9 @@ library(sf)
 library(tm)  # ce package propose un ensemble de fonctions facilitant le traitement de donnees textuelles
 library(wordcloud)  # ce package permet la creation de wordcloud
 library(shinyWidgets)
+library(sparkline) # pour affichage beau tableau 
+library(reactable)
+library(reactablefmtr)
 
 if (!(require(jsonlite))) install.packages("jsonlite")
 mygeocode <- function(adresses){
