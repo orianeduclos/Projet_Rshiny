@@ -10,6 +10,7 @@ library(plotly)
 library(leaflet)
 library(jsonlite)
 library(sf)
+library(lubridate)
 
 if (!(require(jsonlite))) install.packages("jsonlite")
 mygeocode <- function(adresses){
@@ -169,6 +170,28 @@ prenom_graph <- prenom |>
 ggplot(prenom) + 
   aes(x = annais, y = nombre) + 
   geom_point()
+
+output$evolution_globale <- renderAmCharts({
+  nb_attentat_annee$Annee=as.POSIXct(nb_attentat_annee$Annee)
+  amTimeSeries(nb_attentat_annee, 'Annee', "NB",color=input$color, export = TRUE)
+})
+
+output$plot_bebe <- renderPlotly({
+  df <- prenom_annees |>  dplyr::filter(preusuel==input$prenom_bebe)
+  p <- ggplot(df)+aes(x=annais,y=nombre)+
+    geom_point() + 
+    scale_x_date(date_breaks = "10 years")
+  ggplotly(p)
+})
+
+summary(prenom)
+head(prenom)
+
+
+prenom_annees <- subset(prenom, (preusuel != "_PRENOMS_RARES") & (annais != "XXXX"))
+prenom_annees <- prenom_annees |>                                      
+  group_by(preusuel, annais) |>                       
+  summarise(nombre = sum(nombre))
 
 
 
