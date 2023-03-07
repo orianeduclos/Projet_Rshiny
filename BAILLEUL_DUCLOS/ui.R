@@ -33,14 +33,23 @@ dashboardPage(skin='purple',
         menuSubItem("Traitement", tabName = "traitementfrance")),
       menuItem(" Dans une maternité", tabName = "mater", icon = icon("baby"),
         menuSubItem("Présentation BDD", tabName = "bddmater"), 
-        menuSubItem("Régression", tabName = "regressionmater"))
+        menuSubItem("Régression", tabName = "regressionmater"),
+        menuSubItem("Régression simple", tabName = "regsimple"))
     )
   ),
   dashboardBody(
     tabItems(
       tabItem(
         tabName = "accueil",
-        h1("Bonjour")
+        h1("Bonjour"), 
+        h2("Chiffres clés"),
+        
+        fluidRow(
+          valueBoxOutput("Taux_fertilite",width=4),
+          valueBoxOutput("Age_moyen_maman_France",width=4),
+          valueBoxOutput("Nombre_semaine",width=4)),
+      
+        
         ),
       tabItem(
         tabName = "bddpays",
@@ -208,6 +217,16 @@ dashboardPage(skin='purple',
             )
           )
         )
+      ),
+      tabItem(tabName = "regsimple", 
+              fluidRow(
+                p("L'objectif de cet onglet est de visualiser les relations existantes entre les différentes variables de notre modèle vis à vis de la variable 'Nombre de semaine de gestation.",style="text-align:justify;color:black;background-color:lavender;padding:15px;border-radius:10px"),
+              ),
+              radioGroupButtons(
+                inputId = "choix_graphe",
+                label = "Choisissez le type de visualisations (univariées ou bivariées):", 
+                choices = c(`<i class='fa fa-bar-chart'></i>` = "bar", `<i class='fa fa-line-chart'></i>` = "line"),
+                justified = TRUE),
       )
     )
   )

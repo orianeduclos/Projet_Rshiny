@@ -16,8 +16,32 @@ server <- function(input, output) {
   prenom_data <- reactive({
     data[data$annais == input$year_prenom, ]
   })
+#### Partie Acceuil ####
+  
+  ## BANNIERE CHIFFRE CLES
+  
+  output$Age_moyen_maman_France=renderValueBox({
+    valueBox(
+      paste0(round((mean(bebe$AgedelaMere)),1)," ans"),"Age moyen de la mère à la naissance de l'enfant", 
+      color = "red")
+  })
+  
+  output$Taux_fertilites=renderValueBox({
+    
+    valueBox(
+      paste0("+",round(world_fertility$SP.DYN.TFRT.IN,2)), "de naissance par femme dans le monde", 
+      color = "red")
+  })
+  
+  output$Nombre_semaine=renderValueBox({
+    
+    valueBox(
+      paste0(round(mean(bebe$Nbsem),2)," Semaine"), "Moyenne du Nombre de semaine du temps de gestation chez les femmes ", 
+      color = "red")
+  })
   
   
+ 
 #### Partie Pays ####    
 
   output$visu_pays <- DT::renderDataTable({
