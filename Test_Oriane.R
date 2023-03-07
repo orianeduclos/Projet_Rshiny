@@ -138,6 +138,9 @@ library(car)
 avPlots(reg1)
 
 myvars <- c("PoidsBB", "TailleBB","Nbsem", "AgedelaMere", "Sexe_indicatrice")
+for (i in myvars) {
+  bebenew[[i]] <- as.numeric(bebenew[[i]])
+}
 data_matcorr <- bebenew[myvars]
 str(bebenew)
 mcor <- round(cor(data_matcorr),2)

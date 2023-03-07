@@ -22,6 +22,7 @@ library(reactable)
 library(reactablefmtr)
 library(corrplot) # affichage matrice de correlation
 library(car)
+library(rsconnect) # pour publier 
 
 if (!(require(jsonlite))) install.packages("jsonlite")
 mygeocode <- function(adresses){
