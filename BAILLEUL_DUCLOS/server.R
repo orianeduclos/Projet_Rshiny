@@ -230,8 +230,8 @@ server <- function(input, output) {
     type_graph<- reactive({
       switch(input$choix_graphe,
              "bar"=histo,
-             "line"=nuage,
-             "pie"=nuage)
+             "line"=nuage
+            )
     })
     
     
