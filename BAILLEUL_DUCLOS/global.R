@@ -1,4 +1,4 @@
-library(shiny)
+#library(shiny)
 library(colourpicker)
 library(shinydashboard)
 library(rAmCharts)
