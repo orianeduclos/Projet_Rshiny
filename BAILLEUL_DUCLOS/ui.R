@@ -182,6 +182,7 @@ dashboardPage(skin='purple',
             tabPanel(
               title = "Présentation de la base de données", 
               dataTableOutput("visu_bebe")
+              
             ), 
             tabPanel(
               title = "Summary", 
@@ -207,13 +208,18 @@ dashboardPage(skin='purple',
                 mainPanel(
                   verbatimTextOutput(outputId = "RegSum"),
                   verbatimTextOutput(outputId = "IndPrint"),
-                  verbatimTextOutput(outputId = "DepPrint"),
+                  verbatimTextOutput(outputId = "DepPrint")
                 )
               )
             ), 
             tabPanel(
-              title = "Régression graphique", 
-              plotOutput("rl")
+              title = "Régression graphique",
+              
+              box(
+      title = "Analyse des corrélations des régresseurs du modèle", solidHeader=T,
+                       width = 600,height=700, collapsible = T,
+                       plotOutput("correlation")),
+              box(plotOutput("rl"))
             )
           )
         )
@@ -223,10 +229,24 @@ dashboardPage(skin='purple',
                 p("L'objectif de cet onglet est de visualiser les relations existantes entre les différentes variables de notre modèle vis à vis de la variable 'Nombre de semaine de gestation.",style="text-align:justify;color:black;background-color:lavender;padding:15px;border-radius:10px"),
               ),
               radioGroupButtons(
+                inputId = "variable_simple",
+                label = "Choisissez la variable à mettre en relation avec le nombre de semaine de gestation",
+                choices = c("Nbsem"),
+                individual = TRUE,
+                checkIcon = list(yes = tags$i(class = "fa fa-circle",style = "color: steelblue"),no = tags$i(class = "fa fa-circle-o",style = "color: steelblue"))),
+              
+              radioGroupButtons(
                 inputId = "choix_graphe",
                 label = "Choisissez le type de visualisations (univariées ou bivariées):", 
                 choices = c(`<i class='fa fa-bar-chart'></i>` = "bar", `<i class='fa fa-line-chart'></i>` = "line"),
                 justified = TRUE),
+              
+              colourInput(inputId = "color2", label = "Couleur :", value = '#579E7D'),
+              
+              box(
+                title = "", solidHeader=T,
+                width = 12,height=700, collapsible = T,
+                plotlyOutput("nuage_point"),tags$p(""))
       )
     )
   )

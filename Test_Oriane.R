@@ -124,7 +124,7 @@ bebenew %>%
 
 colnames(bebenew)
 
-
+c("Nbsem","Sexe","PoidsBB","TailleBB","PoidsPlacenta","Operant","JourNaiss","SitMat","AgedelaMere","NaissMere","TailMere","PoidsMere","Agedupere","NaisPere","TailPere","PoidsPere","NbGrossess","NbEnfants","NbIVG","NbFC","TypeAllait","ModeAccouc","ModeTravai","Peridurale","DureeTrava","IMCMere","PoidsQuart","Sexe_indicatrice")
 
 ###### Regression ######
 
