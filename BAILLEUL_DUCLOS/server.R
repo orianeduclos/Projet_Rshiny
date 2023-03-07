@@ -183,12 +183,14 @@ server <- function(input, output) {
     }
   )
   
-  # Graphique sur les bébés 
+  # Graphique sur les bébés
   output$plot_bebe <- renderPlotly({
     df <- prenom_annees |>  dplyr::filter(preusuel==input$prenom_bebe)
-    p <- ggplot(df)+aes(x=annais,y=nombre)+
-      geom_point() 
-    ggplotly(p)
+    ggplot(df)+
+      aes(x = annais, y = nombre, color = "purple") + 
+      geom_line(size = 1) + 
+      scale_color_hue(direction = 1) +
+      theme_minimal() 
   })
   
   
@@ -216,12 +218,6 @@ server <- function(input, output) {
   output$IndPrint <- renderPrint({input$IndVar})
   output$RegSum <- renderPrint({summary(lm1())})
   
-  output$rl <- renderPlot({
-    ggplot(bebe) + 
-      aes(x = PoidsBB, y = TailleBB) + 
-      geom_point()+
-      geom_smooth(method="loess")
-  })
   
   ## MATRICE DE CORRELATION DES VARIABLES DU MODELE
   

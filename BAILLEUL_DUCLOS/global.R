@@ -105,6 +105,7 @@ prenom_annees <- subset(prenom, (preusuel != "_PRENOMS_RARES") & (annais != "XXX
 prenom_annees <- prenom_annees |>                                      
   group_by(preusuel, annais) |>                       
   summarise(nombre = sum(nombre))
+prenom_annees$annais <- as.Date(prenom_annees$annais, format="%Y")
 
 ## WORLD CLOUD 
 

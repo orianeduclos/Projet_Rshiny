@@ -20,7 +20,6 @@ prenom_annees <- prenom_annees |>
   summarise(nombre = sum(nombre))
 
 prenom_annees$annais <- as.Date(prenom_annees$annais, format="%Y")
-prenom_annees$annais <- year(prenom_annees$annais)
 
 # Définir l'interface utilisateur
 ui <- fluidPage(
@@ -49,10 +48,10 @@ server <- function(input, output) {
     df <- prenom_annees |>  dplyr::filter(preusuel==input$prenom_bebe)
     ggplot(df)+
       aes(x = annais, y = nombre, color = "purple") + 
-      geom_line(size = 2) + 
+      geom_line(size = 1) + 
       scale_color_hue(direction = 1) +
       theme_minimal() + 
-      scale_x_date(date_breaks = "10 years")
+      scale_x_date(date_breaks = "20 years")
   })
   
   

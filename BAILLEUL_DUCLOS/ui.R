@@ -167,7 +167,8 @@ dashboardPage(skin='purple',
                 ),
                 # Graphique des bébés 
                 mainPanel(
-                  plotlyOutput("plot_bebe")
+                  plotlyOutput("plot_bebe"), 
+                  box(p("Indications : pour rechercher un prénom, écrivez le en majuscule et sans accent. "))
                 )
               )
             )
@@ -219,7 +220,6 @@ dashboardPage(skin='purple',
       title = "Analyse des corrélations des régresseurs du modèle", solidHeader=T,
                        width = 600,height=700, collapsible = T,
                        plotOutput("correlation")),
-              box(plotOutput("rl"))
             )
           )
         )
