@@ -170,6 +170,7 @@ server <- function(input, output) {
               max.words=input$max, colors = brewer.pal(8,"Set2"), random.order=FALSE, rot.per=0)
   })
   
+  ######## À REVOIR ########
   observeEvent(input$update, { # Va rentrer dans ce code uniquement si j'appuie sur le bouton
     updateTabsetPanel(session, inputId = "wdagain")
   })
