@@ -1,5 +1,5 @@
 library(shiny)
-library(leaflet)
+library(ggplot2)
 library(dplyr)
 library(sf)
 
@@ -27,8 +27,8 @@ mygeocode <- function(adresses){
 
 # Importer les données
 
-dpt <- read_sf("../data/dpt")
-prenom <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
+dpt <- read_sf("../BAILLEUL_DUCLOS/data/dpt")
+prenom <- read.csv("../BAILLEUL_DUCLOS/data/dpt2021.csv", header= TRUE, sep=';')
 prenom <- prenom |> 
   rename("CODE_DEPT" = "dpt")
 prenom_dpt <- inner_join(prenom, dpt, by = c("CODE_DEPT"))
@@ -54,7 +54,7 @@ ui <- fluidPage(
       ),
       # carte des bébé
       mainPanel(
-        leafletOutput("carte_bebe_dpt")
+        plotOutput("carte_bebe_dpt")
       )
     )
   )
@@ -62,15 +62,8 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   # Création de la carte leaflet
-  output$carte_bebe_dpt <- renderLeaflet({
-    leaflet() |> 
-      addTiles() |> 
-      setView(lng = France[1], lat = France[2], zoom = 6) |> 
-      addPolygons(data = prenom_dpt, 
-                  fillColor = ~pal(x),
-                  fillOpacity = 0.7, 
-                  color = "#BDBDC3",
-                  weight = 1)
+  output$carte_bebe_dpt <- renderPlot({
+    ggplot(prenom_dpt) + geom_sf()
   })
 }
 

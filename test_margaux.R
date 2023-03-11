@@ -193,6 +193,14 @@ prenom_annees <- prenom_annees |>
   group_by(preusuel, annais) |>                       
   summarise(nombre = sum(nombre))
 
+leaflet() |> 
+  addTiles() |> 
+  setView(lng = France[1], lat = France[2], zoom = 6) |> 
+  addPolygons(data = prenom_dpt, 
+              fillColor = ~pal(x),
+              fillOpacity = 0.7, 
+              color = "#BDBDC3",
+              weight = 1)
 
 
 
