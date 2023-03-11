@@ -19,7 +19,7 @@ dashboardPage(skin='purple',
     sidebarMenu(
       HTML(paste0(
         "<br>",
-        "<img style = 'display: block; margin-left: auto; margin-right: auto;' src='BAILLEUL_DUCLOS/www/logo_bebe.png'>",
+        "<img style = 'display: block; margin-left:auto; margin-right: auto;' src='logo_bebe.png' width ='186' class='arrondie'>",
         "<br>",
         "<p style = 'text-align: center;'><small>Logo bébé</small></p>",
         "<br>"
@@ -48,6 +48,7 @@ dashboardPage(skin='purple',
           valueBoxOutput("Taux_fertilite",width=4),
           valueBoxOutput("Age_moyen_maman_France",width=4),
           valueBoxOutput("Nombre_semaine",width=4)),
+        img(src = "bienvenue.jpg", height = "300", width = "300")
       
         
         ),

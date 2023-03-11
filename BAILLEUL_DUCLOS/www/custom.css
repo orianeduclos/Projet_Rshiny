@@ -9,3 +9,10 @@ h1 {
   font-weight: bold;
   font-size: 24px;
 }
+
+.arrondie {
+border:2px solid black;
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border-radius: 20%;
+}

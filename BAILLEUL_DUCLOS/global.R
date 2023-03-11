@@ -61,8 +61,4 @@ prenom_annees <- prenom_annees |>
   summarise(nombre = sum(nombre))
 prenom_annees$annais <- as.Date(prenom_annees$annais, format="%Y")
 
-<<<<<<< HEAD
-## WORLD CLOUD ki
 
-=======
->>>>>>> 938b87bfcd3fc4908e26cc5beb67661e6a5d4923
