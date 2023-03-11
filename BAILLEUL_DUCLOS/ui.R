@@ -19,7 +19,7 @@ dashboardPage(
     sidebarMenu(
       HTML(paste0(
         tags$br(),
-        tags$img(style = 'display: block; margin-left:auto; margin-right: auto;', src='logo_bebe.png', width ='186'),
+        tags$img(style = 'display: block; margin-left:auto; margin-right: auto;', src='logo_natalite.png', width ='186'),
         tags$br()
       )),
       menuItem("Accueil", tabName = "accueil", icon = icon("door-open")),
@@ -88,7 +88,7 @@ dashboardPage(
               sidebarPanel(
                 selectInput(inputId = "pays_seul", label = "Choisissez un pays", choices = unique(taux_fecondite$LOCATION))
               ),
-              box(plotOutput("graphique_pays_indiv")), 
+              box(plotlyOutput("graphique_pays_indiv")), 
               box(textOutput("texte_pays_seul"))
             )
           )
@@ -114,7 +114,7 @@ dashboardPage(
       tabItem(
         tabName = "traitementfrance",
         fluidPage(
-          tabsetPanel(
+          tabsetPanel(id = "viz",
             # Create a "Word cloud" tab
             tabPanel(
               title = "Word cloud",
