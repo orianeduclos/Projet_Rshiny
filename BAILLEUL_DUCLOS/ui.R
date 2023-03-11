@@ -12,37 +12,35 @@ ui <- fluidPage(
              ".shiny-output-error:before { visibility: hidden; }"
   ),
 
-dashboardPage(skin='purple',
+dashboardPage(
   dashboardHeader(title = "La natalité 👶", 
                   dropdownMenu(type="message", messageItem(from = "Margaux et Oriane", message="Bienvenue sur notre application 👶",icon=icon("envelope-open"), time = "Now"))),
   dashboardSidebar(
     sidebarMenu(
       HTML(paste0(
-        "<br>",
-        "<img style = 'display: block; margin-left:auto; margin-right: auto;' src='logo_bebe.png' width ='186' class='arrondie'>",
-        "<br>",
-        "<p style = 'text-align: center;'><small>Logo bébé</small></p>",
-        "<br>"
+        tags$br(),
+        tags$img(style = 'display: block; margin-left:auto; margin-right: auto;', src='logo_bebe.png', width ='186'),
+        tags$br()
       )),
       menuItem("Accueil", tabName = "accueil", icon = icon("door-open")),
       menuItem(" Dans les pays du monde", tabName = "pays", icon = icon("earth"),
-        menuSubItem("Présentation BDD", tabName = "bddpays"),
-        menuSubItem("À l'échelle mondiale", tabName = "monde")),
+        menuSubItem("Présentation BDD", tabName = "bddpays", icon = icon("earth")),
+        menuSubItem("À l'échelle mondiale", tabName = "monde", icon = icon("earth"))),
       menuItem(" En France", tabName = "france", icon = icon("location-dot"),
-        menuSubItem("Présentation BDD", tabName = "bddfrance"), 
-        menuSubItem("Traitement", tabName = "traitementfrance")),
+        menuSubItem("Présentation BDD", tabName = "bddfrance", icon = icon("earth")), 
+        menuSubItem("Traitement", tabName = "traitementfrance", icon = icon("earth"))),
       menuItem(" Dans une maternité", tabName = "mater", icon = icon("baby"),
-        menuSubItem("Présentation BDD", tabName = "bddmater"), 
-        menuSubItem("Régression", tabName = "regressionmater"),
-        menuSubItem("Régression simple", tabName = "regsimple"))
+        menuSubItem("Présentation BDD", tabName = "bddmater", icon = icon("earth")), 
+        menuSubItem("Régression", tabName = "regressionmater", icon = icon("earth")),
+        menuSubItem("Régression simple", tabName = "regsimple", icon = icon("earth")))
     )
   ),
   dashboardBody(
     tabItems(
       tabItem(
         tabName = "accueil",
-        h1("Bonjour"), 
-        h2("Chiffres clés"),
+        tags$h1("Bonjour"), 
+        tags$h2("Chiffres clés"),
         
         fluidRow(
           valueBoxOutput("Taux_fertilite",width=4),
@@ -118,7 +116,7 @@ dashboardPage(skin='purple',
         fluidPage(
           tabsetPanel(
             # Create a "Word cloud" tab
-            tabPanel(
+            tabPanel( id = "wdagain",
               title = "Word cloud",
               #### world cloud ####
               # Titre de la page
@@ -137,7 +135,6 @@ dashboardPage(skin='purple',
                   hr(),
                   actionButton("update", "Change"),
                   downloadButton(outputId="export",label= "Cliquez pour sauvegarder le graphique")
-                  
                   
                 ),
                 
