@@ -8,7 +8,7 @@ library(shiny)
 
 # Data prenom
 
-data <- read.csv("../data/dpt2021.csv", header= TRUE, sep=';')
+data <- read.csv("BAILLEUL_DUCLOS/data/dpt2021.csv", header= TRUE, sep=';')
 
 
 
