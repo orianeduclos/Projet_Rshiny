@@ -1,18 +1,60 @@
-h1 {
-  font-family: "Georgia", Times, "Times New Roman", serif;
-  font-weight: bold;
-  font-size: 24px;
-}
-
+/*Titre en gaut à gauche */
 .main-header .logo {
   font-family: "Georgia", Times, "Times New Roman", serif;
   font-weight: bold;
   font-size: 24px;
 }
 
-.arrondie {
-border:2px solid black;
--moz-border-radius:7px;
--webkit-border-radius:7px;
-border-radius: 20%;
+/* Couleur de fond de notre sidebarpanel */
+.skin-blue .main-header .logo {
+  background-color: #6E2C00;
 }
+
+/* Couleur quand notre souris passe par-dessus le titre de l'application (en haut à gauche) */
+.skin-blue .main-header .logo:hover {
+  background-color: #6E2C00;
+}
+
+/* Ma couleur de fond de notre navbar (ce qui est en haut) */
+.skin-blue .main-header .navbar {
+  background-color: #6E2C00;
+}
+
+/* La couleur de fond de notre sidebar */
+.skin-blue .main-sidebar {
+  background-color: #6E2C00;
+}
+
+/* La couleur des autres quand ce n'est pas sélectionné */
+.skin-blue .main-sidebar .sidebar .sidebar-menu a{
+  background-color: #EB98BC ;
+  color : white;
+  border-radius: 30px;
+}
+
+/* Quand notre onglet est sélectionné */
+.skin-blue .main-sidebar .sidebar .sidebar-menu .active a{
+  background-color: blue ;
+  color : white;
+  border-radius: 30px;
+}
+
+/* Quand la souris passe par dessus mais sans cliquer */
+.skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{
+  background-color: white;
+  color : purple;
+  border-radius: 30px;
+}
+
+.skin-blue .main-header .navbar .sidebar-toggle:hover{
+  background-color: blue;
+}
+
+/* Nos gros titres */
+h1 {
+  font-family: "Georgia", Times, "Times New Roman", serif;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+
