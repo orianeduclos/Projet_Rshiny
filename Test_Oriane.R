@@ -44,69 +44,56 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 50,
 
 
 
-##### Base de donnée etat civil ####
-etat_civil <- read.csv("data/FD_NAIS_2021.csv", header= TRUE, sep=';')
-View(etat_civil)
+############## VISU EN FRANCE AVEC ETAT CIVIL ##################
 
 
-
-###### Boxplot Age mere age pere ######
-
-library(rAmCharts)
-library(tidyverse)
-
-amBoxplot(
-  etat_civil$AGEPERE
-)
-
-age <- etat_civil |> pivot_longer(c('AGEMERE','AGEPERE'), 
-                                  names_to = "SEXEPARENT",
-                                  values_to ='AGEPARENT')
-#View(age)
-
-#amBoxplot(age$SEXEPARENTS~age$AGEPARENT)
-
-ggplot(age,aes(x=SEXEPARENT, y= AGEPARENT, color = SEXEPARENT))+
-  geom_boxplot()+ 
-  stat_summary(fun.y = mean, geom='point', shape=23, size=4)+ 
-  scale_color_manual(values=c('red','blue'))+
-  scale_fill_manual(values=c('#CD5C5C','#87CEFA'))+
-  theme_classic()
 
 
 
 #### Base de donnée BEBE ####
-bebe <- read.table("data/bebe.txt", header = TRUE, sep = ";")
+bebe <- read.table("BAILLEUL_DUCLOS/data/bebe.txt", header = TRUE, sep = ";")
 head(bebe)
-#View(bebe)
-dim(bebe)
-summary(bebe)
 
-###### NA ######
-mean(bebe$TailleBB, na.rm=TRUE)
-manquant <- is.na(bebe)
-dim(manquant)
-sum(manquant)
-
-# reparage par ligne 
-coordmanquant <- which(manquant, arr.ind=TRUE)
-coordmanquant[1:6,]
-# eliminer doublon 
-unique(coordmanquant[,1])
-
-bool <- apply(is.na(bebe),1,any)
-names(bool) <- NULL
-which(bool)
-
-library(tidyverse)
 bebepropre <- na.omit(bebe)
 
 # transformation sexe en variable indicatrice
-bebenew <- bebepropre |> 
+bebe <- bebepropre |> 
   mutate(Sexe_indicatrice = case_when(Sexe== "M" ~ "1",
                                       Sexe=="F"~ "0" ))
 
 head(bebenew)
+
+############## VISU EN FRANCE AVEC ETAT CIVIL ##################
+
+
+################## VISU BEBE ###################
+#(bebe$AgedelaMere)
+
+bebe <- bebe |> 
+  pivot_longer(c('AgedelaMere','Agedupere'), 
+                                  names_to = "SEXEPARENT",
+                                  values_to ="AGEPARENT") |> 
+  mutate(Sexe_parent = case_when(SEXEPARENT=="AgedelaMere"~"Mere",
+                                  SEXEPARENT=="Agedupere"~"Pere"))
+
+
+
+amBoxplot(AGEPARENT ~ Sexe_parent , col = "pink", data =bebe, ylab="Age du parent", main= "Boxplot de l'age du parent en fonction du sexe")
+
+colnames(bebe)
+
+amAngularGauge(x = round(mean(bebe$Nbsem)), main= "Nombre de semaine de gestion moyenne") |> 
+  amOptions(export = TRUE, exportFormat = "JPG")
+
+amPie(bebe$ModeAccouc)
+
+Mode_accouchement <- as.data.frame(table(bebe$ModeAccouc))
+colnames(Mode_accouchement) <- c("label","value")
+amPie(data=Mode_accouchement, main="Mode d'accouchement")
+Mode_travail <- as.data.frame(table(bebe$ModeTravai))
+colnames(Mode_travail) <- c("label","value")
+amBarplot(x = "label", y = "value", data = Mode_travail, horiz = TRUE)
+
 ### Belle table avec boxplot en bas de la page 
 library(sparkline)
 
@@ -125,6 +112,8 @@ bebenew %>%
 colnames(bebenew)
 
 c("Nbsem","Sexe","PoidsBB","TailleBB","PoidsPlacenta","Operant","JourNaiss","SitMat","AgedelaMere","NaissMere","TailMere","PoidsMere","Agedupere","NaisPere","TailPere","PoidsPere","NbGrossess","NbEnfants","NbIVG","NbFC","TypeAllait","ModeAccouc","ModeTravai","Peridurale","DureeTrava","IMCMere","PoidsQuart","Sexe_indicatrice")
+
+
 
 ###### Regression ######
 
@@ -272,9 +261,12 @@ fertility_map <- left_join(world, fertility, by = c("region" = "Country"))
     )
 #})
 
-##### WorldCloud #####
+###### VISU TAUX DE FECONDITE #####
+  taux_fecondite <- read.csv("BAILLEUL_DUCLOS/data/taux_fecondite.csv", header= TRUE, sep=',')
+  taux_fecondite$TIME <- as.numeric(taux_fecondite$TIME)
+  taux_fecondite$LOCATION <- as.factor(taux_fecondite$LOCATION)
+  levels(taux_fecondite$LOCATION) <- c("Argentine", "Australie", "Autriche", "Belgique", "Bulgarie", "Brésil", "Canada", "Suisse", "Chili", "Chine", "Colombie", "Costa Rica", "Chypre", "République Tchèque", "Allemagne", "Danemark", "Espagne", "Estonie", "Union Européenne", "Finlande", "France", "Royaume-Uni", "Grèce", "Croatie", "Hongrie", "Indonésie", "Inde", "Irlande", "Islande", "Israël", "Italie",  "Japon", "Corée", "Lituanie", "Luxembourg", "Lettonie", "Mexique", "Malte", "Pays-Bas", "Norvège", "Nouvelle Zélande", "OAVG", "Pérou", "Pologne", "Portugal", "Roumanie", "Russie", "Arabie Saoudite", "Slovaquie", "Slovénie", "Suède", "Turquie", "États-Unis", "Afrique du Sud")       
 
-library(wordcloud2)
 
 
 
