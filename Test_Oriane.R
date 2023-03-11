@@ -94,6 +94,10 @@ Mode_travail <- as.data.frame(table(bebe$ModeTravai))
 colnames(Mode_travail) <- c("label","value")
 amBarplot(x = "label", y = "value", data = Mode_travail, horiz = TRUE)
 
+#### Profit moyen de la maman ####
+
+
+
 ### Belle table avec boxplot en bas de la page 
 library(sparkline)
 
