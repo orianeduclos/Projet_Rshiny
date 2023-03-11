@@ -116,7 +116,7 @@ dashboardPage(
         fluidPage(
           tabsetPanel(
             # Create a "Word cloud" tab
-            tabPanel( id = "wdagain",
+            tabPanel(
               title = "Word cloud",
               #### world cloud ####
               # Titre de la page
@@ -133,6 +133,7 @@ dashboardPage(
                               "Nombre Maximal de mots:",
                               min = 1,  max = 500,  value = 100),
                   hr(),
+                  ##### À REVOIR #####
                   actionButton("update", "Change"),
                   downloadButton(outputId="export",label= "Cliquez pour sauvegarder le graphique")
                   
