@@ -175,6 +175,25 @@ dashboardPage(
             tabPanel(
               title = "Summary", 
               verbatimTextOutput("summary_bebe")
+            ),
+            tabPanel(
+              title = "Visualisation",
+              fluidRow(
+                box(amChartsOutput(outputId = "amchart_boxplot")),
+                box(textOutput("texte_boxplot_age")),
+              ),
+                
+              fluidRow(
+                column(width=4,box(amChartsOutput(outputId = "amchart_jauge"))),
+                column(width=8,box(amChartsOutput(outputId = "amchart_pie")))
+                
+                ), 
+              fluidRow(
+                box(amChartsOutput(outputId = "amchart_bar"))
+              )
+          
+              
+             
             )
           )
         )

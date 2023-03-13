@@ -79,14 +79,8 @@ server <- function(input, output) {
       addLegend(pal = pal, 
                 values = fertility_reactive()$SP.DYN.TFRT.IN, 
                 opacity = 0.7, 
-                title = "Taux de fécondité") |> 
-      # Ajout d'un rectangle à la main sur la france 
-      addRectangles(
-        lng1 = -5.11, lat1 = 52.10,
-        lng2 = 10.92, lat2 = 40.25,
-        color = "green",
-        popup = "France",
-        fill = FALSE)
+                title = "Taux de fécondité")
+     
   })
   
   # Texte en dessous carte 
@@ -211,6 +205,36 @@ server <- function(input, output) {
   
   output$summary_bebe <- renderPrint({
     summary(bebe)
+  })
+  
+  
+  ### Onglet visualsiation  
+  output$amchart_boxplot <- renderAmCharts({
+    amBoxplot(AGEPARENT ~ Sexe_parent , col = "pink", data =bebe_sexe, ylab="Age du parent", main= "Boxplot de l'age du parent en fonction du sexe")
+  })
+  
+  
+  output$texte_boxplot_age <- renderText({
+    paste("Nous remarquons que blabla")
+  })
+  
+  output$amchart_jauge <- renderAmCharts({
+    amAngularGauge(x = round(mean(bebe$Nbsem)), main= "Nombre de semaine de gestation moyenne") |> 
+      amOptions(export = TRUE, exportFormat = "JPG")
+  })
+  
+  output$amchart_bar <- renderAmCharts({
+    Mode_travail <- as.data.frame(table(bebe$ModeTravai))
+    colnames(Mode_travail) <- c("label","value")
+    amBarplot(x = "label", y = "value", data = Mode_travail, horiz = TRUE) |> 
+      amOptions(export = TRUE, exportFormat = "JPG")
+  })
+  
+  output$amchart_pie <- renderAmCharts({
+    Mode_accouchement <- as.data.frame(table(bebe$ModeAccouc))
+    colnames(Mode_accouchement) <- c("label","value")
+    amPie(data=Mode_accouchement, main="Mode d'accouchement")|> 
+      amOptions(export = TRUE, exportFormat = "JPG")
   })
   
   

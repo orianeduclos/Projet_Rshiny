@@ -68,12 +68,14 @@ bebe <- bebepropre |>
 ################## VISU BEBE ###################
 #(bebe$AgedelaMere)
 
-bebe <- bebe |> 
+bebe_sexe <- bebe |> 
   pivot_longer(c('AgedelaMere','Agedupere'), 
                                   names_to = "SEXEPARENT",
                                   values_to ="AGEPARENT") |> 
   mutate(Sexe_parent = case_when(SEXEPARENT=="AgedelaMere"~"Mere",
                                   SEXEPARENT=="Agedupere"~"Pere"))
+
+
 
 
 

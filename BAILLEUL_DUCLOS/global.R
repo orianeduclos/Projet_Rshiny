@@ -42,6 +42,16 @@ bebe <- bebepropre |>
   mutate(Sexe_indicatrice = case_when(Sexe== "M" ~ "1",
                                       Sexe=="F"~ "0" ))
 
+bebe_sexe <- bebe |> 
+  pivot_longer(c('AgedelaMere','Agedupere'), 
+               names_to = "SEXEPARENT",
+               values_to ="AGEPARENT") |> 
+  mutate(Sexe_parent = case_when(SEXEPARENT=="AgedelaMere"~"Mere",
+                                 SEXEPARENT=="Agedupere"~"Pere"))
+
+
+Mode_travail <- as.data.frame(table(bebe$ModeTravai))
+colnames(Mode_travail) <- c("label","value")
 
 #### Code pour la carte taux de fertilité dans le monde ####
 fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2017, end = 2019)
