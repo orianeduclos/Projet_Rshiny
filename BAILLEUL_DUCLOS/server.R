@@ -85,7 +85,7 @@ server <- function(input, output) {
   
   # Texte en dessous carte 
   output$texte_carte <- renderText({
-    paste("Le taux de fertilité dans le monde est un indicateur important de la santé démographique des populations. Il mesure le nombre moyen d'enfants qu'une femme peut espérer avoir tout au long de sa vie reproductive. En ", input$Year, "le taux de fertilité mondial était d'environ ",round(mean(fertility_reactive()$SP.DYN.TFRT.IN, na.rm=TRUE),2))  
+    paste("Le taux de fertilité dans le monde est un indicateur important de la santé démographique des populations. Il mesure le nombre moyen d'enfants qu'une femme peut espérer avoir tout au long de sa vie reproductive. En ", input$Year, "le taux de fertilité mondial était d'environ ",round(mean(fertility_reactive()$SP.DYN.TFRT.IN, na.rm=TRUE),2),"Ce taux varie considérablement d'un pays à l'autre et même au sein des pays. Les pays les plus pauvres et les moins développés ont généralement des taux de fertilité plus élevés, tandis que les pays les plus riches et les plus développés ont tendance à avoir des taux plus bas. Les facteurs qui influencent le taux de fertilité sont nombreux et complexes. L'âge est l'un des facteurs les plus importants, car les femmes ont une période limitée de fécondité, qui diminue avec l'âge. Les femmes qui ont leur premier enfant à un âge plus avancé ont tendance à avoir moins d'enfants au total. L'éducation des femmes est également un facteur important, car les femmes qui ont accès à l'éducation ont tendance à avoir des taux de fertilité plus bas, en partie parce qu'elles ont des opportunités professionnelles et économiques plus nombreuses qui peuvent les empêcher d'avoir de nombreux enfants. Les normes culturelles et religieuses sont également importantes. Dans certaines cultures, avoir de nombreux enfants est considéré comme un signe de réussite ou de statut, tandis que dans d'autres cultures, les femmes sont encouragées à limiter leur nombre d'enfants. Les politiques gouvernementales, telles que les programmes de planning familial et l'accès à des méthodes contraceptives, peuvent également influencer le taux de fertilité. Un taux de fertilité élevé peut avoir des avantages, tels que le maintien de la population, mais il peut également présenter des défis, tels que la pression sur les ressources, les problèmes de santé maternelle et infantile et la pauvreté. À l'inverse, un taux de fertilité faible peut également avoir des avantages, tels que la réduction de la pression sur les ressources, mais il peut également présenter des défis, tels que le vieillissement de la population et les problèmes économiques associés à une population en déclin.")  
   })
   
   # Graphique représentant tous les pays 
@@ -264,7 +264,13 @@ server <- function(input, output) {
     
     variable_modele<- reactive({
       switch(input$variable_simple,
-             "Nbsem"=bebe$Nbsem,
+             
+             "TailleMere" = bebe$TailMere,
+             "TaillePere" = bebe$TailPere, 
+             "PoidsMere"= bebe$PoidsMere,
+             "NbGrossess" =bebe$NbGrossess,
+             "NbEnfants" =bebe$NbEnfants,
+     
              )
     })
     
@@ -277,8 +283,8 @@ server <- function(input, output) {
     
     
     nuage=ggplot(bebe) +
-      aes(x = variable_modele(), y = TailleBB) +
-      geom_point(shape = "circle", size = 1.5, colour = input$color2) +
+      aes(x = variable_modele(), y = Nbsem) +
+      geom_point(shape = "circle", size = 1.5, colour = "#F08080") +
       labs(x = input$variable_simple,y = "TailleBB",title = paste("Nuage de point de",input$variable_simple,"avec TailleBB")) +
       geom_smooth(method="lm")+
       
@@ -286,7 +292,7 @@ server <- function(input, output) {
     
     histo=ggplot(bebe) +
       aes(x = variable_modele()) +
-      geom_histogram(bins = 30L, fill =input$color2, colour = input$color2) +
+      geom_histogram(bins = 30L, fill ="#F08080", colour = "#F08080") +
       labs(x = input$variable_simple,y = "Valeur",title = paste("Histogramme de la variable",input$variable_simple))+
       theme_minimal()
     

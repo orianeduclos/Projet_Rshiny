@@ -40,7 +40,7 @@ dashboardPage(
     tabItems(
       tabItem(
         tabName = "accueil",
-        tags$h1("Bonjour"), 
+        tags$h1("Bonjour b"),
         tags$h2("Chiffres clés"),
         
         fluidRow(
@@ -69,6 +69,7 @@ dashboardPage(
       
       tabItem(
         tabName = "monde",
+        tags$h6("L'objectif de cet onglet est de visualiser le taux de fécondité et le taux de fertilité dans le monde "),
         fluidPage(
           tabsetPanel(
             tabPanel(
@@ -77,7 +78,8 @@ dashboardPage(
                 selectInput(inputId = "Year", label = "year", choices = unique(world_fertility$year))
               ),
               leafletOutput("map"),
-              textOutput("texte_carte")
+              br(),
+             textOutput("texte_carte")
             ), 
             tabPanel(
               title = "Graphique sur les pays", 
@@ -114,6 +116,7 @@ dashboardPage(
      
       tabItem(
         tabName = "traitementfrance",
+        tags$h6("L'objectif de cet onglet est de visualiser les prénoms en france entre 1900 et 2021"),
         fluidPage(
           tabsetPanel(id = "viz",
             # Create a "Word cloud" tab
@@ -184,8 +187,8 @@ dashboardPage(
               ),
                 
               fluidRow(
-                column(width=4,box(amChartsOutput(outputId = "amchart_jauge"))),
-                column(width=8,box(amChartsOutput(outputId = "amchart_pie")))
+                column(width=9,box(amChartsOutput(outputId = "amchart_jauge"))),
+                column(width=3,box(amChartsOutput(outputId = "amchart_pie")))
                 
                 ), 
               fluidRow(
@@ -201,6 +204,7 @@ dashboardPage(
       
       tabItem(
         tabName = "regressionmater", 
+        tags$h6("L'objectif de cet onglet est de visualiser les relations existantes entre les différentes variables de notre modèle. Vous trouverez une regression simple et une regression multiple"),
         fluidPage(
           tabsetPanel(
             tabPanel(
@@ -231,13 +235,12 @@ dashboardPage(
         )
       ),
       tabItem(tabName = "regsimple", 
-              fluidRow(
-                p("L'objectif de cet onglet est de visualiser les relations existantes entre les différentes variables de notre modèle vis à vis de la variable 'Nombre de semaine de gestation.",style="text-align:justify;color:black;background-color:lavender;padding:15px;border-radius:10px"),
-              ),
+              tags$h6("L'objectif de cet onglet est de visualiser les relations existantes entre les différentes variables de notre modèle vis à vis de la variable 'Nombre de semaine de gestation."),
+              
               radioGroupButtons(
                 inputId = "variable_simple",
                 label = "Choisissez la variable à mettre en relation avec le nombre de semaine de gestation",
-                choices = c("Nbsem"),
+                choices = c( "TailleMere","TaillePere", "PoidsMere","NbGrossess","NbEnfants"),
                 individual = TRUE,
                 checkIcon = list(yes = tags$i(class = "fa fa-circle",style = "color: steelblue"),no = tags$i(class = "fa fa-circle-o",style = "color: steelblue"))),
               
@@ -247,7 +250,7 @@ dashboardPage(
                 choices = c(`<i class='fa fa-bar-chart'></i>` = "bar", `<i class='fa fa-line-chart'></i>` = "line"),
                 justified = TRUE),
               
-              colourInput(inputId = "color2", label = "Couleur :", value = '#579E7D'),
+          
               
               box(
                 title = "", solidHeader=T,
