@@ -14,6 +14,7 @@ ui <- fluidPage(
 
 dashboardPage(
   dashboardHeader(title = "La natalité 👶", 
+                  tags$li(class="dropdown",tags$a(href="https://www.worldometers.info/fr/", icon("earth"), " Worldometer", target = "_blank")),
                   dropdownMenu(type="message", messageItem(from = "Margaux et Oriane", message="Bienvenue sur notre application 👶",icon=icon("envelope-open"), time = "Now"))),
   dashboardSidebar(
     sidebarMenu(
@@ -24,15 +25,15 @@ dashboardPage(
       )),
       menuItem("Accueil", tabName = "accueil", icon = icon("door-open")),
       menuItem(" Dans les pays du monde", tabName = "pays", icon = icon("earth"),
-        menuSubItem("Présentation BDD", tabName = "bddpays", icon = icon("earth")),
-        menuSubItem("À l'échelle mondiale", tabName = "monde", icon = icon("earth"))),
+        menuSubItem("Présentation BDD", tabName = "bddpays", icon = icon("database")),
+        menuSubItem("À l'échelle mondiale", tabName = "monde", icon = icon("globe"))),
       menuItem(" En France", tabName = "france", icon = icon("location-dot"),
-        menuSubItem("Présentation BDD", tabName = "bddfrance", icon = icon("earth")), 
-        menuSubItem("Traitement", tabName = "traitementfrance", icon = icon("earth"))),
+        menuSubItem("Présentation BDD", tabName = "bddfrance", icon = icon("database")), 
+        menuSubItem("Traitement", tabName = "traitementfrance", icon = icon("flag"))),
       menuItem(" Dans une maternité", tabName = "mater", icon = icon("baby"),
-        menuSubItem("Présentation BDD", tabName = "bddmater", icon = icon("earth")), 
-        menuSubItem("Régression", tabName = "regressionmater", icon = icon("earth")),
-        menuSubItem("Régression simple", tabName = "regsimple", icon = icon("earth")))
+        menuSubItem("Présentation BDD", tabName = "bddmater", icon = icon("database")), 
+        menuSubItem("Régression", tabName = "regressionmater", icon = icon("chart-line")),
+        menuSubItem("Régression simple", tabName = "regsimple", icon = icon("chart-line")))
     )
   ),
   dashboardBody(
