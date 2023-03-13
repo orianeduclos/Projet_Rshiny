@@ -46,7 +46,7 @@ wordcloud(words = d$word, freq = d$freq, min.freq = 50,
 
 ############## VISU EN FRANCE AVEC ETAT CIVIL ##################
 
-
+library(rAmCharts)
 
 
 
@@ -61,7 +61,6 @@ bebe <- bebepropre |>
   mutate(Sexe_indicatrice = case_when(Sexe== "M" ~ "1",
                                       Sexe=="F"~ "0" ))
 
-head(bebenew)
 
 ############## VISU EN FRANCE AVEC ETAT CIVIL ##################
 
@@ -82,10 +81,10 @@ amBoxplot(AGEPARENT ~ Sexe_parent , col = "pink", data =bebe, ylab="Age du paren
 
 colnames(bebe)
 
-amAngularGauge(x = round(mean(bebe$Nbsem)), main= "Nombre de semaine de gestion moyenne") |> 
+amAngularGauge(x = round(mean(bebe$Nbsem)), main= "Nombre de semaine de gestation moyenne") |> 
   amOptions(export = TRUE, exportFormat = "JPG")
 
-amPie(bebe$ModeAccouc)
+
 
 Mode_accouchement <- as.data.frame(table(bebe$ModeAccouc))
 colnames(Mode_accouchement) <- c("label","value")

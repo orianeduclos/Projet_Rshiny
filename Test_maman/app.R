@@ -1,4 +1,6 @@
 library(shiny)
+library(ggplot2)
+library(plotly)
 
 
 bebe <- read.table("BAILLEUL_DUCLOS/data/bebe.txt", header = TRUE, sep = ";")
@@ -15,7 +17,7 @@ ui <- fluidPage(
       selectInput("age", "Âge de la maman :", choices = c("Tous" = "all", "Moins de 20 ans" = "lt20", "20-24 ans" = "20to24", "25-29 ans" = "25to29", "30-34 ans" = "30to34", "35-39 ans" = "35to39", "40 ans et plus" = "ge40"), selected = "all"),
     ),
     mainPanel(
-      plotOutput("graph")
+      plotlyOutput("graph")
     )
   )
 )
@@ -41,13 +43,14 @@ server <- function(input, output) {
   })
   
   # Fonction pour créer le graphique en fonction des données filtrées
-  output$graph <- renderPlot({
+  output$graph <- renderPlotly({
     data <- filter_data()
-    ggplot(data, aes(x = PoidsBB)) + 
+    p <- ggplot(data, aes(x = PoidsBB)) + 
       geom_density(fill = "blue", alpha = 0.3) +
       xlab("Poids du bébé à la naissance (en onces)") + 
       ylab("Densité") + 
       ggtitle("Profil moyen de la maman à l'accouchement")
+    ggplotly(p)
   })
 }
 
