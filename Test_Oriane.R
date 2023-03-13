@@ -174,6 +174,8 @@ View(world)
 world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
 View(world_fertility)
 
+cat(mean(world_fertility$SP.DYN.TFRT.IN, na.rm=TRUE))
+
 ### Affichage en dynamique ###
 
 library(sparkline)
