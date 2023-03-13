@@ -22,24 +22,23 @@ server <- function(input, output) {
   
   ## BANNIERE CHIFFRE CLES
   
-  output$Age_moyen_maman_France=renderValueBox({
+  output$Age_moyen_maman_France <- renderValueBox({
     valueBox(
-      paste0(round((mean(bebe$AgedelaMere)),1)," ans"),"Age moyen de la mère à la naissance de l'enfant", 
-      color = "red")
+      paste0(round((mean(bebe$AgedelaMere)),1)," ans"),"Âge moyen de la mère à la naissance de l'enfant", 
+      icon = icon("person-breastfeeding"), color = "yellow")
   })
   
-  output$Taux_fertilites=renderValueBox({
-    
+  output$Taux_fertilite <- renderValueBox({
     valueBox(
-      paste0("+",round(world_fertility$SP.DYN.TFRT.IN,2)), "de naissance par femme dans le monde", 
-      color = "red")
+      paste0(round(mean(world_fertility$SP.DYN.TFRT.IN, na.rm = TRUE), 2), " enfants"), "par femme en moyenne dans le monde", 
+      icon = icon("earth"), color = "yellow")
   })
   
-  output$Nombre_semaine=renderValueBox({
+  output$Nombre_semaine <- renderValueBox({
     
     valueBox(
-      paste0(round(mean(bebe$Nbsem),2)," Semaine"), "Moyenne du Nombre de semaine du temps de gestation chez les femmes ", 
-      color = "red")
+      paste0(round(mean(bebe$Nbsem),2)," semaines"), "de temps de gestation moyen chez les femmes", 
+      icon = icon("baby"), color = "yellow")
   })
   
   
