@@ -151,20 +151,17 @@ dashboardPage(
             ), 
             tabPanel(
               title = "Prénoms au fur et à mesure des années", 
-              sidebarLayout(
-                sidebarPanel(
-                  textInput("prenom_bebe", "Prénom du bébé", value = "LAURENT")
-                ),
-                # Graphique des bébés 
-                mainPanel(
-                  plotlyOutput("plot_bebe"), 
-                  box(p("Indications : pour rechercher un prénom, écrivez le en majuscule et sans accent. "))
+              fluidRow(
+                textInput("prenom_bebe", "Prénom du bébé", value = "LAURENT"), 
+                box(p("Indications : pour rechercher un prénom, écrivez le en majuscule et sans accent. "))
+              ), 
+              fluidRow(
+                plotlyOutput("plot_bebe")
+              )
                 )
               )
             )
-          )
-        )
-      ), 
+          ), 
 
       tabItem(
         tabName = "bddmater", 
@@ -184,20 +181,13 @@ dashboardPage(
               tags$h6("L'objectif de cet onglet est de visualiser quelques statistiques descriptives"),
               fluidRow(
                 box(amChartsOutput(outputId = "amchart_boxplot")),
-                box(textOutput("texte_boxplot_age")),
+                box(textOutput("texte_boxplot_age"))
               ),
-                
               fluidRow(
-                column(width=9,box(amChartsOutput(outputId = "amchart_jauge"))),
-                column(width=3,box(amChartsOutput(outputId = "amchart_pie")))
-                
-                ), 
-              fluidRow(
+                box(amChartsOutput(outputId = "amchart_jauge")),
+                box(amChartsOutput(outputId = "amchart_pie")),
+              ),
                 box(amChartsOutput(outputId = "amchart_bar"))
-              )
-          
-              
-             
             ), 
             tabPanel(
               title = "Profil de la maman",

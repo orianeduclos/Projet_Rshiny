@@ -172,8 +172,32 @@ server <- function(input, output) {
     },
     content = function(file) {
       png(file)
+      ## Créer un corpus des prénoms sélectionnés
+      docs <- Corpus(VectorSource(prenom_data()$preusuel))
+      inspect(docs) # consulter l'interieur du document 
+      # transformer caractere spé en espace 
+      toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+      docs <- tm_map(docs, toSpace, "_")
+      inspect(docs)
+      docs <- tm_map(docs, content_transformer(tolower)) # transformer texte en minuscule
+      # Supprimer votre propre liste de mots non désirés
+      inspect(docs)
+      docs <- tm_map(docs, removeWords, c("prenoms rares")) 
+      inspect(docs)
+      
+      # Supprimer les espaces vides supplémentaires
+      docs <- tm_map(docs, stripWhitespace)
+      
+      ## Créer une matrice de termes-fréquences
+      dtm <- TermDocumentMatrix(docs)
+      m <- as.matrix(dtm)
+      v <- sort(rowSums(m),decreasing=TRUE)
+      d <- data.frame(word = names(v),freq=v)
+      
+      
+      # Générer le word cloud
       wordcloud(words = d$word, freq = d$freq, min.freq = input$freq,
-                max.words=input$max, colors = brewer.pal(8,"Dark2"), random.order=FALSE, rot.per=0.35)
+                max.words=input$max, colors = brewer.pal(8,"Set2"), random.order=FALSE, rot.per=0)
       dev.off()
     }
   )
