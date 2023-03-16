@@ -50,8 +50,8 @@ bebe_sexe <- bebe |>
                                  SEXEPARENT=="Agedupere"~"Pere"))
 
 
-Mode_travail <- as.data.frame(table(bebe$ModeTravai))
-colnames(Mode_travail) <- c("label","value")
+
+
 
 #### Code pour la carte taux de fertilité dans le monde ####
 fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2017, end = 2019)

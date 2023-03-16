@@ -40,15 +40,15 @@ dashboardPage(
     tabItems(
       tabItem(
         tabName = "accueil",
-        tags$h1("Bonjour b"),
-        tags$h2("Chiffres clés"),
-        
+        tags$h1("Bonjour bienvenue dans notre appplication de visualisation de la natalité"),
         fluidRow(
+          tags$h6("Les données sur les naissances permettent de comprendre les comportements de reproduction des populations et de planifier les services de santé en conséquence. Elles sont importantes pour les études démographiques, telles que la projection de la croissance de la population et la compréhension de la répartition géographique des naissances. De plus, ces données sont utilisées dans la recherche en santé publique pour mieux comprendre les facteurs qui influencent la santé maternelle et infantile, et pour développer de nouvelles interventions pour améliorer la santé des mères et des enfants."),
           valueBoxOutput("Taux_fertilite",width=4),
           valueBoxOutput("Age_moyen_maman_France",width=4),
           valueBoxOutput("Nombre_semaine",width=4)),
-        img(src = "bienvenue.jpg", height = "300", width = "300")
-      
+        # Ajouter une image GIF
+        tags$img(src = "https://media.giphy.com/media/26xBJyMTcwM7rUyPe/giphy.gif"),
+       
         
         ),
       tabItem(
@@ -181,6 +181,7 @@ dashboardPage(
             ),
             tabPanel(
               title = "Visualisation",
+              tags$h6("L'objectif de cet onglet est de visualiser quelques statistiques descriptives"),
               fluidRow(
                 box(amChartsOutput(outputId = "amchart_boxplot")),
                 box(textOutput("texte_boxplot_age")),
@@ -197,6 +198,21 @@ dashboardPage(
           
               
              
+            ), 
+            tabPanel(
+              title = "Profil de la maman",
+              tags$h6("L'objectif de cet onglet est de visualiser le poids du BB en fonction de la tranche de la maman"),
+              sidebarLayout(
+                sidebarPanel(
+                  h4("Sélectionnez les variables pour afficher les résultats:"),
+                  selectInput("age", "Âge de la maman :", choices = c("Tous" = "all", "Moins de 20 ans" = "lt20", "20-24 ans" = "20to24", "25-29 ans" = "25to29", "30-34 ans" = "30to34", "35-39 ans" = "35to39", "40 ans et plus" = "ge40"), selected = "all"),
+                ),
+                mainPanel(
+                  colourInput(inputId = "color", label = "Couleur :", value = '#FAE5D3'),
+                  plotlyOutput("graph")
+                )
+              )
+              
             )
           )
         )
@@ -219,7 +235,9 @@ dashboardPage(
                 mainPanel(
                   verbatimTextOutput(outputId = "RegSum"),
                   verbatimTextOutput(outputId = "IndPrint"),
-                  verbatimTextOutput(outputId = "DepPrint")
+                  verbatimTextOutput(outputId = "DepPrint"), 
+                  valueBoxOutput("r2",width=6),
+                  valueBoxOutput("fisher",width=6)
                 )
               )
             ), 

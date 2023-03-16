@@ -13,11 +13,7 @@ server <- function(input, output) {
     )
   })
   
-  prenom_data <- reactive({
-    data[data$annais == input$year_prenom, ]
-  })
 
-  
 #### Partie Acceuil ####
   
   ## BANNIERE CHIFFRE CLES
@@ -58,6 +54,8 @@ server <- function(input, output) {
     summary(taux_fecondite)
     
   })
+  
+  
   
  
   # Création de la carte leaflet
@@ -237,6 +235,38 @@ server <- function(input, output) {
       amOptions(export = TRUE, exportFormat = "JPG")
   })
   
+  ### Onglet profil maman###
+  
+  
+  
+  # Fonction pour filtrer les données en fonction des sélections de l'utilisateur
+  filter_data <- reactive({
+    bebe$age_class <- cut(bebe$AgedelaMere, breaks = c(0, 20, 25, 30, 35, 39, Inf), labels = c("lt20", "20to24", "25to29", "30to34", "35to39", "ge40"))
+    if (input$age == "all") {
+      return(bebe)
+    } else {
+      filtered_data <- bebe
+      if (input$age != "all") {
+        filtered_data <- filtered_data[filtered_data$age_class == input$age,]
+      }
+      
+      
+      return(filtered_data)
+    }
+  })
+  
+  # Fonction pour créer le graphique en fonction des données filtrées
+  output$graph <- renderPlotly({
+    data <- filter_data()
+    p <- ggplot(data, aes(x = PoidsBB)) + 
+      geom_density(fill = input$color, alpha = 0.3) +
+      xlab("Poids du bébé à la naissance (en onces)") + 
+      ylab("Densité") + 
+      ggtitle("Profil moyen de la maman à l'accouchement")
+    ggplotly(p)
+  })
+  
+  ### Onglet regression ###
   
   lm1 <- reactive({
     lm(reformulate(input$IndVar, input$DepVar), data = bebe)
@@ -256,6 +286,30 @@ server <- function(input, output) {
     
   })
   
+  output$r2=renderValueBox({
+    r2=summary(lm1())$r.squared
+    
+    if (r2<0.4){
+      color="red"
+        icon=icon("exclamation-triangle")
+    }else if(r2>0.4&r2<0.6){
+      color="orange"
+        icon=NULL
+    }else{
+      color="green"
+        icon=icon("check")
+    }
+    valueBox(
+      round(r2,2),"R2 du modèle", 
+      color = color,icon=icon)
+  })
+  
+  output$fisher=renderValueBox({
+    stat=summary(lm1())$fstatistic[[1]]
+    valueBox(
+      round(stat,2), "Statistique de fisher du modèle", 
+      color = "purple")
+  })
   
 
   
