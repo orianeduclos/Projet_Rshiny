@@ -23,6 +23,7 @@ library(reactablefmtr)
 library(corrplot) # affichage matrice de correlation
 library(car)
 library(rsconnect) # pour publier 
+library(corrplot)
 
 ### Base de données taux de fécondité ###
 

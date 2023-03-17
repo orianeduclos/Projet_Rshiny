@@ -202,5 +202,6 @@ leaflet() |>
               color = "#BDBDC3",
               weight = 1)
 
-
-
+var <- c("Nbsem", "TailleBB", "PoidsBB", "PoidsPlacenta", "Sexe")
+df <- bebepropre[var]
+corrplot(cor(df))

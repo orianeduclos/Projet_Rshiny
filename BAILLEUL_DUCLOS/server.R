@@ -103,7 +103,10 @@ server <- function(input, output) {
   output$graphique_pays_indiv <- renderPlotly({
     df <- taux_fecondite |>  dplyr::filter(LOCATION==input$pays_seul)
     ggplot(df)+aes(x=TIME,y=Value)+
-      geom_line(size = 1)+theme_bw()
+      geom_line(size = 1)+theme_bw() + 
+      labs(title = paste("Évolution du taux de fécondité du pays ", input$pays_seul),
+           x = "Années",
+           y = "Taux de fécondité")
   })
   
   # Texte pour les pays 
@@ -209,8 +212,29 @@ server <- function(input, output) {
       aes(x = annais, y = nombre) + 
       geom_line(size = 1) + 
       scale_color_hue(direction = 1) +
-      theme_minimal() 
+      labs(title = paste("Évolution du prénom", input$prenom_bebe),
+           x = "Année de naissance",
+           y = "Nombre de prénoms donnés")
   })
+  
+  # Exportation du graphique bébé 
+  
+  output$export_bebe <- downloadHandler(
+    filename = function() {
+      paste("Prénom", input$prenom_bebe, ".png", sep="")
+    },
+    content = function(file) {
+      png(file)
+      df <- prenom_annees |>  dplyr::filter(preusuel==input$prenom_bebe)
+      ggplot(df)+
+        aes(x = annais, y = nombre) + 
+        geom_line(size = 1) + 
+        scale_color_hue(direction = 1) +
+        labs(title = paste("Évolution du prénom", input$prenom_bebe),
+             x = "Année de naissance",
+             y = "Nombre de prénoms donnés")
+      dev.off()
+    })
   
   
 #### Partie Maternité ####  
@@ -293,7 +317,7 @@ server <- function(input, output) {
   ### Onglet regression ###
   
   lm1 <- reactive({
-    lm(reformulate(input$IndVar, input$DepVar), data = bebe)
+    lm(reformulate(input$IndVar, input$DepVar), data = bebepropre)
   })
   
   output$IndPrint <- renderPrint({input$IndVar})
@@ -348,6 +372,8 @@ server <- function(input, output) {
              "PoidsMere"= bebe$PoidsMere,
              "NbGrossess" =bebe$NbGrossess,
              "NbEnfants" =bebe$NbEnfants,
+             "TailleBB" = bebe$TailleBB,
+             "Nbsem" = bebe$Nbsem
      
              )
     })
@@ -361,9 +387,9 @@ server <- function(input, output) {
     
     
     nuage=ggplot(bebe) +
-      aes(x = variable_modele(), y = Nbsem) +
+      aes(x = PoidsBB, y = variable_modele()) +
       geom_point(shape = "circle", size = 1.5, colour = "#F08080") +
-      labs(x = input$variable_simple,y = "TailleBB",title = paste("Nuage de point de",input$variable_simple,"avec TailleBB")) +
+      labs(y = input$variable_simple,x = "PoidsBB",title = paste("Nuage de point de",input$variable_simple,"avec TailleBB")) +
       geom_smooth(method="lm")+
       
       theme_minimal()

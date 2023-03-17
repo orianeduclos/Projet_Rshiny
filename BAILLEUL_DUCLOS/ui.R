@@ -32,8 +32,8 @@ dashboardPage(
         menuSubItem("Traitement", tabName = "traitementfrance", icon = icon("flag"))),
       menuItem(" Dans une maternité", tabName = "mater", icon = icon("baby"),
         menuSubItem("Présentation BDD", tabName = "bddmater", icon = icon("database")), 
-        menuSubItem("Régression", tabName = "regressionmater", icon = icon("chart-line")),
-        menuSubItem("Régression simple", tabName = "regsimple", icon = icon("chart-line")))
+        menuSubItem("Régression simple", tabName = "regsimple", icon = icon("chart-line")),
+        menuSubItem("Régression multiple", tabName = "regressionmater", icon = icon("chart-line")))
     )
   ),
   dashboardBody(
@@ -153,7 +153,8 @@ dashboardPage(
               title = "Prénoms au fur et à mesure des années", 
               fluidRow(
                 textInput("prenom_bebe", "Prénom du bébé", value = "LAURENT"), 
-                box(p("Indications : pour rechercher un prénom, écrivez le en majuscule et sans accent. "))
+                box(p("Indications : pour rechercher un prénom, écrivez le en majuscule et sans accent. ")),
+                downloadButton(outputId="export_bebe",label= "Cliquez pour télécharger le graphique")
               ), 
               fluidRow(
                 plotlyOutput("plot_bebe")
@@ -220,7 +221,7 @@ dashboardPage(
                   p("Select the inputs for the Dependent Variable"),
                   selectInput(inputId = "DepVar", label = "Dependent Variables", multiple = FALSE, choices = list("PoidsBB", "TailleBB")),
                   p("Select the inputs for the Independent Variable"),
-                  checkboxGroupInput(inputId = "IndVar", label = "Independent Variables", choices = colnames(bebe), selected = "TailleBB")
+                  checkboxGroupInput(inputId = "IndVar", label = "Independent Variables", choices = list("PoidsBB", "TailleBB", "Nbsem", "PoidsPlacenta", "AgedelaMere", "NaissMere", "TailMere", "PoidsMere", "PoidsMere", "AgeduPere", "NaisPere", "TailPere", "PoidsPere", "NbGrossess", "NbEnfants", "NbIVG", "NbFC", "DureeTrava", "IMCMere"), selected = "TailleBB")
                 ),
                 mainPanel(
                   verbatimTextOutput(outputId = "RegSum"),
@@ -248,7 +249,7 @@ dashboardPage(
               radioGroupButtons(
                 inputId = "variable_simple",
                 label = "Choisissez la variable à mettre en relation avec le nombre de semaine de gestation",
-                choices = c( "TailleMere","TaillePere", "PoidsMere","NbGrossess","NbEnfants"),
+                choices = c( "TailleMere","TaillePere", "PoidsMere","NbGrossess","NbEnfants", "TailleBB", "Nbsem"),
                 individual = TRUE,
                 checkIcon = list(yes = tags$i(class = "fa fa-circle",style = "color: steelblue"),no = tags$i(class = "fa fa-circle-o",style = "color: steelblue"))),
               
