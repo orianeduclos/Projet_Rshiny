@@ -61,7 +61,7 @@ dashboardPage(
             ), 
             tabPanel(
               title = "Summary", 
-              verbatimTextOutput("summary_pays")
+              dataTableOutput("summary_pays")
             ),
           )
         )
@@ -108,7 +108,7 @@ dashboardPage(
             ), 
             tabPanel(
               title = "Summary", 
-              verbatimTextOutput("summary_france")
+              dataTableOutput("summary_france")
             )
           )
         )
@@ -175,7 +175,7 @@ dashboardPage(
             ), 
             tabPanel(
               title = "Summary", 
-              verbatimTextOutput("summary_bebe")
+              dataTableOutput("summary_bebe")
             ),
             tabPanel(
               title = "Visualisation",
