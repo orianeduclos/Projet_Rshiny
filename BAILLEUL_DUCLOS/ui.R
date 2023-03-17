@@ -228,7 +228,8 @@ dashboardPage(
                   verbatimTextOutput(outputId = "IndPrint"),
                   verbatimTextOutput(outputId = "DepPrint"), 
                   valueBoxOutput("r2",width=6),
-                  valueBoxOutput("fisher",width=6)
+                  valueBoxOutput("fisher",width=6),
+                  plotOutput(outputId = "matricecorr")
                 )
               )
             ), 

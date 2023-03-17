@@ -326,12 +326,10 @@ server <- function(input, output) {
   
   ## MATRICE DE CORRELATION DES VARIABLES DU MODELE
   
-  output$correlation <- renderPlot({
-    myvars <- input$IndVar
-    data_matcorr <- bebe[myvars]
-    mcor <- round(cor(data_matcorr),2)
-    corrplot(mcor, type="upper", order="hclust", tl.col="black", tl.srt=45,cex.main=0.9)
-    
+  output$matricecorr <- renderPlot({
+    var <- input$IndVar
+    df <- bebepropre[var]
+    corrplot(cor(df))
   })
   
   output$r2=renderValueBox({
