@@ -50,9 +50,9 @@ server <- function(input, output) {
                        "}")))
   })
   
-  output$summary_pays <- renderPrint({
-    summary(taux_fecondite)
-    
+  output$summary_pays <- renderDataTable({
+    summary(taux_fecondite, options = 
+              list(scrollX = TRUE))
   })
   
   
@@ -125,8 +125,9 @@ server <- function(input, output) {
                        "}")))
   })
   
-  output$summary_france <- renderPrint({
-    summary(prenom)
+  output$summary_france <- renderDataTable({
+    summary(prenom, options = 
+              list(scrollX = TRUE))
   })
   
   # Sélectionner les données en fonction de l'année choisie
@@ -249,8 +250,9 @@ server <- function(input, output) {
   })
   
   
-  output$summary_bebe <- renderPrint({
-    summary(bebe)
+  output$summary_bebe <- renderDataTable({
+    summary(bebe, options = 
+              list(scrollX = TRUE))
   })
   
   
