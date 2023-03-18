@@ -76,7 +76,7 @@ R Shiny\\
 Université de Rennes II : Master Mathématiques Appliquées, Statistiques}
 \author{Margaux Bailleul\\
 Oriane Duclos}
-\date{17 March, 2023}
+\date{17 mars, 2023}
 
 \begin{document}
 \maketitle
@@ -313,16 +313,32 @@ de travail.
 rencontrées}\label{difficultuxe9s-rencontruxe9es}}
 
 Nous avons chacune rencontré des difficultés en travaillant sur le
-projet. Nous allons ici vous les présenter : - Utilisation du package
+projet. Nous allons ici vous les présenter : * Utilisation du package
 formattable, association avec le package DT qui marchait très bien dans
 ma console mais impossible de le faire marcher dans l'application à
-cause d'une erreur html - Base de données fertility, impossible de
-sélectionner trop d'années car trop lourd - NA dans le choix des années
-avec la carte, on ne sait pas comment l'enlever - Voulait faire un
-bouton logout mais il fallait shiny server pro - Difficultés à publier à
-cause d'une de nos bases de données Ces difficultés nous ont permis de
-voir les limites de notre application et de nous remettre sans cesse en
-question.
+cause d'une erreur html * Base de données fertility, impossible de
+sélectionner trop d'années car trop lourd * NA dans le choix des années
+avec la carte, on ne sait pas comment l'enlever * Voulait faire un
+bouton logout mais il fallait shiny server pro * Difficultés à publier
+notre application : \textbf{Methode de resolution des problèmes} Pour
+trouver les erreurs nous avons essayer de publier une application plus
+basique et nous avons rajouter le code au fur et à mesure. Nous avons
+mis du temps à réaliser cette étape car cela met du temps de verifier
+étape par étape que notre application fonctionne en local et de publier.
+aPR7 \textbf{Problème non resolu} - Problème racontrer au niveau de la
+visualisation des bases de données au format DT sur nos grosses bases de
+données ( prenom et taux de fecondité) - Problème rencontré lorsque que
+l'on fait appel à un serveur externe type API qui nous permet de réalisé
+une carte du taux de fertilité avec le package WDI
+
+\textbf{Les hypothèses du problème} - Version shiny.io n'a pas les memes
+versions de packages que celles qu'on utilise en local - Mauvais import
+de base de données du a un mauvais trie (erreur manquante\ldots) -
+Shiny.io protege son serveur et ne peut pas publier des applications qui
+font appel à des serveurs externes
+
+Ces difficultés nous ont permis de voir les limites de notre application
+et de nous remettre sans cesse en question.
 
 \hypertarget{conlusion}{%
 \section{Conlusion}\label{conlusion}}

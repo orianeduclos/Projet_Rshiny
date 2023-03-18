@@ -32,7 +32,7 @@ dtm <- TermDocumentMatrix(docs)
 m <- as.matrix(dtm)
 v <- sort(rowSums(m),decreasing=TRUE)
 d <- data.frame(word = names(v),freq=v)
-View(d)
+View(d) 
 head(d, 10)
 
 #generer le nuage de mots
