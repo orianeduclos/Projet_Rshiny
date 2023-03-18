@@ -3,6 +3,7 @@ title: "Les Naissances"
 subtitle: | 
     | Projet de visualisation de données
     | R Shiny
+    | Le contexte, les données, ce à quoi sert notre appli
     | Université de Rennes II : Master Mathématiques Appliquées, Statistiques 
 author: | 
     | Margaux Bailleul
@@ -26,17 +27,14 @@ output:
 
 ---
 
-le contexte, les données, ce à quoi sert votre appli
-
-Lien de l'application : 
-
+Lien de l'application : https://oxsb16-oriane-duclos.shinyapps.io/BAILLEUL_DUCLOS/  
 Lien du github : https://github.com/orianeduclos/Projet_Rshiny.git
 
 # Introduction 
 
 ## Pourquoi avons-nous choisi de travailler sur les naissances ? 
 
-Les données sur les naissances permettent de comprendre les comportements de reproduction des populations et de planifier les services de santé en conséquence. Elles sont importantes pour les études démographiques, telles que la projection de la croissance de la population et la compréhension de la répartition géographique des naissances. De plus, ces données sont utilisées dans la recherche en santé publique pour mieux comprendre les facteurs qui influencent la santé maternelle et infantile, et pour développer de nouvelles interventions pour améliorer la santé des mères et des enfants.
+Les données sur les naissances permettent de comprendre les comportements de reproduction des populations et de planifier les services de santé en conséquence. Elles sont importantes pour les études démographiques, telles que la projection de la croissance de la population et la compréhension de la répartition géographique des naissances. De plus, ces données sont utilisées dans la recherche en santé publique pour mieux comprendre les facteurs qui influencent la santé maternelle et infantile, et pour développer de nouvelles interventions pour améliorer la santé des mères et des enfants.  
 
 Cela en fait donc un sujet très intéressant et qui peut présenter énormément de possibilités de traitements visuels : cartes, régression linéaire, graphiques...
 
@@ -46,26 +44,29 @@ Cela en fait donc un sujet très intéressant et qui peut présenter énormémen
 Notre application web se veut tout d'abord intercative. Celle ci nous permet de visualiser et d'analyser des données à l'aide de R. Shiny permet de créer des tableaux de bord interactifs, des graphiques interactifs et des visualisations de données dynamiques, qui permettent aux utilisateurs de filtrer, trier, explorer et analyser les données en temps réel. Elle se veut également simple d'utilisation.
 Nous voulions traiter les naissances à différentes échelles. En effet, à travers nos différentes bases de données, les traitement varient énormément. 
 
-## Présentation des différentes bases de données
+## Présentation des différentes bases de données et de leurs usages 
+
+### Base de données bebe 
+
+
+Il s'agit d'une base de donnée que nous avons utilisé dans le cadre du cours de "Logiciel avancé" avec Nicolas Jegou. Nous avons des variables pertinantes en ce qui concerne le poids, la taille de la mère et du bébé par exemple. 
+
+**Tri de bebe** : Valeur manquante 
+Nous avons decider de faire un tri sur les individus non totalement renseignés et d'utiliser une base de données sans NA.  
+
+Nous avons decider d'utiliser 2 bases de données pour présenter la partie monde car nous voulions à la fois travailler avec notre propre base de donnée "taux_fécondité" et essayer l'utiliser un serveur externe à l'aide d'un package "WDI". Cette démarche nous a été guider après avoir parcouru la documentation sur les cartes. Effectivement, nous utilisons seulement le taux de fertilité pour réaliser la carte.  
+
+### Base de données taux_fecondité
+
+La base de données taux de fécondité nous indique la localisation, l'indicateur, la fréquence, le temps et la valeur.
 
 ### Base de données WDI
 
 La bibliothèque WDI (World Development Indicators) est un package R qui permet de télécharger et d'explorer les indicateurs de développement économique et social du monde entier. Cette bibliothèque est basée sur la base de données de la Banque mondiale, qui comprend une grande quantité de données sur les pays du monde entier. Nous utilisons cette library pour pouvoir montrer à l'utilisateur le taux de fertilité dans le monde en fonction des années. De plus, nous avons que 2019, 2018 et 2017 en choix pour la variable année. Il s'agit d'une library qui est lourde et met du temps à charger or, si nous laissons un plus garnd choix d'année, cela ralentit considerablement le chargement de l'application. 
 
-### Base de données bebe 
-
-Il s'agit d'une base de donnée que nous avons utilisé dans le cadre du cours de "Logiciel avancé" avec Nicolas Jegou. Nous avons des variables pertinantes en ce qui concerne le poids, la taille de la mère et du bébé par exemple. 
-
-**Tri de bebe** : Valeur manquante 
-Nous avons decider de faire un tri sur les individus non totalement renseignés et d'utiliser une base de données sans NA. 
-
-### Base de données taux_fecondité
-
-La base de données taux de fécondité nous indique À COMPLETER
-
 ### Base de données dpt2021
 
-Cette base de données comporte les prénoms donnés à des bébés de 1900 à 2014 en France. Nous avons tout de suite vu la possibilité de faire de la visualisation avec cette base, étant donné la grande période sur laquelle elle s'étend, et étant en lien direct avec les naissances. 
+Cette base de données comporte les prénoms donnés à des bébés de 1900 à 2021 en France. Nous avons tout de suite vu la possibilité de faire de la visualisation avec cette base, étant donné la grande période sur laquelle elle s'étend, et étant en lien direct avec les naissances. 
 
 # Etude des naissances
 
@@ -87,7 +88,7 @@ Le graphique présentant tous les pays n'est cependant pas suffisant. En effet, 
 
 ### Worldcoud
 
-Le nuage de mots ou « wordcloud » en anglais est un outil de visualisation qui permet au travers d’une image de percevoir très rapidement quels sont les mots qui sont les plus fréquents au sein d’un texte ou un corpus de texte. L'utilisateur peut en un clic sélectionner une année et observer quels sont les prénoms qui ont été le plus fréquemment donnés sur cette année, en lui laissant le choix de la fréquence d'apparition du prénom ainsi que le nombre de prénoms qui seront présents dans le wordcloud. 
+Le nuage de mots ou « wordcloud » en anglais est un outil de visualisation qui permet au travers d’une image de percevoir très rapidement quels sont les mots qui sont les plus fréquents au sein d’un texte ou un corpus de texte. L'utilisateur peut en un clic sélectionner une année et observer quels sont les prénoms qui ont été le plus fréquemment donnés sur cette année, en lui laissant le choix de la fréquence d'apparition du prénom ainsi que le nombre de prénoms qui seront présents dans le wordcloud.  
 
 Wordcloud est un widget html. Cela signifie que votre wordcloud sera sorti dans un HTMLformat.
 Nous avons décider de mettre en place un bouton qui permet à l'utilisateur de l'exporter en tant que png image. 
@@ -98,31 +99,32 @@ Cet onglet est sûrement le plus interactif avec l'utilisateur. Nous sommes en e
 
 ## À l'échelle d'une maternité 
 
+### Visualisation 
+Cet onglet nous permet de visualiser rapidement les statistiques descriptives intéractives de base avec l'utilisation du package RamCharts. Nous avons integrer différents types de répresentation (boxplot, jauge..). Cela nous as permis d'utiliser un grand panel des fonctionnalités de ce package. 
+
 ### Regression simple
 
-Nous allons etudier le poids de naissance des bébés. 
+Nous allons etudier le poids de naissance des bébés (en grammes).   
+Les variables explicatives sont toutes les variables quantitatifs de notre base de données. 
 
-Les variables sont :  
+Nous considérons le modèle suivant  en fonction de ce que l'utilisateur choisira: 
 
-* le poids de naissance du bébé (en grammes) (**PoidsBB**)
+$Y_{PoidsBB} = \beta0 + \beta1 X1_{ChoixUtilisateur}  + \epsilon$ 
 
-* l'âge de la mère (**AgedeleMere**)
-
-* le poids de la mère en ??? (**PoidsMere**)
-
-* la taille du bébé (en centimètre) (**TailleBB**)
-
-* Sexe du bébé (fille = 0, garçon = 1) : transformation de la variable **Sexe** en varaible indicatrice 
-
-Nous considérons le modèle suivant : 
-
-$Y_{PoidsBB} = \beta0 + \beta1 X1_{AgedelaMere} + \beta2 X2_{PoidsMere} + \beta3X3_{TailleBB} + \beta4X4_{Sexe} + \epsilon$ 
-
-Avant d'estimer les paramêtres, nous calculons la matrice de corrélation et nous présenterons un diagramme de dispersion de toutes les pairs de ces variables. Ceci permet de visualiser la relation entre la variable à expliquer et chacune des variables explicatives et de juger de la correlation entre les variables explicatives 
+Nous représentons en clic bouton le choix des variables. Puis, en fonction de la variable choisit, l'utilisateur peut visualiser en histogramme sa variable et le graphique de régression. 
 
 ### Régression multiple
 
-L'utilisateur a le choix de faire une régression multiple en choisissant les différentes variables explicatives. Il n'a pas le choix concernant la variable à explliquer ? 
+L'utilisateur a le choix de faire une régression multiple en choisissant les différentes variables explicatives. Il pourra, dès que le choix est fait, visualiser :
+
+* Matrice de corrélation : la matrice de corrélation indique les valeurs de corrélation, qui mesurent le degré de relation linéaire entre chaque paire de variables. Les valeurs de corrélation peuvent être comprises entre -1 et +1. Si les deux variables ont tendance à augmenter et à diminuer en même temps, la valeur de corrélation est positive.
+
+* Le r² : le coefficient de détermination est un indicateur utilisé en statistiques pour juger de la qualité d'une régression linéaire. Ici, l'utilisateur pour voir avec un code couleur la qualité du modele. Plus la régression linéaire est en adéquation avec les données collectées.  
+-Vert :  R² supperieur ou égale à 0.6. 
+-Orange :  R² est compris entre 0.4 et 0.6   
+-Rouge : R² est inferieur à 0.4   
+
+* Statsique de Fisher 
 
 # Travail en binôme 
 
@@ -142,22 +144,29 @@ Nous avons beaucoup aimé travailler sur le thème des naissances. Avoir différ
 
 Nous avons chacune rencontré des difficultés en travaillant sur le projet. Nous allons ici vous les présenter :
 
-* Utilisation du package formattable, association avec le package DT qui marchait très bien dans ma console mais impossible de le faire marcher dans l'application à cause d'une erreur html
-* Base de données fertility, impossible de sélectionner trop d'années car trop lourd 
-* NA dans le choix des années avec la carte, on ne sait pas comment l'enlever 
-* Voulait faire un bouton logout mais il fallait shiny server pro 
-* Difficultés à publier notre application : 
+1. Utilisation du package formattable, association avec le package DT qui marchait très bien dans ma console mais impossible de le faire marcher dans l'application à cause d'une erreur html
+2. Base de données fertility, impossible de sélectionner trop d'années car trop lourd 
+3. NA dans le choix des années avec la carte, on ne sait pas comment l'enlever 
+4. Voulait faire un bouton logout mais il fallait shiny server pro 
+5. Difficultés à publier notre application : <br>
+
 **Methode de resolution des problèmes**
-Pour trouver les erreurs nous  avons essayer de publier une application plus basique et nous avons rajouter le code au fur et à mesure. Nous avons mis du temps à réaliser cette étape car cela met du temps de verifier  étape par étape que  notre application fonctionne en  local et de publier. 
-aPR7
+Pour trouver les erreurs nous  avons essayer de publier une application plus basique et nous avons rajouter le code au fur et à mesure. Nous avons mis du temps à réaliser cette étape car cela met du temps de verifier  étape par étape que  notre application fonctionne en  local et de publier. Nous avons utiliser  le code 
+
+```{r eval=FALSE}
+rsconnect::showLogs() #fonction pour afficher les messages du journal d'une application déployée
+```
+
+<br>
 **Problème non resolu**
- - Problème racontrer au niveau de la visualisation des bases de données au format DT sur nos grosses bases de données ( prenom et taux de fecondité)
- - Problème rencontré lorsque que l'on fait appel à un serveur externe type API qui nous permet de réalisé une carte du taux de fertilité avec le package WDI
- 
+* Problème racontrer au niveau de la visualisation des bases de données au format DT sur nos grosses bases de données (prenom et taux de fecondité). L'une d'entre elle fait 76Mo.
+* Problème rencontré lorsque que l'on fait appel à un serveur externe type API qui nous permet de réalisé une carte du taux de fertilité avec le package WDI
+
+<br>
+
 **Les hypothèses du problème** 
- - Version shiny.io n'a pas les memes versions de packages que celles qu'on utilise en local 
- - Mauvais import de base de données du a un mauvais trie (erreur manquante...)
- - Shiny.io protege son serveur et ne peut pas publier des applications qui font appel à des serveurs externes 
+* Version shiny.io n'a pas les memes versions de packages que celles qu'on utilise en local 
+* Shiny.io protege son serveur et ne peut pas publier des applications qui font appel à des serveurs externes
 
 
 Ces difficultés nous ont permis de voir les limites de notre application et de nous remettre sans cesse en question. 
