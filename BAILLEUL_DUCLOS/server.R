@@ -90,13 +90,13 @@ server <- function(input, output) {
   output$graphique_pays <- renderHighchart({
     hchart(
       taux_fecondite, "line", 
-      hcaes(x = TIME, y =  Value, group = LOCATION)
-    )
-  })
-  
-  # Texte pour les pays 
-  output$texte_plsrs_pays <- renderText({
-    paste("Nous remarquons que blabla")
+      hcaes(x = TIME, y =  Value, group = LOCATION),
+    ) |> 
+      hc_title(text = "Taux de fécondité des pays du monde en fonction des années") |> 
+      hc_xAxis(title = list(text = "<b>Années</b>"), lineWidth = 2, 
+               lineColor = rgb(0, 0, 0)) |> 
+      hc_yAxis(title = list(text = "<b>Valeur du taux de fécondité</b>"), lineWidth= 2, 
+               lineColor = rgb(0, 0, 0), gridLineColor = rgb(0, 0, 0))
   })
   
   # Graphique dans lequel on peut choisir le pays 
@@ -104,14 +104,9 @@ server <- function(input, output) {
     df <- taux_fecondite |>  dplyr::filter(LOCATION==input$pays_seul)
     ggplot(df)+aes(x=TIME,y=Value)+
       geom_line(size = 1)+theme_bw() + 
-      labs(title = paste("Évolution du taux de fécondité du pays ", input$pays_seul),
+      labs(title = paste("Évolution du taux de fécondité du pays :", input$pays_seul),
            x = "Années",
            y = "Taux de fécondité")
-  })
-  
-  # Texte pour les pays 
-  output$texte_pays_seul <- renderText({
-    paste("Nous remarquons que blabla", input$pays_seul)
   })
   
 #### Partie France #### 
@@ -256,33 +251,25 @@ server <- function(input, output) {
   })
   
   
-  ### Onglet visualsiation  
+  ### Onglet visualisation  
   output$amchart_boxplot <- renderAmCharts({
     amBoxplot(AGEPARENT ~ Sexe_parent , col = "pink", data =bebe_sexe, ylab="Age du parent", main= "Boxplot de l'age du parent en fonction du sexe")
   })
   
-  
-  output$texte_boxplot_age <- renderText({
-    paste("Nous remarquons que blabla")
-  })
-  
   output$amchart_jauge <- renderAmCharts({
-    amAngularGauge(x = round(mean(bebe$Nbsem)), main= "Nombre de semaine de gestation moyenne") |> 
-      amOptions(export = TRUE, exportFormat = "JPG")
+    amAngularGauge(x = round(mean(bebe$Nbsem)), main= "Nombre de semaine de gestation moyenne")
   })
   
   output$amchart_bar <- renderAmCharts({
     Mode_travail <- as.data.frame(table(bebe$ModeTravai))
     colnames(Mode_travail) <- c("label","value")
-    amBarplot(x = "label", y = "value", data = Mode_travail, horiz = TRUE) |> 
-      amOptions(export = TRUE, exportFormat = "JPG")
+    amBarplot(x = "label", y = "value", data = Mode_travail, horiz = TRUE, main = "Mode de travail")
   })
   
   output$amchart_pie <- renderAmCharts({
     Mode_accouchement <- as.data.frame(table(bebe$ModeAccouc))
     colnames(Mode_accouchement) <- c("label","value")
-    amPie(data=Mode_accouchement, main="Mode d'accouchement")|> 
-      amOptions(export = TRUE, exportFormat = "JPG")
+    amPie(data=Mode_accouchement, main="Mode d'accouchement")
   })
   
   ### Onglet profil maman###
@@ -310,7 +297,7 @@ server <- function(input, output) {
     data <- filter_data()
     p <- ggplot(data, aes(x = PoidsBB)) + 
       geom_density(fill = input$color, alpha = 0.3) +
-      xlab("Poids du bébé à la naissance (en onces)") + 
+      xlab("Poids du bébé à la naissance (en grammes)") + 
       ylab("Densité") + 
       ggtitle("Profil moyen de la maman à l'accouchement")
     ggplotly(p)
@@ -367,13 +354,23 @@ server <- function(input, output) {
     variable_modele<- reactive({
       switch(input$variable_simple,
              
-             "TailleMere" = bebe$TailMere,
-             "TaillePere" = bebe$TailPere, 
+             "TailMere" = bebe$TailMere,
+             "TailPere" = bebe$TailPere, 
              "PoidsMere"= bebe$PoidsMere,
              "NbGrossess" =bebe$NbGrossess,
              "NbEnfants" =bebe$NbEnfants,
              "TailleBB" = bebe$TailleBB,
-             "Nbsem" = bebe$Nbsem
+             "Nbsem" = bebe$Nbsem, 
+             "PoidsPlacenta" = bebe$PoidsPlacenta, 
+             "AgedelaMere" = bebe$AgedelaMere,
+             "NaissMere" = bebe$NaissMere,
+             "Agedupere" = bebe$Agedupere, 
+             "NaisPere" = bebe$NaisPere, 
+             "PoidsPere" = bebe$PoidsPere, 
+             "NbIVG" = bebe$NbIVG, 
+             "NbFC" = bebe$NbFC, 
+             "DureeTrava" = bebe$DureeTrava, 
+             "IMCMere" = bebe$IMCMere
      
              )
     })
