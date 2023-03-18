@@ -31,7 +31,8 @@ dashboardPage(
         menuSubItem("Présentation BDD", tabName = "bddfrance", icon = icon("database")), 
         menuSubItem("Traitement", tabName = "traitementfrance", icon = icon("flag"))),
       menuItem(" Dans une maternité", tabName = "mater", icon = icon("baby"),
-        menuSubItem("Présentation BDD", tabName = "bddmater", icon = icon("database")), 
+        menuSubItem("Présentation BDD", tabName = "bddmater", icon = icon("database")),        
+        menuSubItem("Visualisation", tabName = "visu_bddmater", icon = icon("eye")), 
         menuSubItem("Régression simple", tabName = "regsimple", icon = icon("chart-line")),
         menuSubItem("Régression multiple", tabName = "regressionmater", icon = icon("chart-line")))
     )
@@ -40,7 +41,7 @@ dashboardPage(
     tabItems(
       tabItem(
         tabName = "accueil",
-        tags$h1("Bonjour bienvenue dans notre appplication de visualisation de la natalité"),
+        tags$h1("Bonjour ! Bienvenue dans notre appplication de visualisation de la natalité"),
         fluidRow(
           tags$h6("Les données sur les naissances permettent de comprendre les comportements de reproduction des populations et de planifier les services de santé en conséquence. Elles sont importantes pour les études démographiques, telles que la projection de la croissance de la population et la compréhension de la répartition géographique des naissances. De plus, ces données sont utilisées dans la recherche en santé publique pour mieux comprendre les facteurs qui influencent la santé maternelle et infantile, et pour développer de nouvelles interventions pour améliorer la santé des mères et des enfants."),
           valueBoxOutput("Taux_fertilite",width=4),
@@ -75,24 +76,28 @@ dashboardPage(
             tabPanel(
               title = "Carte", 
               sidebarPanel(
-                selectInput(inputId = "Year", label = "year", choices = unique(world_fertility$year))
+                selectInput(inputId = "Year", label = "Années", choices = unique(world_fertility$year))
               ),
+              br(),
+              p(strong("Taux de fertilité des pays du monde")),
+              br(),
               leafletOutput("map"),
               br(),
              textOutput("texte_carte")
             ), 
             tabPanel(
               title = "Graphique sur les pays", 
-              box(highchartOutput("graphique_pays")), 
-              box(textOutput("texte_plsrs_pays"))
+                highchartOutput("graphique_pays"), 
+              fluidRow(
+                p(strong("Interprétation : "),"nous remarquons une tendance globale à la baisse pour tous les pays au fur et à mesure des années. L'Arabie Saoudite se démarque des autres car elle a un taux de fécondité plus élevé.")
+              )
             ), 
             tabPanel(
               title = "Graphique sur un pays", 
-              sidebarPanel(
-                selectInput(inputId = "pays_seul", label = "Choisissez un pays", choices = unique(taux_fecondite$LOCATION))
-              ),
-              box(plotlyOutput("graphique_pays_indiv")), 
-              box(textOutput("texte_pays_seul"))
+                selectInput(inputId = "pays_seul", label = "Choisissez un pays", choices = unique(taux_fecondite$LOCATION)),
+              plotlyOutput("graphique_pays_indiv"), 
+              br(),
+              p("Nous remarquons que pour n'importe quel pays, le taux de fertilité a baissé entre 1960 et 2021. Cela nous permet de voir plus en détail chaque pays, l'onglet précédent ayant une échelle plus grande.")
             )
           )
         )
@@ -137,15 +142,15 @@ dashboardPage(
                               "Nombre Maximal de mots:",
                               min = 1,  max = 500,  value = 100),
                   hr(),
-                  ##### À REVOIR #####
-                  actionButton("update", "Change"),
-                  downloadButton(outputId="export",label= "Cliquez pour sauvegarder le graphique")
+                  actionButton("update", "Change")
                   
                 ),
                 
                 # Affichage du word cloud
                 mainPanel(
-                  plotOutput("wordcloud")
+                  plotOutput("wordcloud"), 
+                  br(),
+                  downloadButton(outputId="export",label= "Cliquez pour télécharger le graphique")
                 )
               )
             ), 
@@ -153,11 +158,12 @@ dashboardPage(
               title = "Prénoms au fur et à mesure des années", 
               fluidRow(
                 textInput("prenom_bebe", "Prénom du bébé", value = "LAURENT"), 
-                box(p("Indications : pour rechercher un prénom, écrivez le en majuscule et sans accent. ")),
-                downloadButton(outputId="export_bebe",label= "Cliquez pour télécharger le graphique")
+                p(strong("Indications")," : pour rechercher un prénom, écrivez le en majuscule et sans accent. ")
               ), 
               fluidRow(
-                plotlyOutput("plot_bebe")
+                plotlyOutput("plot_bebe"), 
+                br(),
+                downloadButton(outputId="export_bebe",label= "Cliquez pour télécharger le graphique")
               )
                 )
               )
@@ -176,19 +182,31 @@ dashboardPage(
             tabPanel(
               title = "Summary", 
               dataTableOutput("summary_bebe")
-            ),
+            )
+          )
+        )
+      ), 
+      tabItem(
+        tabName = "visu_bddmater", 
+        fluidPage(
+          tabsetPanel(
             tabPanel(
               title = "Visualisation",
               tags$h6("L'objectif de cet onglet est de visualiser quelques statistiques descriptives"),
               fluidRow(
-                box(amChartsOutput(outputId = "amchart_boxplot")),
-                box(textOutput("texte_boxplot_age"))
+                column(
+                  6, amChartsOutput(outputId = "amchart_boxplot")
+                ),
+                column(
+                  6, amChartsOutput(outputId = "amchart_jauge")
+                )
               ),
+              br(),
               fluidRow(
-                box(amChartsOutput(outputId = "amchart_jauge")),
-                box(amChartsOutput(outputId = "amchart_pie")),
+                  amChartsOutput(outputId = "amchart_pie"), 
+                  br()
               ),
-                box(amChartsOutput(outputId = "amchart_bar"))
+              amChartsOutput(outputId = "amchart_bar")
             ), 
             tabPanel(
               title = "Profil de la maman",
@@ -207,21 +225,18 @@ dashboardPage(
             )
           )
         )
-      ), 
-      
+      ),
       tabItem(
         tabName = "regressionmater", 
         tags$h6("L'objectif de cet onglet est de visualiser les relations existantes entre les différentes variables de notre modèle. Vous trouverez une regression simple et une regression multiple"),
         fluidPage(
-          tabsetPanel(
-            tabPanel(
               title = "Régression sortie", 
               sidebarLayout(
                 sidebarPanel(
-                  p("Select the inputs for the Dependent Variable"),
+                  p("Sélectionner la variable à expliquer"),
                   selectInput(inputId = "DepVar", label = "Dependent Variables", multiple = FALSE, choices = list("PoidsBB", "TailleBB")),
-                  p("Select the inputs for the Independent Variable"),
-                  checkboxGroupInput(inputId = "IndVar", label = "Independent Variables", choices = list("PoidsBB", "TailleBB", "Nbsem", "PoidsPlacenta", "AgedelaMere", "NaissMere", "TailMere", "PoidsMere", "PoidsMere", "AgeduPere", "NaisPere", "TailPere", "PoidsPere", "NbGrossess", "NbEnfants", "NbIVG", "NbFC", "DureeTrava", "IMCMere"), selected = "TailleBB")
+                  p("Sélectionner les variables explicatives"),
+                  checkboxGroupInput(inputId = "IndVar", label = "Independent Variables", choices = list("PoidsBB", "TailleBB", "Nbsem", "PoidsPlacenta", "AgedelaMere", "NaissMere", "TailMere", "PoidsMere", "Agedupere", "NaisPere", "TailPere", "PoidsPere", "NbGrossess", "NbEnfants", "NbIVG", "NbFC", "DureeTrava", "IMCMere"), selected = "TailleBB")
                 ),
                 mainPanel(
                   verbatimTextOutput(outputId = "RegSum"),
@@ -232,25 +247,15 @@ dashboardPage(
                   plotOutput(outputId = "matricecorr")
                 )
               )
-            ), 
-            tabPanel(
-              title = "Régression graphique",
-              
-              box(
-      title = "Analyse des corrélations des régresseurs du modèle", solidHeader=T,
-                       width = 600,height=700, collapsible = T,
-                       plotOutput("correlation")),
-            )
-          )
         )
       ),
       tabItem(tabName = "regsimple", 
-              tags$h6("L'objectif de cet onglet est de visualiser les relations existantes entre les différentes variables de notre modèle vis à vis de la variable 'Nombre de semaine de gestation."),
+              tags$h6("L'objectif de cet onglet est de visualiser les relations possiblement existantes entre les différentes variables de notre modèle vis à vis de la variable PoidsBB. "),
               
               radioGroupButtons(
                 inputId = "variable_simple",
-                label = "Choisissez la variable à mettre en relation avec le nombre de semaine de gestation",
-                choices = c( "TailleMere","TaillePere", "PoidsMere","NbGrossess","NbEnfants", "TailleBB", "Nbsem"),
+                label = "Choisissez la variable à mettre en relation avec le poids du bébé",
+                choices = c("TailleBB", "Nbsem", "PoidsPlacenta", "AgedelaMere", "NaissMere", "TailMere", "PoidsMere", "Agedupere", "NaisPere", "TailPere", "PoidsPere", "NbGrossess", "NbEnfants", "NbIVG", "NbFC", "DureeTrava", "IMCMere"),
                 individual = TRUE,
                 checkIcon = list(yes = tags$i(class = "fa fa-circle",style = "color: steelblue"),no = tags$i(class = "fa fa-circle-o",style = "color: steelblue"))),
               
@@ -260,7 +265,6 @@ dashboardPage(
                 choices = c(`<i class='fa fa-bar-chart'></i>` = "bar", `<i class='fa fa-line-chart'></i>` = "line"),
                 justified = TRUE),
               
-          
               
               box(
                 title = "", solidHeader=T,

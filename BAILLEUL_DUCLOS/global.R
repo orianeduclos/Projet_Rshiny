@@ -50,10 +50,6 @@ bebe_sexe <- bebe |>
   mutate(Sexe_parent = case_when(SEXEPARENT=="AgedelaMere"~"Mere",
                                  SEXEPARENT=="Agedupere"~"Pere"))
 
-
-
-
-
 #### Code pour la carte taux de fertilité dans le monde ####
 fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2017, end = 2019)
 
@@ -63,7 +59,7 @@ world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
 
 pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
 
-### BASE DE DONNEE PRENOM 
+### BASE DE DONNEE PRENOM ###
 prenom <- read.csv("data/dpt2021.csv", header= TRUE, sep=';')
 
 prenom_annees <- subset(prenom, (preusuel != "_PRENOMS_RARES") & (annais != "XXXX"))
