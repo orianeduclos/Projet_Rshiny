@@ -177,7 +177,7 @@ rsconnect::showLogs() #fonction pour afficher les messages du journal d'une appl
 
 **Résolution de la publication**
 
-Ces difficultés nous ont permis de voir les limites de notre application et de nous remettre sans cesse en question. Concernant la publication de l'application, nous avons donc trouvé les lignes de code qui nous empêchaient de la publier. Nous avons alors mis en # ces lignes, publié l'application, et enlevé les # afin que l'application "entière" puisse être visualisée si nous la lançons en local. Nous n'avons pas publié notre carte qui fait appel au server externe WDI la table de notre base de donnée taux de fécondité en affichage DT ainsi que son summary. L'application publiée n'est donc pas complète, mais elle est tout de même publiée. 
+Ces difficultés nous ont permis de voir les limites de notre application et de nous remettre sans cesse en question. Concernant la publication de l'application, nous avons donc trouvé les lignes de code qui nous empêchaient de la publier. Nous avons alors mis en # ces lignes, publié l'application, et enlevé les # afin que l'application "entière" puisse être visualisée si nous la lançons en local. Nous n'avons pas publié notre carte qui fait appel au server externe WDI, la table de notre base de donnée taux de fécondité en affichage DT ainsi que son summary. L'application publiée n'est donc pas complète, mais elle est tout de même publiée. 
 
 # Conlusion 
 
