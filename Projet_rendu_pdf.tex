@@ -115,7 +115,7 @@ Le contexte, les données, ce à quoi sert notre appli\\
 Université de Rennes II : Master Mathématiques Appliquées, Statistiques}
 \author{Margaux Bailleul\\
 Oriane Duclos}
-\date{18 March, 2023}
+\date{19 March, 2023}
 
 \begin{document}
 \maketitle
@@ -124,6 +124,8 @@ Oriane Duclos}
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
 Lien de l'application :
 \url{https://oxsb16-oriane-duclos.shinyapps.io/BAILLEUL_DUCLOS/}\\
 Lien du github : \url{https://github.com/orianeduclos/Projet_Rshiny.git}
@@ -153,14 +155,18 @@ linéaire, graphiques\ldots{}
 \subsection{À quoi sert notre application
 ?}\label{uxe0-quoi-sert-notre-application}}
 
-Notre application web se veut tout d'abord intercative. Celle ci nous
-permet de visualiser et d'analyser des données à l'aide de R. Shiny
-permet de créer des tableaux de bord interactifs, des graphiques
-interactifs et des visualisations de données dynamiques, qui permettent
-aux utilisateurs de filtrer, trier, explorer et analyser les données en
-temps réel. Elle se veut également simple d'utilisation. Nous voulions
-traiter les naissances à différentes échelles. En effet, à travers nos
-différentes bases de données, les traitement varient énormément.
+Notre application veut rendre la compréhension des naissances dans le
+monde de manière accessible et à travers différents échelles. C'est pour
+cela que nous avons rendu l'application intercative au maximum, en nous
+permettant de visualiser et d'analyser des données. Cela va être rendu
+possible grâce à l'utilisation de RShiny, qui permet de créer des
+tableaux de bord interactifs, des graphiques interactifs et des
+visualisations de données dynamiques, permettant aux utilisateurs de
+filtrer, trier, explorer et analyser les données en temps réel. Elle se
+veut également simple d'utilisation avec différents onglets traitant
+chacun d'une échelle différente. L'application veut répondre à la
+problématique suivante : comment les naissances évoluent-elles à
+différentes échelles ?
 
 \hypertarget{pruxe9sentation-des-diffuxe9rentes-bases-de-donnuxe9es-et-de-leurs-usages}{%
 \subsection{Présentation des différentes bases de données et de leurs
@@ -169,28 +175,24 @@ usages}\label{pruxe9sentation-des-diffuxe9rentes-bases-de-donnuxe9es-et-de-leurs
 \hypertarget{base-de-donnuxe9es-bebe}{%
 \subsubsection{Base de données bebe}\label{base-de-donnuxe9es-bebe}}
 
-Il s'agit d'une base de donnée que nous avons utilisé dans le cadre du
-cours de ``Logiciel avancé'' avec Nicolas Jegou. Nous avons des
-variables pertinantes en ce qui concerne le poids, la taille de la mère
-et du bébé par exemple.
+Il s'agit d'une base de données que nous avons utilisé dans le cadre du
+cours de ``Logiciel avancé'' enseigné par Nicolas Jegou durant notre
+licence. La base présente plusieurs variables quantitatives, nous avons
+donc relevé des variables pertinantes en ce qui concerne le poids, la
+taille de la mère ou encore celle du bébé par exemple.
 
-\textbf{Tri de bebe} : Valeur manquante Nous avons decider de faire un
-tri sur les individus non totalement renseignés et d'utiliser une base
-de données sans NA.
-
-Nous avons decider d'utiliser 2 bases de données pour présenter la
-partie monde car nous voulions à la fois travailler avec notre propre
-base de donnée ``taux\_fécondité'' et essayer l'utiliser un serveur
-externe à l'aide d'un package ``WDI''. Cette démarche nous a été guider
-après avoir parcouru la documentation sur les cartes. Effectivement,
-nous utilisons seulement le taux de fertilité pour réaliser la carte.
+\textbf{Tri de la base de données} : Valeurs manquantes \newline Nous
+avons decidé de faire un tri sur les individus non totalement renseignés
+et d'utiliser une base de données sans NA.
 
 \hypertarget{base-de-donnuxe9es-taux_fecondituxe9}{%
 \subsubsection{Base de données
 taux\_fecondité}\label{base-de-donnuxe9es-taux_fecondituxe9}}
 
 La base de données taux de fécondité nous indique la localisation,
-l'indicateur, la fréquence, le temps et la valeur.
+l'indicateur, la fréquence, le temps et la valeur du taux de fécondité
+dans les différents pays du monde en fonction des années (de 1960 à
+2020).
 
 \hypertarget{base-de-donnuxe9es-wdi}{%
 \subsubsection{Base de données WDI}\label{base-de-donnuxe9es-wdi}}
@@ -199,13 +201,13 @@ La bibliothèque WDI (World Development Indicators) est un package R qui
 permet de télécharger et d'explorer les indicateurs de développement
 économique et social du monde entier. Cette bibliothèque est basée sur
 la base de données de la Banque mondiale, qui comprend une grande
-quantité de données sur les pays du monde entier. Nous utilisons cette
-library pour pouvoir montrer à l'utilisateur le taux de fertilité dans
-le monde en fonction des années. De plus, nous avons que 2019, 2018 et
-2017 en choix pour la variable année. Il s'agit d'une library qui est
-lourde et met du temps à charger or, si nous laissons un plus garnd
-choix d'année, cela ralentit considerablement le chargement de
-l'application.
+quantité de données. Nous utilisons cette librairie pour pouvoir montrer
+à l'utilisateur le taux de fertilité dans le monde en fonction des
+années. \newline De plus, en important la librairie, nous nous sommes
+limitées aux années 2017, 2018 et 2019. Il s'agit d'une librairie qui
+est lourde et qui met du temps à charger. Si nous avions choisi un plus
+grand nombre d'années, cela aurait considérablement ralenti le
+chargement de l'application.
 
 \hypertarget{base-de-donnuxe9es-dpt2021}{%
 \subsubsection{Base de données
@@ -226,17 +228,19 @@ laquelle elle s'étend, et étant en lien direct avec les naissances.
 \subsubsection{Carte}\label{carte}}
 
 La carte nous permet de mettre en évidence les différents pays dont le
-taux de fertilité est le plus élevé. Sans surprise, c'est l'Afrique qui
-se retrouve avec la plupart des pays avec un haut taux de fertilité.
+taux de fertilité est le plus élevé. Les seules années sélectionnables
+sont de 2017 à 2019, car comme expliqué précédemment, augmenter la plage
+de la période aurait considérablement ralenti notre application.
 
-\hypertarget{graphique-sur-tous-les-pays}{%
-\subsubsection{Graphique sur tous les
-pays}\label{graphique-sur-tous-les-pays}}
+\hypertarget{taux-de-fuxe9condituxe9-des-pays-du-monde}{%
+\subsubsection{Taux de fécondité des pays du
+monde}\label{taux-de-fuxe9condituxe9-des-pays-du-monde}}
 
 Le graphique présentant tous les pays est pertinent car il nous permet
 de comparer directement les pays entre eux et d'avoir une idée de la
 tendance globale de l'évolution du taux de fécondité au fur et à mesure
-des années.
+des années. Le graphique est intercatif et nous permet de savoir la
+valeur du taux de fécondité pour chaque ppays et pour chaque année.
 
 \hypertarget{graphique-sur-un-seul-pays}{%
 \subsubsection{Graphique sur un seul
@@ -244,14 +248,16 @@ pays}\label{graphique-sur-un-seul-pays}}
 
 Le graphique présentant tous les pays n'est cependant pas suffisant. En
 effet, nous avons du mal à avoir une idée précise de l'évolution d'un
-seul pays. C'est pour cela que cest onglet a été créé.
+seul pays. Cet onglet permet donc de rendre compte de l'évolution d'un
+seul pays, en observant des hausses ou des baisses que nous ne pouvions
+pas visualiser dans le graphique précédent.
 
 \hypertarget{uxe0-luxe9chelle-de-la-france}{%
 \subsection{À l'échelle de la
 France}\label{uxe0-luxe9chelle-de-la-france}}
 
-\hypertarget{worldcoud}{%
-\subsubsection{Worldcoud}\label{worldcoud}}
+\hypertarget{wordcoud}{%
+\subsubsection{Wordcoud}\label{wordcoud}}
 
 Le nuage de mots ou « wordcloud » en anglais est un outil de
 visualisation qui permet au travers d'une image de percevoir très
@@ -260,19 +266,22 @@ texte ou un corpus de texte. L'utilisateur peut en un clic sélectionner
 une année et observer quels sont les prénoms qui ont été le plus
 fréquemment donnés sur cette année, en lui laissant le choix de la
 fréquence d'apparition du prénom ainsi que le nombre de prénoms qui
-seront présents dans le wordcloud.
-
-Wordcloud est un widget html. Cela signifie que votre wordcloud sera
-sorti dans un HTMLformat. Nous avons décider de mettre en place un
-bouton qui permet à l'utilisateur de l'exporter en tant que png image.
+seront présents dans le wordcloud.\\
+Nous avons décidé de mettre en place un bouton qui permet à
+l'utilisateur de l'exporter en tant que png image.
 
 \hypertarget{courbe-du-pruxe9nom-au-fur-et-uxe0-mesure-des-annuxe9es}{%
 \subsubsection{Courbe du prénom au fur et à mesure des
 années}\label{courbe-du-pruxe9nom-au-fur-et-uxe0-mesure-des-annuxe9es}}
 
-Cet onglet est sûrement le plus interactif avec l'utilisateur. Nous
-sommes en effet amenés à écrire un prénom, et en fonction de celui-ci,
-la courbe du nombre de bébés ayant reçu ce prénom s'affichera.
+Cet onglet est sûrement celui qui amène le plus l'utilisateur à
+interragir avec l'application. Nous sommes en effet amenés à écrire un
+prénom, et en fonction de celui-ci, la courbe du nombre de bébés ayant
+reçu ce prénom en fonction des années s'affichera. Il ne faut pas
+hésiter à essayer les prénoms de personnes que nous connaissons.
+
+Nous avons décider de mettre en place un bouton qui permet à
+l'utilisateur de l'exporter en tant que png image.
 
 \hypertarget{uxe0-luxe9chelle-dune-maternituxe9}{%
 \subsection{À l'échelle d'une
@@ -282,16 +291,19 @@ maternité}\label{uxe0-luxe9chelle-dune-maternituxe9}}
 \subsubsection{Visualisation}\label{visualisation}}
 
 Cet onglet nous permet de visualiser rapidement les statistiques
-descriptives intéractives de base avec l'utilisation du package
-RamCharts. Nous avons integrer différents types de répresentation
+descriptives de la base de données bébé avec l'utilisation du package
+RamCharts. Nous avons intégré différents types de répresentation
 (boxplot, jauge..). Cela nous as permis d'utiliser un grand panel des
 fonctionnalités de ce package.
 
-\hypertarget{regression-simple}{%
-\subsubsection{Regression simple}\label{regression-simple}}
+Nous avons également mis en place un graphique représentant le poids du
+bébé en fonction de la tranche d'âge de la maman.
+
+\hypertarget{ruxe9gression-simple}{%
+\subsubsection{Régression simple}\label{ruxe9gression-simple}}
 
 Nous allons etudier le poids de naissance des bébés (en grammes).\\
-Les variables explicatives sont toutes les variables quantitatifs de
+Les variables explicatives sont toutes les variables quantitatives de
 notre base de données.
 
 Nous considérons le modèle suivant en fonction de ce que l'utilisateur
@@ -299,9 +311,10 @@ choisira:
 
 \(Y_{PoidsBB} = \beta0 + \beta1 X1_{ChoixUtilisateur} + \epsilon\)
 
-Nous représentons en clic bouton le choix des variables. Puis, en
-fonction de la variable choisit, l'utilisateur peut visualiser en
-histogramme sa variable et le graphique de régression.
+Nous représentons en clic bouton le choix des variables. L'utilisateur
+peut ensuite visualiser la variable sélectionnée sous forme
+d'histogramme, puis la visualiser avec la courbe de régression en
+fonction de la variable PoidsBB.
 
 \hypertarget{ruxe9gression-multiple}{%
 \subsubsection{Régression multiple}\label{ruxe9gression-multiple}}
@@ -312,10 +325,10 @@ fait, visualiser :
 
 \begin{itemize}
 \item
-  Matrice de corrélation : la matrice de corrélation indique les valeurs
-  de corrélation, qui mesurent le degré de relation linéaire entre
-  chaque paire de variables. Les valeurs de corrélation peuvent être
-  comprises entre -1 et +1. Si les deux variables ont tendance à
+  La matrice de corrélation : la matrice de corrélation indique les
+  valeurs de corrélation, qui mesurent le degré de relation linéaire
+  entre chaque paire de variables. Les valeurs de corrélation peuvent
+  être comprises entre -1 et +1. Si les deux variables ont tendance à
   augmenter et à diminuer en même temps, la valeur de corrélation est
   positive.
 \item
@@ -323,12 +336,21 @@ fait, visualiser :
   statistiques pour juger de la qualité d'une régression linéaire. Ici,
   l'utilisateur pour voir avec un code couleur la qualité du modele.
   Plus la régression linéaire est en adéquation avec les données
-  collectées.\\
-  -Vert : R² supperieur ou égale à 0.6. -Orange : R² est compris entre
-  0.4 et 0.6\\
-  -Rouge : R² est inferieur à 0.4
+  collectées.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Vert : R² supperieur ou égale à 0.6.
+  \item
+    Orange : R² est compris entre 0.4 et 0.6\\
+  \item
+    Rouge : R² est inferieur à 0.4
+  \end{itemize}
 \item
-  Statsique de Fisher
+  La statistique de Fisher du modèle
+\item
+  Le summary du modèle de régression en sortie R
 \end{itemize}
 
 \hypertarget{travail-en-binuxf4me}{%
@@ -340,23 +362,21 @@ fait, visualiser :
 Afin de faciliter notre travail nous avons décidé d'utiliser git. En
 effet, nous avons eu un cours en début de semestre et cela nous a semblé
 pertinent de travailler avec cet outil. Nous avons pour ce projet
-utilisé le terminal et non les boutons de R. Nous avons donc travaillé
-en effectuant des git commit, des git push, des git pull et même un git
-remote.
+utilisé le terminal et non les boutons de R.
 
 \hypertarget{ruxe9partition-des-tuxe2ches}{%
 \subsection{Répartition des tâches}\label{ruxe9partition-des-tuxe2ches}}
 
-Nous nous sommes réparties les tâches au fur et à mesure de l'avancée de
+Nous nous sommes réparties les tâches au fur et à mesure de l'avancé de
 l'application. Nous avons tout d'abord décidé de la structure de
-l'application ensemble, ainsi que des onglets et des sous-onglets. Nous
-avons ensuite établi les grandes idées : les graphiques, où nous
-voulions faire des cartes, quels packages nous pouvions utiliser qui
-pouvaient rendre l'application intéressante etc. Après cela, nous nous
-tenions au courant au fur et à mesure pour savoir qui faisait quoi. Bien
-sûr, si l'une d'entre nous avait commencé une partie mais n'arrivait pas
-à la finir ou ne trouvait pas ses erreurs, l'autre l'aidait ou prenait
-le relai.
+l'application ensemble, ainsi que les onglets et les sous-onglets qui
+seront présents. Nous avons ensuite établi les grandes idées : les
+graphiques, où nous voulions faire des cartes, quels packages nous
+pouvions utiliser qui pouvaient rendre l'application intéressante etc.
+Après cela, nous avons travailé en nous tenant au courant au fur et à
+mesure pour continuer la répartition des tâches mais sur des tâxhes
+beaucoup plus précises. Bien sûr, en cas de difficulté, l'entraide était
+présente.
 
 \hypertarget{notre-ressenti}{%
 \subsection{Notre ressenti}\label{notre-ressenti}}
@@ -389,17 +409,18 @@ projet. Nous allons ici vous les présenter :
   NA dans le choix des années avec la carte, on ne sait pas comment
   l'enlever
 \item
-  Voulait faire un bouton logout mais il fallait shiny server pro
+  Nous voulions faire un bouton logout mais était pour shiny server pro
 \item
   Difficultés à publier notre application :
 \end{enumerate}
 
-\textbf{Methode de resolution des problèmes} Pour trouver les erreurs
-nous avons essayer de publier une application plus basique et nous avons
-rajouter le code au fur et à mesure. Nous avons mis du temps à réaliser
-cette étape car cela met du temps de verifier étape par étape que notre
-application fonctionne en local et de publier. Nous avons utiliser le
-code
+\textbf{Methode de resolution des problèmes} \newline Pour trouver les
+erreurs nous avons essayé de publier une application plus basique et
+nous avons rajouter le code au fur et à mesure. Nous avons mis du temps
+à réaliser cette étape car il faut vérifier étape par étape que notre
+application fonctionne en local et la publier ensuite. Nous avons
+utiliser la fonction ci-dessous pour déterminer nos erreurs de façon
+précise.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -407,20 +428,40 @@ code
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Problème non resolu} * Problème racontrer au niveau de la
-visualisation des bases de données au format DT sur nos grosses bases de
-données (prenom et taux de fecondité). L'une d'entre elle fait 76Mo. *
-Problème rencontré lorsque que l'on fait appel à un serveur externe type
-API qui nous permet de réalisé une carte du taux de fertilité avec le
-package WDI
+\textbf{Problèmes non résolus}
 
-\textbf{Les hypothèses du problème} * Version shiny.io n'a pas les memes
-versions de packages que celles qu'on utilise en local * Shiny.io
-protege son serveur et ne peut pas publier des applications qui font
-appel à des serveurs externes
+\begin{itemize}
+\tightlist
+\item
+  Problème rencontré au niveau de la visualisation de notre base de
+  données taux de fecondité.
+\item
+  Problème rencontré lorsque que l'on fait appel à un serveur externe
+  type API qui nous permet de réaliser une carte du taux de fertilité
+  avec le package WDI
+\end{itemize}
+
+\textbf{Les hypothèses du problème}
+
+\begin{itemize}
+\tightlist
+\item
+  Version shiny.io n'a pas les memes versions de packages que celles
+  qu'on utilise en local
+\item
+  Shiny.io protege son serveur et ne peut pas publier des applications
+  qui font appel à des serveurs externes
+\end{itemize}
+
+\textbf{Résolution de la publication}
 
 Ces difficultés nous ont permis de voir les limites de notre application
-et de nous remettre sans cesse en question.
+et de nous remettre sans cesse en question. Concernant la publication de
+l'application, nous avons donc trouvé les lignes de code qui nous
+empêchaient de la publier. Nous avons alors mis en \# ces lignes, publié
+l'application, et enlevé les \# afin que l'application ``entière''
+puisse être visualisée si nous la lançons en local. L'application
+publiée n'est donc pas complète, mais elle est tout de même publiée.
 
 \hypertarget{conlusion}{%
 \section{Conlusion}\label{conlusion}}
@@ -429,6 +470,7 @@ Pour conclure, cela a été un vrai plaisir de travailler sur ce projet.
 Nous espérons que l'application vous plaira. Nous avons beaucoup appris
 : gérer nos erreurs, gérer notre temps (le projet demandant une certaine
 investigation et ayant une date limite de rendu), répartir les
-tâches\ldots{}
+tâches\ldots{} Pour répondre à notre problématique, nous vous laissons
+le loisir d'aller parcourir notre application.
 
 \end{document}
