@@ -5,13 +5,13 @@
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
-  # Reactivité de la carte en fonction des années 
-  # fertility_reactive <- reactive({
-  #   subset(
-  #     world_fertility, 
-  #     year == input$Year
-  #   )
-  # })
+  #Reactivité de la carte en fonction des années
+  fertility_reactive <- reactive({
+    subset(
+      world_fertility,
+      year == input$Year
+    )
+  })
   
 
 #### Partie Acceuil ####
@@ -24,11 +24,11 @@ server <- function(input, output) {
       icon = icon("person-breastfeeding"), color = "yellow")
   })
   
-  # output$Taux_fertilite <- renderValueBox({
-  #   valueBox(
-  #     paste0(round(mean(world_fertility$SP.DYN.TFRT.IN, na.rm = TRUE), 2), " enfants"), "par femme en moyenne dans le monde", 
-  #     icon = icon("earth"), color = "yellow")
-  # })
+  output$Taux_fertilite <- renderValueBox({
+    valueBox(
+      paste0(round(mean(world_fertility$SP.DYN.TFRT.IN, na.rm = TRUE), 2), " enfants"), "par femme en moyenne dans le monde",
+      icon = icon("earth"), color = "yellow")
+  })
   
   output$Nombre_semaine <- renderValueBox({
     
@@ -41,46 +41,46 @@ server <- function(input, output) {
  
 #### Partie Pays ####    
 
-  # output$visu_pays <- DT::renderDataTable({
-  #   datatable(taux_fecondite, options = 
-  #               list(scrollX = TRUE, 
-  #                    initComplete = JS(
-  #                      "function(settings, json) {",
-  #                      "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
-  #                      "}")))
-  # })
-  
-  # output$summary_pays <- renderDataTable({
-  #   summary(taux_fecondite, options =
-  #             list(scrollX = TRUE))
-  # })
+  output$visu_pays <- DT::renderDataTable({
+    datatable(taux_fecondite, options =
+                list(scrollX = TRUE,
+                     initComplete = JS(
+                       "function(settings, json) {",
+                       "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+                       "}")))
+  })
+
+  output$summary_pays <- renderDataTable({
+    summary(taux_fecondite, options =
+              list(scrollX = TRUE))
+   })
 
 
-  
- 
+
+
   # Création de la carte leaflet
-  # output$map <- renderLeaflet({
-  #   leaflet() |> 
-  #     addTiles() |> 
-  #     addPolygons(data = fertility_reactive(), 
-  #                 label = ~ fertility_reactive()$name_sort,
-  #                 opacity= 1,
-  #                 dashArray = "2",
-  #                 fillColor = ~pal(SP.DYN.TFRT.IN),
-  #                 fillOpacity = 0.8, 
-  #                 color = "#BDBDC3",
-  #                 highlightOptions = highlightOptions(color = "#666", weight = 2, dashArray = "", fillOpacity = 0.7, bringToFront = TRUE),
-  #                 weight = 1,
-  #                 popup = paste0("<b>Country:</b> ",fertility_reactive()$name_sort, "<br>",
-  #                                "<b>Fertility rate:</b> ", round(fertility_reactive()$SP.DYN.TFRT.IN, 2))
-  #     ) |> 
-  #     addLegend(pal = pal, 
-  #               values = fertility_reactive()$SP.DYN.TFRT.IN, 
-  #               opacity = 0.7, 
-  #               title = "Taux de fécondité")
-  #    
-  # })
+   output$map <- renderLeaflet({
+     leaflet() |>
+       addTiles() |>
+       addPolygons(data = fertility_reactive(),
+                   label = ~ fertility_reactive()$name_sort,
+                   opacity= 1,
+                   dashArray = "2",
+                   fillColor = ~pal(SP.DYN.TFRT.IN),
+                   fillOpacity = 0.8,
+                   color = "#BDBDC3",
+                   highlightOptions = highlightOptions(color = "#666", weight = 2, dashArray = "", fillOpacity = 0.7, bringToFront = TRUE),
+                   weight = 1,
+                   popup = paste0("<b>Country:</b> ",fertility_reactive()$name_sort, "<br>",
+                                  "<b>Fertility rate:</b> ", round(fertility_reactive()$SP.DYN.TFRT.IN, 2))
+       ) |>
+      addLegend(pal = pal,
+                 values = fertility_reactive()$SP.DYN.TFRT.IN,
+                 opacity = 0.7,
+                 title = "Taux de fécondité")
   
+  })
+
   # Texte en dessous carte 
   output$texte_carte <- renderText({
     paste("Le taux de fertilité dans le monde est un indicateur important de la santé démographique des populations. Il mesure le nombre moyen d'enfants qu'une femme peut espérer avoir tout au long de sa vie reproductive. En ", input$Year, "le taux de fertilité mondial était d'environ ",round(mean(fertility_reactive()$SP.DYN.TFRT.IN, na.rm=TRUE),2),"Ce taux varie considérablement d'un pays à l'autre et même au sein des pays. Les pays les plus pauvres et les moins développés ont généralement des taux de fertilité plus élevés, tandis que les pays les plus riches et les plus développés ont tendance à avoir des taux plus bas. Les facteurs qui influencent le taux de fertilité sont nombreux et complexes. L'âge est l'un des facteurs les plus importants, car les femmes ont une période limitée de fécondité, qui diminue avec l'âge. Les femmes qui ont leur premier enfant à un âge plus avancé ont tendance à avoir moins d'enfants au total. L'éducation des femmes est également un facteur important, car les femmes qui ont accès à l'éducation ont tendance à avoir des taux de fertilité plus bas, en partie parce qu'elles ont des opportunités professionnelles et économiques plus nombreuses qui peuvent les empêcher d'avoir de nombreux enfants. Les normes culturelles et religieuses sont également importantes. Dans certaines cultures, avoir de nombreux enfants est considéré comme un signe de réussite ou de statut, tandis que dans d'autres cultures, les femmes sont encouragées à limiter leur nombre d'enfants. Les politiques gouvernementales, telles que les programmes de planning familial et l'accès à des méthodes contraceptives, peuvent également influencer le taux de fertilité. Un taux de fertilité élevé peut avoir des avantages, tels que le maintien de la population, mais il peut également présenter des défis, tels que la pression sur les ressources, les problèmes de santé maternelle et infantile et la pauvreté. À l'inverse, un taux de fertilité faible peut également avoir des avantages, tels que la réduction de la pression sur les ressources, mais il peut également présenter des défis, tels que le vieillissement de la population et les problèmes économiques associés à une population en déclin.")  
