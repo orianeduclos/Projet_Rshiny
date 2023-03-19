@@ -6,12 +6,12 @@
 server <- function(input, output) {
   
   # Reactivité de la carte en fonction des années 
-  fertility_reactive <- reactive({
-    subset(
-      world_fertility, 
-      year == input$Year
-    )
-  })
+  # fertility_reactive <- reactive({
+  #   subset(
+  #     world_fertility, 
+  #     year == input$Year
+  #   )
+  # })
   
 
 #### Partie Acceuil ####
@@ -24,11 +24,11 @@ server <- function(input, output) {
       icon = icon("person-breastfeeding"), color = "yellow")
   })
   
-  output$Taux_fertilite <- renderValueBox({
-    valueBox(
-      paste0(round(mean(world_fertility$SP.DYN.TFRT.IN, na.rm = TRUE), 2), " enfants"), "par femme en moyenne dans le monde", 
-      icon = icon("earth"), color = "yellow")
-  })
+  # output$Taux_fertilite <- renderValueBox({
+  #   valueBox(
+  #     paste0(round(mean(world_fertility$SP.DYN.TFRT.IN, na.rm = TRUE), 2), " enfants"), "par femme en moyenne dans le monde", 
+  #     icon = icon("earth"), color = "yellow")
+  # })
   
   output$Nombre_semaine <- renderValueBox({
     
@@ -41,45 +41,45 @@ server <- function(input, output) {
  
 #### Partie Pays ####    
 
-  output$visu_pays <- DT::renderDataTable({
-    datatable(taux_fecondite, options = 
-                list(scrollX = TRUE, 
-                     initComplete = JS(
-                       "function(settings, json) {",
-                       "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
-                       "}")))
-  })
+  # output$visu_pays <- DT::renderDataTable({
+  #   datatable(taux_fecondite, options = 
+  #               list(scrollX = TRUE, 
+  #                    initComplete = JS(
+  #                      "function(settings, json) {",
+  #                      "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+  #                      "}")))
+  # })
   
-  output$summary_pays <- renderDataTable({
-    summary(taux_fecondite, options = 
-              list(scrollX = TRUE))
-  })
-  
-  
+  # output$summary_pays <- renderDataTable({
+  #   summary(taux_fecondite, options =
+  #             list(scrollX = TRUE))
+  # })
+
+
   
  
   # Création de la carte leaflet
-  output$map <- renderLeaflet({
-    leaflet() |> 
-      addTiles() |> 
-      addPolygons(data = fertility_reactive(), 
-                  label = ~ fertility_reactive()$name_sort,
-                  opacity= 1,
-                  dashArray = "2",
-                  fillColor = ~pal(SP.DYN.TFRT.IN),
-                  fillOpacity = 0.8, 
-                  color = "#BDBDC3",
-                  highlightOptions = highlightOptions(color = "#666", weight = 2, dashArray = "", fillOpacity = 0.7, bringToFront = TRUE),
-                  weight = 1,
-                  popup = paste0("<b>Country:</b> ",fertility_reactive()$name_sort, "<br>",
-                                 "<b>Fertility rate:</b> ", round(fertility_reactive()$SP.DYN.TFRT.IN, 2))
-      ) |> 
-      addLegend(pal = pal, 
-                values = fertility_reactive()$SP.DYN.TFRT.IN, 
-                opacity = 0.7, 
-                title = "Taux de fécondité")
-     
-  })
+  # output$map <- renderLeaflet({
+  #   leaflet() |> 
+  #     addTiles() |> 
+  #     addPolygons(data = fertility_reactive(), 
+  #                 label = ~ fertility_reactive()$name_sort,
+  #                 opacity= 1,
+  #                 dashArray = "2",
+  #                 fillColor = ~pal(SP.DYN.TFRT.IN),
+  #                 fillOpacity = 0.8, 
+  #                 color = "#BDBDC3",
+  #                 highlightOptions = highlightOptions(color = "#666", weight = 2, dashArray = "", fillOpacity = 0.7, bringToFront = TRUE),
+  #                 weight = 1,
+  #                 popup = paste0("<b>Country:</b> ",fertility_reactive()$name_sort, "<br>",
+  #                                "<b>Fertility rate:</b> ", round(fertility_reactive()$SP.DYN.TFRT.IN, 2))
+  #     ) |> 
+  #     addLegend(pal = pal, 
+  #               values = fertility_reactive()$SP.DYN.TFRT.IN, 
+  #               opacity = 0.7, 
+  #               title = "Taux de fécondité")
+  #    
+  # })
   
   # Texte en dessous carte 
   output$texte_carte <- renderText({
@@ -111,17 +111,17 @@ server <- function(input, output) {
   
 #### Partie France #### 
 
-  output$visu_france <- DT::renderDataTable({
-    datatable(prenom, options = 
-                list(scrollX = TRUE, 
+  output$visu_france <- renderDataTable({
+    datatable(prenom, options =
+                list(scrollX = TRUE,
                      initComplete = JS(
                        "function(settings, json) {",
                        "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
                        "}")))
   })
-  
+   
   output$summary_france <- renderDataTable({
-    summary(prenom, options = 
+    summary(prenom, options =
               list(scrollX = TRUE))
   })
   

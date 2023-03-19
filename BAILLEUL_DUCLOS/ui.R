@@ -76,7 +76,7 @@ dashboardPage(
             tabPanel(
               title = "Carte", 
               sidebarPanel(
-                selectInput(inputId = "Year", label = "Années", choices = unique(world_fertility$year))
+                #selectInput(inputId = "Year", label = "Années", choices = unique(world_fertility$year))
               ),
               br(),
               p(strong("Taux de fertilité des pays du monde")),

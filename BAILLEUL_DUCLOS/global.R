@@ -51,13 +51,13 @@ bebe_sexe <- bebe |>
                                  SEXEPARENT=="Agedupere"~"Pere"))
 
 #### Code pour la carte taux de fertilité dans le monde ####
-fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2017, end = 2019)
-
-
-world <- ne_countries(scale = "medium", returnclass = "sf")
-world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
-
-pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
+# fertility <- WDI(indicator = "SP.DYN.TFRT.IN", start = 2017, end = 2019)
+# 
+# 
+# world <- ne_countries(scale = "medium", returnclass = "sf")
+# world_fertility <- left_join(world, fertility, by = c("iso_a3" = "iso3c"))
+# 
+# pal <- colorNumeric(palette = "YlOrRd", domain = world_fertility$SP.DYN.TFRT.IN)
 
 ### BASE DE DONNEE PRENOM ###
 prenom <- read.csv("data/dpt2021.csv", header= TRUE, sep=';')

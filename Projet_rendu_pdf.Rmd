@@ -78,7 +78,7 @@ La carte nous permet de mettre en évidence les différents pays dont le taux de
 
 ### Taux de fécondité des pays du monde
 
-Le graphique présentant tous les pays est pertinent car il nous permet de comparer directement les pays entre eux et d'avoir une idée de la tendance globale de l'évolution du taux de fécondité au fur et à mesure des années. Le graphique est intercatif et nous permet de savoir la valeur du taux de fécondité pour chaque ppays et pour chaque année.
+Le graphique présentant tous les pays est pertinent car il nous permet de comparer directement les pays entre eux et d'avoir une idée de la tendance globale de l'évolution du taux de fécondité au fur et à mesure des années. Le graphique est intercatif et nous permet de savoir la valeur du taux de fécondité pour chaque pays et pour chaque année.
 
 ### Graphique sur un seul pays
 
@@ -139,7 +139,7 @@ Afin de faciliter notre travail nous avons décidé d'utiliser git. En effet, no
 
 ## Répartition des tâches
 
-Nous nous sommes réparties les tâches au fur et à mesure de l'avancé de l'application. Nous avons tout d'abord décidé de la structure de l'application ensemble, ainsi que les onglets et les sous-onglets qui seront présents. Nous avons ensuite établi les grandes idées : les graphiques, où nous voulions faire des cartes, quels packages nous pouvions utiliser qui pouvaient rendre l'application intéressante etc. Après cela, nous avons travailé en nous tenant au courant au fur et à mesure pour continuer la répartition des tâches mais sur des tâxhes beaucoup plus précises. Bien sûr, en cas de difficulté, l'entraide était présente. 
+Nous nous sommes réparties les tâches au fur et à mesure de l'avancé de l'application. Nous avons tout d'abord décidé de la structure de l'application ensemble, ainsi que les onglets et les sous-onglets qui seront présents. Nous avons ensuite établi les grandes idées : les graphiques, où nous voulions faire des cartes, quels packages nous pouvions utiliser qui pouvaient rendre l'application intéressante etc. Après cela, nous avons travailé en nous tenant au courant au fur et à mesure pour continuer la répartition des tâches mais sur des tâches beaucoup plus précises. Bien sûr, en cas de difficulté, l'entraide était présente. 
 
 ## Notre ressenti
 
@@ -177,7 +177,7 @@ rsconnect::showLogs() #fonction pour afficher les messages du journal d'une appl
 
 **Résolution de la publication**
 
-Ces difficultés nous ont permis de voir les limites de notre application et de nous remettre sans cesse en question. Concernant la publication de l'application, nous avons donc trouvé les lignes de code qui nous empêchaient de la publier. Nous avons alors mis en # ces lignes, publié l'application, et enlevé les # afin que l'application "entière" puisse être visualisée si nous la lançons en local. L'application publiée n'est donc pas complète, mais elle est tout de même publiée. 
+Ces difficultés nous ont permis de voir les limites de notre application et de nous remettre sans cesse en question. Concernant la publication de l'application, nous avons donc trouvé les lignes de code qui nous empêchaient de la publier. Nous avons alors mis en # ces lignes, publié l'application, et enlevé les # afin que l'application "entière" puisse être visualisée si nous la lançons en local. Nous n'avons pas publié notre carte qui fait appel au server externe WDI la table de notre base de donnée taux de fécondité en affichage DT ainsi que son summary. L'application publiée n'est donc pas complète, mais elle est tout de même publiée. 
 
 # Conlusion 
 
